@@ -1,0 +1,168 @@
+// PathFold website – database schema
+// Provider: PostgreSQL (works locally with `prisma dev` and on Vercel with Neon / Vercel Postgres / Prisma Postgres)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Users that may sign in to /admin
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+/// News, events, press mentions and announcements
+model NewsPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  category    String   @default("News") // News | Event | Press | Talk | Release
+  excerpt     String
+  content     String   @default("") // Markdown
+  coverImage  String?
+  externalUrl String?
+  publishedAt DateTime @default(now())
+  published   Boolean  @default(true)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// Scientific publications (project outputs and related prior work)
+model Publication {
+  id        String   @id @default(cuid())
+  title     String
+  authors   String
+  venue     String
+  year      Int
+  type      String   @default("Conference") // Journal | Conference | Workshop | Preprint | Dataset | Software | Thesis | Book chapter
+  category  String   @default("PathFold") // PathFold | Related work
+  doi       String?
+  url       String?
+  pdfUrl    String?
+  codeUrl   String?
+  abstract  String?
+  bibtex    String?
+  featured  Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// People involved in the project
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  affiliation String
+  group       String   @default("Core team") // Core team | Associated partners | Alumni | Open positions
+  bio         String?
+  photo       String?
+  email       String?
+  website     String?
+  orcid       String?
+  scholar     String?
+  linkedin    String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// Institutions: coordinator, associated partners, infrastructure, funding
+model Partner {
+  id          String   @id @default(cuid())
+  name        String
+  shortName   String?
+  type        String   @default("Associated partner") // Coordinator | Associated partner | Infrastructure | Funding
+  description String?
+  website     String?
+  logo        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// Media gallery: images, videos, press coverage, talks, posters, documents
+model MediaItem {
+  id          String    @id @default(cuid())
+  title       String
+  type        String    @default("Image") // Image | Video | Press | Talk | Poster | Document
+  url         String
+  thumbnail   String?
+  description String?
+  source      String?
+  date        DateTime?
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+/// Software, benchmarks, datasets and documentation produced by the project
+model Resource {
+  id          String   @id @default(cuid())
+  name        String
+  kind        String   @default("Software") // Software | Benchmark | Dataset | Model | Documentation
+  description String
+  status      String   @default("Planned") // Planned | In development | Released
+  url         String?
+  repoUrl     String?
+  docsUrl     String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// Work packages of the project plan
+model WorkPackage {
+  id           String   @id @default(cuid())
+  number       Int
+  title        String
+  period       String // e.g. "M01–M12 (Oct 2026 – Sep 2027)"
+  lead         String?
+  summary      String
+  objectives   String   @default("") // Markdown
+  deliverables String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+/// Project milestones
+model Milestone {
+  id          String   @id @default(cuid())
+  code        String // M1 … M5
+  title       String
+  due         String // e.g. "Sep 2027"
+  workPackage String?
+  description String
+  status      String   @default("Planned") // Planned | In progress | Achieved
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// Messages submitted via the contact form
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+/// Key/value site settings editable in the admin
+model SiteSetting {
+  key   String @id
+  value String
+}
