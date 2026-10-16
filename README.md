@@ -99,8 +99,3 @@ src/app/api/upload   admin-only upload endpoint (Vercel Blob / local disk)
 src/components/      site, admin and ui components
 src/lib/             db, auth, data access, settings, admin registry + server actions, static content
 ```
-
-## Content notes
-
-The seed and static texts are derived from the project proposal. Sensitive details (budget, salaries,
-phone numbers, letters of support, bank details) are intentionally not included.
