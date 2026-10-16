@@ -1,8 +1,7 @@
 # PathFold
 
-Website for **PathFold – Language Modelling for Protein (Mis-)Folding Pathway Dynamics**, a BMFTR-funded
-research project (Zukunft eHealth, grant 031L0342) coordinated at Saarland University with DFKI and DZNE as
-associated partners.
+**PathFold - Language Modelling for Protein (Mis-)Folding Pathway Dynamics**, a BMFTR-funded
+research project.
 
 The site is a Next.js 16 app with a PostgreSQL database (Prisma) and a built-in admin area where all dynamic
 content (news, publications, team, partners, media, resources, work packages, milestones, contact messages,
