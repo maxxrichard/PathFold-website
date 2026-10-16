@@ -1,4 +1,4 @@
-# PathFold – project website
+# PathFold
 
 Website for **PathFold – Language Modelling for Protein (Mis-)Folding Pathway Dynamics**, a BMFTR-funded
 research project (Zukunft eHealth, grant 031L0342) coordinated at Saarland University with DFKI and DZNE as
