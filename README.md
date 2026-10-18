@@ -69,10 +69,13 @@ Useful scripts:
    - `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME` – first admin account (created automatically on first login)
    - `NEXT_PUBLIC_SITE_URL` – e.g. `https://pathfold.example.org`
    - `BLOB_READ_WRITE_TOKEN` – optional, added automatically when you create a **Blob** store under *Storage*; enables image uploads from the admin
-4. **Create the tables** once: run `npx prisma db push` locally with `DATABASE_URL` set to the production URL
-   (`DATABASE_URL="postgres://…" npx prisma db push`), then optionally `DATABASE_URL="postgres://…" npm run db:seed`.
-   Alternatively open the Vercel project's database tab and use the Neon SQL editor with `prisma migrate diff`.
-5. Deploy. The build script runs `prisma generate && next build`.
+4. **Create the tables** – easiest: add the environment variable `PRISMA_DB_PUSH_ON_BUILD=1` and redeploy; the
+   build then runs `prisma db push` against `DATABASE_URL` before `next build` (you can remove the variable
+   afterwards). Alternatively run it from your machine:
+   `DATABASE_URL="postgres://…" npx prisma db push`, then optionally `DATABASE_URL="postgres://…" npm run db:seed`
+   to load the initial content.
+5. Deploy, then open `https://<your-site>/api/health`. It reports whether the database is configured, reachable
+   and migrated and prints a hint for anything that is missing. `/admin/login` shows the same hints.
 6. **Custom domain** – *Settings → Domains*, add your domain and point its DNS (CNAME to `cname.vercel-dns.com`,
    or A record `76.76.21.21`) as instructed by Vercel. Update `NEXT_PUBLIC_SITE_URL` afterwards.
 

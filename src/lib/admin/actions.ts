@@ -8,6 +8,7 @@ import { getModel, type FieldDef } from "./registry";
 import { slugify } from "@/lib/utils";
 import { SETTING_FIELDS } from "@/lib/settings";
 import bcrypt from "bcryptjs";
+import { describeDbError } from "@/lib/db-status";
 
 export interface ActionState {
   ok?: boolean;
@@ -183,7 +184,13 @@ export async function loginAction(_prev: ActionState, formData: FormData): Promi
   const password = String(formData.get("password") ?? "");
   if (!email || !password) return { error: "Please enter your e-mail address and password." };
 
-  const user = await verifyCredentials(email, password);
+  let user: Awaited<ReturnType<typeof verifyCredentials>>;
+  try {
+    user = await verifyCredentials(email, password);
+  } catch (e) {
+    const { error, hint } = describeDbError(e);
+    return { error: `${error} ${hint}`.trim() };
+  }
   if (!user) return { error: "Invalid e-mail address or password." };
 
   await createSession({ userId: user.id, email: user.email, name: user.name });
