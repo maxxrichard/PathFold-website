@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Dna, Activity, Boxes } from "lucide-react";
 import { HeroCanvas } from "@/components/site/HeroCanvas";
+import { LoopVideo } from "@/components/site/LoopVideo";
 import { PathwayExplorer } from "@/components/site/PathwayExplorer";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -58,13 +58,13 @@ export default async function HomePage() {
             <div className="relative mx-auto max-w-5xl">
               <div className="absolute -inset-1 rounded-[1.6rem] bg-gradient-to-r from-brand-cyan/30 via-brand-blue/20 to-misfold/30 blur-xl" />
               <div className="card relative overflow-hidden rounded-[1.5rem] p-1.5">
-                <Image
-                  src="/pathfold-overview.webp"
-                  alt="PathFold overview: from an amino acid sequence to predicted folding and misfolding pathways over time"
+                <LoopVideo
+                  src="/pathfold-folding-paths.mp4"
+                  poster="/pathfold-overview.jpg"
                   width={1536}
                   height={1024}
-                  priority
-                  className="w-full rounded-[1.1rem]"
+                  label="Animation: from an amino acid sequence to predicted folding and misfolding pathways over time"
+                  className="aspect-[3/2] w-full rounded-[1.1rem] object-cover"
                 />
               </div>
             </div>
