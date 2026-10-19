@@ -50,7 +50,7 @@ export default async function ResourcesPage() {
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-fg-muted">
             All components are published under open-source licences together with model cards and usage documentation that meet
             the transparency requirements of the EU AI Act and the FAIR software principles, with explicit versioning and
-            provenance documentation in line with the research data management policy of Saarland University. PathFold does not
+            provenance documentation in line with the research data management policy of Universität des Saarlandes. PathFold does not
             pursue patent protection: all model architectures, datasets and outputs are released under open-source and open-data
             licences.
           </p>

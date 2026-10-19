@@ -1,11 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, Dna, Activity, Boxes, Sparkles } from "lucide-react";
-import { HeroCanvas } from "@/components/site/HeroCanvas";
+import { ArrowRight, Dna, Activity, Boxes } from "lucide-react";
+import { HeroVideo } from "@/components/site/HeroVideo";
 import { PathwayExplorer } from "@/components/site/PathwayExplorer";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { Badge } from "@/components/ui/Badge";
 import { NewsCard, PublicationCard, PartnerCard, StatTile } from "@/components/site/cards";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { getSettings } from "@/lib/settings";
@@ -26,32 +24,31 @@ export default async function HomePage() {
   return (
     <>
       {/* ------------------------------------------------------------ Hero */}
-      <section className="relative isolate overflow-hidden pt-28 sm:pt-32">
-        <HeroCanvas className="absolute inset-0 -z-10 h-full w-full opacity-90" />
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(59,130,246,0.18),transparent_70%)]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-bg" />
+      <section className="relative isolate flex min-h-[calc(100dvh-4rem)] items-center overflow-hidden pt-24 pb-20 sm:pt-28">
+        <HeroVideo
+          src="/pathfold-animated.mp4"
+          poster="/pathfold-overview.jpg"
+          className="absolute inset-0 -z-20 h-full w-full object-cover"
+        />
+        {/* legibility overlays */}
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-bg/55" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_60%_at_50%_45%,rgba(7,11,20,0.75),rgba(7,11,20,0.25)_60%,transparent)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-bg" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-bg/80 to-transparent" />
 
         <div className="container-x">
           <div className="mx-auto max-w-4xl text-center">
             <Reveal>
-              <div className="inline-flex flex-wrap items-center justify-center gap-2">
-                <Badge tone="cyan">
-                  <Sparkles className="h-3 w-3" /> BMFTR · Zukunft eHealth
-                </Badge>
-                <Badge>{PROJECT.start} – {PROJECT.end}</Badge>
-              </div>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h1 className="font-display mt-6 text-balance text-5xl font-bold leading-[1.05] tracking-tight text-fg sm:text-6xl lg:text-7xl">
+              <h1 className="font-display text-balance text-5xl font-bold leading-[1.05] tracking-tight text-fg sm:text-6xl lg:text-7xl">
                 <span className="text-gradient">{settings.heroTitle}</span>
               </h1>
             </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-fg-muted sm:text-xl">
+            <Reveal delay={0.05}>
+              <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-fg sm:text-xl">
                 {settings.heroSubtitle}
               </p>
             </Reveal>
-            <Reveal delay={0.15}>
+            <Reveal delay={0.1}>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
                 <Link href="/research" className="btn btn-primary">
                   Explore the research <ArrowRight className="h-4 w-4" />
@@ -62,33 +59,17 @@ export default async function HomePage() {
               </div>
             </Reveal>
           </div>
-
-          <Reveal delay={0.2} className="mt-16 sm:mt-20">
-            <div className="relative mx-auto max-w-5xl">
-              <div className="absolute -inset-1 rounded-[1.6rem] bg-gradient-to-r from-brand-cyan/30 via-brand-blue/20 to-misfold/30 blur-xl" />
-              <div className="card relative overflow-hidden rounded-[1.5rem] p-1.5">
-                <Image
-                  src="/pathfold-overview.webp"
-                  alt="PathFold overview: from an amino acid sequence to predicted folding and misfolding pathways over time"
-                  width={1536}
-                  height={1024}
-                  priority
-                  className="w-full rounded-[1.1rem]"
-                />
-              </div>
-            </div>
-          </Reveal>
         </div>
       </section>
 
       {/* ------------------------------------------------------- Key facts */}
-      <Section className="pt-10 sm:pt-12">
+      <Section className="pt-4 sm:pt-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Reveal>
             <StatTile label="Duration" value="36 months" hint={PROJECT.duration} />
           </Reveal>
           <Reveal delay={0.05}>
-            <StatTile label="Coordinated by" value="Saarland University" hint="with DFKI and DZNE as associated partners" />
+            <StatTile label="Coordinated by" value="Universität des Saarlandes" hint="with DFKI and DZNE as associated partners" />
           </Reveal>
           <Reveal delay={0.1}>
             <StatTile label="Funded by" value="BMFTR" hint={`${PROJECT.programme} · ${PROJECT.grantNumber}`} />
@@ -221,7 +202,7 @@ export default async function HomePage() {
         <SectionHeading
           eyebrow="Consortium"
           title="Partners & funding"
-          description="PathFold is coordinated at Saarland University and supported by two associated partners that anchor the project in Germany's AI and neurodegenerative-disease research landscape."
+          description="PathFold is coordinated at Universität des Saarlandes and supported by two associated partners that anchor the project in Germany's AI and neurodegenerative-disease research landscape."
         />
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {partners.map((p, i) => (

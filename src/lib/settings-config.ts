@@ -7,7 +7,7 @@ export const SETTING_DEFAULTS = {
   contactEmail: "m.rahman@iss.uni-saarland.de",
   contactName: "Dr.-Ing. Maxx Richard Rahman",
   contactRole: "Project coordinator",
-  contactInstitution: "Saarland University",
+  contactInstitution: "Universität des Saarlandes",
   contactAddress: "Campus A5 4, 66123 Saarbrücken, Germany",
   githubUrl: "",
   linkedinUrl: "",

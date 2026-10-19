@@ -8,7 +8,7 @@ import { getPartners } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with the PathFold project team at Saarland University.",
+  description: "Get in touch with the PathFold project team at Universität des Saarlandes.",
 };
 
 export default async function ContactPage() {
