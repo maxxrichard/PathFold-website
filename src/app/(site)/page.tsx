@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Dna, Activity, Boxes } from "lucide-react";
-import { HeroVideo } from "@/components/site/HeroVideo";
+import { HeroCanvas } from "@/components/site/HeroCanvas";
 import { PathwayExplorer } from "@/components/site/PathwayExplorer";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -24,17 +25,10 @@ export default async function HomePage() {
   return (
     <>
       {/* ------------------------------------------------------------ Hero */}
-      <section className="relative isolate flex min-h-[calc(100dvh-4rem)] items-center overflow-hidden pt-24 pb-20 sm:pt-28">
-        <HeroVideo
-          src="/pathfold-animated.mp4"
-          poster="/pathfold-overview.jpg"
-          className="absolute inset-0 -z-20 h-full w-full object-cover"
-        />
-        {/* legibility overlays */}
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-bg/55" />
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_60%_at_50%_45%,rgba(7,11,20,0.75),rgba(7,11,20,0.25)_60%,transparent)]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-bg" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-bg/80 to-transparent" />
+      <section className="relative isolate overflow-hidden pt-28 sm:pt-32">
+        <HeroCanvas className="absolute inset-0 -z-10 h-full w-full opacity-90" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(59,130,246,0.18),transparent_70%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-bg" />
 
         <div className="container-x">
           <div className="mx-auto max-w-4xl text-center">
@@ -44,7 +38,7 @@ export default async function HomePage() {
               </h1>
             </Reveal>
             <Reveal delay={0.05}>
-              <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-fg sm:text-xl">
+              <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-fg-muted sm:text-xl">
                 {settings.heroSubtitle}
               </p>
             </Reveal>
@@ -59,11 +53,27 @@ export default async function HomePage() {
               </div>
             </Reveal>
           </div>
+
+          <Reveal delay={0.15} className="mt-16 sm:mt-20">
+            <div className="relative mx-auto max-w-5xl">
+              <div className="absolute -inset-1 rounded-[1.6rem] bg-gradient-to-r from-brand-cyan/30 via-brand-blue/20 to-misfold/30 blur-xl" />
+              <div className="card relative overflow-hidden rounded-[1.5rem] p-1.5">
+                <Image
+                  src="/pathfold-overview.webp"
+                  alt="PathFold overview: from an amino acid sequence to predicted folding and misfolding pathways over time"
+                  width={1536}
+                  height={1024}
+                  priority
+                  className="w-full rounded-[1.1rem]"
+                />
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ------------------------------------------------------- Key facts */}
-      <Section className="pt-4 sm:pt-6">
+      <Section className="pt-10 sm:pt-12">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Reveal>
             <StatTile label="Duration" value="36 months" hint={PROJECT.duration} />
