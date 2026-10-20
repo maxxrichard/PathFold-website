@@ -14,7 +14,7 @@ export default async function PublicationsPage() {
     <>
       <PageHero
         eyebrow="Publications"
-        title={<>Papers, preprints & <span className="text-gradient">open artefacts</span></>}
+        title={<span className="text-gradient">Publications</span>}
         description="Peer-reviewed publications and preprints from PathFold, together with the prior work that laid its methodological foundations in trajectory-aware sequence modelling, pathway-based machine learning and generative modelling for neurodegenerative disease research."
       />
       <Section>

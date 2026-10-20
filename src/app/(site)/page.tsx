@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Dna, Activity, Boxes } from "lucide-react";
+import { ArrowRight, ChevronDown, Dna, Activity, Boxes } from "lucide-react";
 import { HeroCanvas } from "@/components/site/HeroCanvas";
 import { LoopVideo } from "@/components/site/LoopVideo";
 import { PathwayExplorer } from "@/components/site/PathwayExplorer";
@@ -25,7 +25,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ------------------------------------------------------------ Hero */}
-      <section className="relative isolate overflow-hidden pt-28 sm:pt-32">
+      <section className="relative isolate flex min-h-dvh items-center overflow-hidden pt-16">
         <HeroCanvas className="absolute inset-0 -z-10 h-full w-full opacity-90" />
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(59,130,246,0.18),transparent_70%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-bg" />
@@ -53,27 +53,19 @@ export default async function HomePage() {
               </div>
             </Reveal>
           </div>
-
-          <Reveal delay={0.15} className="mt-16 sm:mt-20">
-            <div className="relative mx-auto max-w-5xl">
-              <div className="absolute -inset-1 rounded-[1.6rem] bg-gradient-to-r from-brand-cyan/30 via-brand-blue/20 to-misfold/30 blur-xl" />
-              <div className="card relative overflow-hidden rounded-[1.5rem] p-1.5">
-                <LoopVideo
-                  src="/pathfold-folding-paths.mp4"
-                  poster="/pathfold-overview.jpg"
-                  width={1536}
-                  height={1024}
-                  label="Animation: from an amino acid sequence to predicted folding and misfolding pathways over time"
-                  className="aspect-[3/2] w-full rounded-[1.1rem] object-cover"
-                />
-              </div>
-            </div>
-          </Reveal>
         </div>
+
+        <a
+          href="#facts"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-fg-subtle transition hover:text-fg"
+          aria-label="Scroll to project facts"
+        >
+          <ChevronDown className="h-6 w-6 animate-bounce" />
+        </a>
       </section>
 
       {/* ------------------------------------------------------- Key facts */}
-      <Section className="pt-10 sm:pt-12">
+      <Section id="facts" className="pt-16 sm:pt-20">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Reveal>
             <StatTile label="Duration" value="36 months" hint={PROJECT.duration} />
@@ -88,6 +80,25 @@ export default async function HomePage() {
             <StatTile label="Open science" value="FAIR by design" hint="Open-source models, datasets and benchmark" />
           </Reveal>
         </div>
+      </Section>
+
+      {/* ------------------------------------------------- Project picture */}
+      <Section className="pt-0 sm:pt-0">
+        <Reveal>
+          <div className="relative mx-auto max-w-5xl">
+            <div className="absolute -inset-1 rounded-[1.6rem] bg-gradient-to-r from-brand-cyan/30 via-brand-blue/20 to-misfold/30 blur-xl" />
+            <div className="card relative overflow-hidden rounded-[1.5rem] p-1.5">
+              <LoopVideo
+                src="/pathfold-folding-paths.mp4"
+                poster="/pathfold-overview.jpg"
+                width={1536}
+                height={1024}
+                label="Animation: from an amino acid sequence to predicted folding and misfolding pathways over time"
+                className="aspect-[3/2] w-full rounded-[1.1rem] object-cover"
+              />
+            </div>
+          </div>
+        </Reveal>
       </Section>
 
       {/* --------------------------------------------- Beyond static structures */}

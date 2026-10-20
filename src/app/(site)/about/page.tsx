@@ -4,21 +4,20 @@ import Link from "next/link";
 import { CheckCircle2, ExternalLink } from "lucide-react";
 import { PageHero, Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { Badge, statusTone } from "@/components/ui/Badge";
-import { Markdown } from "@/components/ui/Markdown";
+import { Badge } from "@/components/ui/Badge";
 import { PartnerCard } from "@/components/site/cards";
-import { getPartners, getWorkPackages, getMilestones } from "@/lib/data";
+import { getPartners } from "@/lib/data";
 import { getSettings } from "@/lib/settings";
 import { PROJECT, RESEARCH_QUESTIONS, HYPOTHESES, SUCCESS_CRITERIA, FAIR_PRINCIPLES, TIMELINE } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "PathFold – Language Modelling for Protein (Mis-)Folding Pathway Dynamics: goals, research questions, work plan, milestones and partners.",
+    "PathFold – Language Modelling for Protein (Mis-)Folding Pathway Dynamics: goals, research questions, roadmap and partners.",
 };
 
 export default async function AboutPage() {
-  const [partners, workPackages, milestones, settings] = await Promise.all([getPartners(), getWorkPackages(), getMilestones(), getSettings()]);
+  const [partners, settings] = await Promise.all([getPartners(), getSettings()]);
 
   return (
     <>
@@ -161,68 +160,6 @@ export default async function AboutPage() {
             ))}
           </ul>
         </div>
-      </Section>
-
-      {/* Work plan */}
-      <Section id="workplan">
-        <SectionHeading
-          eyebrow="Work plan"
-          title="Five work packages over 36 months"
-          description="Each work package contributes a modular deliverable towards the PathFold-Toolbox, an open-science platform for trajectory simulation and molecular stability analysis."
-        />
-        <div className="mt-10 space-y-4">
-          {workPackages.map((wp, i) => (
-            <Reveal key={wp.id} delay={i * 0.04}>
-              <details className="card group overflow-hidden" open={i === 0}>
-                <summary className="flex cursor-pointer list-none items-start gap-5 p-6 [&::-webkit-details-marker]:hidden">
-                  <span className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-cyan to-brand-indigo text-lg font-bold text-bg">
-                    {wp.number}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="flex flex-wrap items-center gap-2 text-xs text-fg-subtle">
-                      <span className="font-mono">{wp.period}</span>
-                      {wp.lead && <span>· Lead: {wp.lead}</span>}
-                    </span>
-                    <span className="font-display mt-1 block text-xl font-semibold text-fg">{wp.title}</span>
-                    <span className="mt-2 block text-sm leading-relaxed text-fg-muted">{wp.summary}</span>
-                  </span>
-                  <span className="ml-auto mt-2 text-fg-subtle transition group-open:rotate-180">▾</span>
-                </summary>
-                <div className="border-t border-border px-6 py-6 sm:pl-[5.75rem]">
-                  <Markdown content={wp.objectives} className="prose-sm" />
-                  {wp.deliverables && (
-                    <p className="mt-5 text-sm">
-                      <span className="font-semibold text-fg">Deliverables: </span>
-                      <span className="text-fg-muted">{wp.deliverables}</span>
-                    </p>
-                  )}
-                </div>
-              </details>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      {/* Milestones */}
-      <Section tone="elevated" id="milestones">
-        <SectionHeading eyebrow="Milestones" title="Measurable checkpoints" />
-        <ol className="relative mt-12 space-y-8 border-l border-border pl-8">
-          {milestones.map((m, i) => (
-            <Reveal key={m.id} as="li" delay={i * 0.05} className="relative">
-              <span className="absolute -left-[2.4rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-brand-cyan bg-bg">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan" />
-              </span>
-              <div className="flex flex-wrap items-center gap-2 text-xs">
-                <Badge tone="cyan">{m.code}</Badge>
-                <span className="font-mono text-fg-subtle">{m.due}</span>
-                {m.workPackage && <span className="text-fg-subtle">· {m.workPackage}</span>}
-                <Badge tone={statusTone(m.status)}>{m.status}</Badge>
-              </div>
-              <h3 className="font-display mt-2 text-lg font-semibold text-fg">{m.title}</h3>
-              <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-fg-muted">{m.description}</p>
-            </Reveal>
-          ))}
-        </ol>
       </Section>
 
       {/* Roadmap */}

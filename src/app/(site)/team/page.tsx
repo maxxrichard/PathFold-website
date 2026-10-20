@@ -21,7 +21,7 @@ export default async function TeamPage() {
       <PageHero
         eyebrow="Team"
         title={<>The people behind <span className="text-gradient">PathFold</span></>}
-        description="PathFold is led by a postdoctoral project leader at Universität des Saarlandes, supported by a doctoral researcher and two associated partners with complementary expertise in AI systems engineering and neurodegenerative disease biology."
+        description="PathFold is led by Universität des Saarlandes, supported by two associated partners with complementary expertise in AI systems engineering and neurodegenerative disease biology."
       />
       <Section>
         {members.length === 0 ? (

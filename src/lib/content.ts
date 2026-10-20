@@ -165,8 +165,36 @@ export const FAIR_PRINCIPLES = [
 ];
 
 export const TIMELINE = [
-  { year: "2027", items: ["First PathFold-P preprint", "Presentation at AAAI", "Integration talks with NFDI4Health and ELIXIR-DE", "AP1 dataset publication"] },
-  { year: "2028", items: ["DynBench release with public leaderboard", "P-Track and M-Track deposited under FAIR standards", "PathFold-P v1.0 release and peer-reviewed publication", "NeurIPS / ICML presentation, demo portal"] },
-  { year: "2029", items: ["PathFold-M v1.0 and PathFold-Toolbox (Python SDK, REST API)", "Alzheimer benchmark subset", "Joint AP5 publication with DZNE", "Workflow contributions to BioExcel, follow-up proposals"] },
-  { year: "2030+", items: ["Extension to multi-protein aggregation and PTM modelling", "Integration into DZNE and national neurodegenerative research programmes", "Clinical validation of trajectory-based misfolding risk scores"] },
+  {
+    year: "2027",
+    items: [
+      "Dataset release: P-Track and M-Track v1.0, FAIR-compliant via ELIXIR-DE and NFDI4Health",
+      "Goal: one harmonised sequence–trajectory–annotation resource as the foundation for both models",
+    ],
+  },
+  {
+    year: "2028",
+    items: [
+      "Model release: PathFold-P v1.0, the folding trajectory model",
+      "Benchmark release: DynBench v1.0 with a public leaderboard",
+      "Goal: kinetically ordered, energy-consistent trajectories that agree with NMR and HDX-MS intermediates",
+    ],
+  },
+  {
+    year: "2029",
+    items: [
+      "Model release: PathFold-M v1.0, the misfolding and aggregation model",
+      "Release: PathFold-Toolbox with Python SDK, CLI and REST API",
+      "Dataset release: Alzheimer benchmark subset for amyloid-β, tau and α-synuclein",
+      "Goal: variant-resolved dynamic misfolding maps for neurodegenerative proteins",
+    ],
+  },
+  {
+    year: "2030+",
+    items: [
+      "Goal: extend PathFold to multi-protein aggregation and post-translational modifications",
+      "Goal: clinical validation of trajectory-based misfolding risk scores",
+      "Continued DynBench and dataset releases for the community",
+    ],
+  },
 ];
