@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2, ExternalLink } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { PageHero, Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
@@ -115,11 +115,6 @@ export default async function AboutPage() {
                   </dd>
                 </div>
               </dl>
-              {settings.dfkiProjectUrl && (
-                <a href={settings.dfkiProjectUrl} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm mt-6 w-full">
-                  DFKI project page <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              )}
             </div>
           </aside>
         </div>

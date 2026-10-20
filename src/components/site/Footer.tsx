@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, ExternalLink } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Github, Linkedin } from "@/components/ui/BrandIcons";
 import type { Settings } from "@/lib/settings";
 import { NAV_LINKS } from "@/lib/nav";
@@ -58,16 +58,6 @@ export function Footer({ settings }: { settings: Settings }) {
           <h3 className="eyebrow">Funding</h3>
           <p className="mt-4 text-sm leading-relaxed text-fg-muted">{settings.fundingText}</p>
           <p className="mt-4 text-sm text-fg-subtle">{settings.footerNote}</p>
-          {settings.dfkiProjectUrl && (
-            <a
-              href={settings.dfkiProjectUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-4 inline-flex items-center gap-1.5 text-sm text-brand-cyan hover:underline"
-            >
-              Project page at DFKI <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-          )}
         </div>
       </div>
       <div className="border-t border-border">

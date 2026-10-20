@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, Building2, ExternalLink } from "lucide-react";
+import { Mail, MapPin, Building2 } from "lucide-react";
 import { PageHero, Section } from "@/components/ui/Section";
 import { ContactForm } from "@/components/site/ContactForm";
 import { getSettings } from "@/lib/settings";
@@ -48,11 +48,6 @@ export default async function ContactPage() {
                   </div>
                 </div>
               </dl>
-              {settings.dfkiProjectUrl && (
-                <a href={settings.dfkiProjectUrl} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm mt-6">
-                  Project page at DFKI <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              )}
             </div>
           </div>
           <div className="lg:col-span-7">

@@ -13,7 +13,6 @@ export const SETTING_DEFAULTS = {
   linkedinUrl: "",
   twitterUrl: "",
   blueskyUrl: "",
-  dfkiProjectUrl: "https://www.dfki.de/en/web/research/projects-and-publications/project/pathfold",
   fundingText:
     "PathFold is funded by the German Federal Ministry of Research, Technology and Space (BMFTR) under the “Zukunft eHealth” funding guideline (grant no. 031L0342).",
   footerNote: "UdS · DFKI · DZNE",
@@ -36,7 +35,6 @@ export const SETTING_FIELDS: Array<{ key: SettingKey; label: string; type: "text
   { key: "linkedinUrl", label: "LinkedIn URL", type: "url" },
   { key: "twitterUrl", label: "X / Twitter URL", type: "url" },
   { key: "blueskyUrl", label: "Bluesky URL", type: "url" },
-  { key: "dfkiProjectUrl", label: "DFKI project page URL", type: "url" },
   { key: "fundingText", label: "Funding statement", type: "textarea" },
   { key: "footerNote", label: "Footer note", type: "text" },
 ];
