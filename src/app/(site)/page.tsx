@@ -5,11 +5,11 @@ import { LoopVideo } from "@/components/site/LoopVideo";
 import { PathwayExplorer } from "@/components/site/PathwayExplorer";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { NewsCard, PublicationCard, PartnerCard, StatTile } from "@/components/site/cards";
+import { NewsCard, PublicationCard, PartnerCard } from "@/components/site/cards";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { getSettings } from "@/lib/settings";
 import { getPublishedNews, getFeaturedPublications, getPartners } from "@/lib/data";
-import { PROJECT, PROBLEM_CARDS, COMPONENTS } from "@/lib/content";
+import { PROBLEM_CARDS, COMPONENTS } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const COMPONENT_ICONS = [Dna, Activity, Boxes];
@@ -56,34 +56,16 @@ export default async function HomePage() {
         </div>
 
         <a
-          href="#facts"
+          href="#overview"
           className="absolute bottom-6 left-1/2 -translate-x-1/2 text-fg-subtle transition hover:text-fg"
-          aria-label="Scroll to project facts"
+          aria-label="Scroll to the project overview"
         >
           <ChevronDown className="h-6 w-6 animate-bounce" />
         </a>
       </section>
 
-      {/* ------------------------------------------------------- Key facts */}
-      <Section id="facts" className="pt-16 sm:pt-20">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Reveal>
-            <StatTile label="Duration" value="36 months" hint={PROJECT.duration} />
-          </Reveal>
-          <Reveal delay={0.05}>
-            <StatTile label="Coordinated by" value="Universität des Saarlandes" hint="with DFKI and DZNE as associated partners" />
-          </Reveal>
-          <Reveal delay={0.1}>
-            <StatTile label="Funded by" value="BMFTR" hint={`${PROJECT.programme} · ${PROJECT.grantNumber}`} />
-          </Reveal>
-          <Reveal delay={0.15}>
-            <StatTile label="Open science" value="FAIR by design" hint="Open-source models, datasets and benchmark" />
-          </Reveal>
-        </div>
-      </Section>
-
       {/* ------------------------------------------------- Project picture */}
-      <Section className="pt-0 sm:pt-0">
+      <Section id="overview" className="pt-12 sm:pt-16">
         <Reveal>
           <div className="relative mx-auto max-w-5xl">
             <div className="absolute -inset-1 rounded-[1.6rem] bg-gradient-to-r from-brand-cyan/30 via-brand-blue/20 to-misfold/30 blur-xl" />
