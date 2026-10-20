@@ -16,7 +16,7 @@ export const SETTING_DEFAULTS = {
   dfkiProjectUrl: "https://www.dfki.de/en/web/research/projects-and-publications/project/pathfold",
   fundingText:
     "PathFold is funded by the German Federal Ministry of Research, Technology and Space (BMFTR) under the “Zukunft eHealth” funding guideline (grant no. 031L0342).",
-  footerNote: "Saarland University · DFKI · DZNE",
+  footerNote: "UdS · DFKI · DZNE",
 } as const;
 
 export type SettingKey = keyof typeof SETTING_DEFAULTS;
