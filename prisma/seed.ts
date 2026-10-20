@@ -21,12 +21,12 @@ async function seedPartners() {
   await prisma.partner.createMany({
     data: [
       {
-        name: "Universität des Saarlandes",
+        name: "Saarland University",
         shortName: "UdS",
         type: "Coordinator",
         website: "https://www.uni-saarland.de/en/",
         description:
-          "Project coordinator and host institution. The Faculty of Computer Science at Universität des Saarlandes hosts more than 900 researchers in AI, bioinformatics and data science; PathFold uses the UdS HPC cluster for data preprocessing, hyper-parameter search and parallel benchmarking and is embedded in the Centre for Bioinformatics (ZBI) environment.",
+          "Project coordinator and host institution. Saarland University's Faculty of Computer Science hosts more than 900 researchers in AI, bioinformatics and data science; PathFold uses the UdS HPC cluster for data preprocessing, hyper-parameter search and parallel benchmarking and is embedded in the Centre for Bioinformatics (ZBI) environment.",
         order: 1,
       },
       {
@@ -83,18 +83,18 @@ async function seedTeam() {
       {
         name: "Dr.-Ing. Maxx Richard Rahman",
         role: "Principal investigator & project leader",
-        affiliation: "Universität des Saarlandes",
+        affiliation: "Saarland University",
         group: "Core team",
         email: "m.rahman@iss.uni-saarland.de",
         website: "https://www.dfki.de/en/web/research/projects-and-publications/project/pathfold",
         bio:
-          "Interdisciplinary researcher at the interface of artificial intelligence and biomedical analysis. He obtained his doctorate in computer science at Universität des Saarlandes on anomaly detection in longitudinal clinical and biological data, combining statistical inference with deep-learning architectures. Before that he worked on data-driven analyses in particle physics at CERN. Since 2021 he has led five externally funded projects in AI-based biomedical analysis at DFKI (3S, 3S-II, EPOPredictII, EPOPredictIII, MARVIN) in collaboration with the World Anti-Doping Agency and the German Sport University Cologne, with publications at ICML, AAAI, NeurIPS, IJCAI, IEEE and Nature Scientific Reports.",
+          "Interdisciplinary researcher at the interface of artificial intelligence and biomedical analysis. He obtained his doctorate in computer science at Saarland University on anomaly detection in longitudinal clinical and biological data, combining statistical inference with deep-learning architectures. Before that he worked on data-driven analyses in particle physics at CERN. Since 2021 he has led five externally funded projects in AI-based biomedical analysis at DFKI (3S, 3S-II, EPOPredictII, EPOPredictIII, MARVIN) in collaboration with the World Anti-Doping Agency and the German Sport University Cologne, with publications at ICML, AAAI, NeurIPS, IJCAI, IEEE and Nature Scientific Reports.",
         order: 1,
       },
       {
         name: "Doctoral researcher (to be appointed)",
         role: "PhD researcher – data engineering, PathFold-Toolbox & DynBench",
-        affiliation: "Universität des Saarlandes, Graduate School of Computer Science",
+        affiliation: "Saarland University, Graduate School of Computer Science",
         group: "Open positions",
         bio:
           "The doctoral researcher implements the large-scale data integration pipeline and the versioned FAIR dataset infrastructure, takes full responsibility for the software engineering of the PathFold-Toolbox (Python SDK, CLI, REST API) and the DynBench framework, and leads the computational workflow of the neurodegenerative-disease case study.",
@@ -103,7 +103,7 @@ async function seedTeam() {
       {
         name: "Prof. Dr.-Ing. Wolfgang Maaß",
         role: "Scientific advisor – AI systems engineering & digital health",
-        affiliation: "DFKI Saarbrücken (Smart Service Engineering) & Universität des Saarlandes",
+        affiliation: "DFKI Saarbrücken (Smart Service Engineering) & Saarland University",
         group: "Associated partners",
         website: "https://www.dfki.de/en/web/about-us/employee/person/woma01",
         bio: "Scientific Director of the Smart Service Engineering department at DFKI. Advises on AI system design, the PathFold-Toolbox architecture and dissemination into the eHealth research community, and acts as primary supervisor of the doctoral researcher.",
@@ -244,7 +244,7 @@ async function seedNews() {
         excerpt: "The PathFold project website is live. Here you will find background on the project, its research programme, news, publications, media and open resources as they are released.",
         content: `The PathFold project website is now online.
 
-PathFold (*Language Modelling for Protein (Mis-)Folding Pathway Dynamics*) develops a generative AI framework that learns and predicts how proteins fold and misfold over time, directly from their amino acid sequences. The project is coordinated at **Universität des Saarlandes** and supported by the **German Research Center for Artificial Intelligence (DFKI)** and the **German Center for Neurodegenerative Diseases (DZNE)** as associated partners. It is funded by the Federal Ministry of Research, Technology and Space (BMFTR) under the *Zukunft eHealth* programme.
+PathFold (*Language Modelling for Protein (Mis-)Folding Pathway Dynamics*) develops a generative AI framework that learns and predicts how proteins fold and misfold over time, directly from their amino acid sequences. The project is coordinated at **Saarland University** and supported by the **German Research Center for Artificial Intelligence (DFKI)** and the **German Center for Neurodegenerative Diseases (DZNE)** as associated partners. It is funded by the Federal Ministry of Research, Technology and Space (BMFTR) under the *Zukunft eHealth* programme.
 
 On this site you will find:
 
@@ -379,7 +379,7 @@ async function seedWorkPackages() {
         objectives: `1. **Consolidate open molecular resources**: UniProt (canonical sequences and isoforms), PDB (experimental structure ensembles incl. NMR conformers), AlphaFold DB (structurally uncharacterised sequences), BMRB (NMR dynamics) and HDX-MS protection factors, DisProt and MobiDB (residue-resolved disorder), AmyLoad and AmyPro (amyloid and aggregation annotations), ClinVar (pathogenic variants) and Folding@home trajectory subsets (coarse-grained kinetic supervision).
 2. **Generate embeddings and structural features** with pre-trained PLMs (ESM-2, ProtT5-XL): contact maps, dihedral angles, secondary-structure states and solvent exposure as supervision for the energy-based contrastive learning component.
 3. **Construct two supervised tracks**: *P-Track* (sequence–trajectory pairs for folded proteins) and *M-Track* (sequence–annotation pairs for disordered and amyloidogenic proteins), harmonised through standardised identifier mappings.
-4. **Implement FAIR metadata, versioning and documentation** following ELIXIR-DE, NFDI4Health and the research-data policy of Universität des Saarlandes, including machine-readable data cards for every release.`,
+4. **Implement FAIR metadata, versioning and documentation** following ELIXIR-DE, NFDI4Health and the Saarland University research-data policy, including machine-readable data cards for every release.`,
         deliverables: "Integrated FAIR dataset (P-Track and M-Track), embedding library, dataset data cards, FAIR metadata schema.",
         order: 1,
       },

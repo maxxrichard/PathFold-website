@@ -6,7 +6,7 @@ import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with the PathFold project team at Universität des Saarlandes.",
+  description: "Get in touch with the PathFold project team at Saarland University.",
 };
 
 export default async function ContactPage() {

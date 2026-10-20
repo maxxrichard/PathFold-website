@@ -205,7 +205,7 @@ export default async function HomePage() {
         <SectionHeading
           eyebrow="Consortium"
           title="Partners & funding"
-          description="PathFold is coordinated at Universität des Saarlandes and supported by two associated partners that anchor the project in Germany's AI and neurodegenerative-disease research landscape."
+          description="PathFold is coordinated at Saarland University and supported by two associated partners that anchor the project in Germany's AI and neurodegenerative-disease research landscape."
         />
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {partners.map((p, i) => (

@@ -7,7 +7,7 @@ export const SETTING_DEFAULTS = {
   contactEmail: "m.rahman@iss.uni-saarland.de",
   contactName: "Dr.-Ing. Maxx Richard Rahman",
   contactRole: "Project coordinator",
-  contactInstitution: "Universität des Saarlandes",
+  contactInstitution: "Saarland University",
   contactAddress: "Campus A5 4, 66123 Saarbrücken, Germany",
   githubUrl: "",
   linkedinUrl: "",
@@ -16,7 +16,7 @@ export const SETTING_DEFAULTS = {
   dfkiProjectUrl: "https://www.dfki.de/en/web/research/projects-and-publications/project/pathfold",
   fundingText:
     "PathFold is funded by the German Federal Ministry of Research, Technology and Space (BMFTR) under the “Zukunft eHealth” funding guideline (grant no. 031L0342).",
-  footerNote: "Universität des Saarlandes · DFKI · DZNE",
+  footerNote: "Saarland University · DFKI · DZNE",
 } as const;
 
 export type SettingKey = keyof typeof SETTING_DEFAULTS;

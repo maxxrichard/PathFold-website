@@ -14,7 +14,7 @@ export const PROJECT = {
   funding: "BMFTR – Federal Ministry of Research, Technology and Space",
   programme: "Zukunft eHealth (Postdoc Starting Grant)",
   grantNumber: "031L0342",
-  coordinatorInstitution: "Universität des Saarlandes",
+  coordinatorInstitution: "Saarland University",
   coordinator: "Dr.-Ing. Maxx Richard Rahman",
   keywords: [
     "Protein folding dynamics",

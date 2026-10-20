@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: "%s · PathFold",
   },
   description:
-    "PathFold is a generative AI framework that learns and predicts how proteins fold and misfold over time, directly from their amino acid sequence. Funded by BMFTR (Zukunft eHealth), coordinated at Universität des Saarlandes.",
+    "PathFold is a generative AI framework that learns and predicts how proteins fold and misfold over time, directly from their amino acid sequence. Funded by BMFTR (Zukunft eHealth), coordinated at Saarland University.",
   keywords: [
     "PathFold",
     "protein folding",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "protein language model",
     "neurodegenerative diseases",
     "Alzheimer",
-    "Universität des Saarlandes",
+    "Saarland University",
     "DFKI",
     "DZNE",
     "BMFTR",

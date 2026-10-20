@@ -9,7 +9,7 @@ import { TEAM_GROUPS } from "@/lib/admin/registry";
 
 export const metadata: Metadata = {
   title: "Team",
-  description: "The people behind PathFold at Universität des Saarlandes, DFKI and DZNE.",
+  description: "The people behind PathFold at Saarland University, DFKI and DZNE.",
 };
 
 export default async function TeamPage() {
@@ -21,7 +21,7 @@ export default async function TeamPage() {
       <PageHero
         eyebrow="Team"
         title={<>The people behind <span className="text-gradient">PathFold</span></>}
-        description="PathFold is led by Universität des Saarlandes, supported by two associated partners with complementary expertise in AI systems engineering and neurodegenerative disease biology."
+        description="PathFold is led by Saarland University, supported by two associated partners with complementary expertise in AI systems engineering and neurodegenerative disease biology."
       />
       <Section>
         {members.length === 0 ? (
