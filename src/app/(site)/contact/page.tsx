@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Mail, MapPin, Building2, ExternalLink } from "lucide-react";
 import { PageHero, Section } from "@/components/ui/Section";
 import { ContactForm } from "@/components/site/ContactForm";
-import { PartnerCard } from "@/components/site/cards";
 import { getSettings } from "@/lib/settings";
-import { getPartners } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -12,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ContactPage() {
-  const [settings, partners] = await Promise.all([getSettings(), getPartners()]);
+  const settings = await getSettings();
   return (
     <>
       <PageHero eyebrow="Contact" title={<>Let&apos;s <span className="text-gradient">talk</span></>} description="Questions about the project, collaboration ideas, data or media requests: we are happy to hear from you." />
@@ -66,14 +64,6 @@ export default async function ContactPage() {
               </div>
             </div>
           </div>
-        </div>
-      </Section>
-      <Section tone="elevated">
-        <h2 className="font-display text-2xl font-semibold text-fg">Institutions</h2>
-        <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {partners.map((p) => (
-            <PartnerCard key={p.id} partner={p} />
-          ))}
         </div>
       </Section>
     </>
