@@ -1,4 +1,4 @@
-# PathFold design system — "the printed annual"
+# PathFold design system - "the printed annual"
 
 The public site is laid out like a well-edited printed research report: a masthead of the project's own footage, a tight oversized title, text held to a strict column line, and colour used in whole flat blocks the way a two-colour print job would. The two colours are the project's own: **native blue** for productive folding and **misfold coral** for off-pathway divergence, on paper, with one near-black "night" band per page.
 
@@ -61,4 +61,4 @@ Headlines: sentence case, tracking −0.02 to −0.03em, two lines or fewer at e
 
 ## Pictures
 
-The project's own: `pathfold-folding-paths.mp4`, `pathfold-overview.(jpg|webp)` (also cropped as the component portraits), partner logos. Found in the open collections and credited in the footer and `public/images/CREDITS.md`: the Saarland University campus, two Alzheimer micrographs (all CC BY-SA). Never present a found picture as the project's own result.
+Only the project's own: `pathfold-folding-paths.mp4` (masthead, shown whole), `pathfold-overview.(jpg|webp)` (about page figure, masthead poster), partner logos, and whatever the admin uploads (team portraits, news cover images, media).

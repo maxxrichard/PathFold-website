@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero, Section } from "@/components/ui/Section";
 import { ContactForm } from "@/components/site/ContactForm";
 import { getSettings } from "@/lib/settings";
@@ -19,15 +18,7 @@ export default async function ContactPage() {
         <div className="grid-12 gap-y-12">
           <Reveal as="section" delay={0.1} className="aside-zone order-2 lg:order-1" aria-label="Contact details">
             <div className="lg:sticky lg:top-24">
-              <Image
-                src="/images/saarland-university-campus.jpg"
-                alt="The campus of Saarland University in Saarbrücken"
-                width={1600}
-                height={1070}
-                sizes="(max-width: 1024px) 100vw, 33vw"
-                className="aspect-[4/3] w-full object-cover"
-              />
-              <h2 className="mt-4 text-[1.5rem] font-semibold leading-tight tracking-[-0.02em]">{settings.contactName}</h2>
+              <h2 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.02em]">{settings.contactName}</h2>
               <p className="t-body mt-1 text-ink-soft">{settings.contactRole}</p>
               <dl className="t-body mt-5 space-y-3">
                 <div>

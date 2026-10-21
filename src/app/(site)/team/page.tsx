@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { PageHero, Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { TeamCard } from "@/components/site/cards";
@@ -46,18 +45,8 @@ export default async function TeamPage() {
       </Section>
       <Section tone="night">
         <div className="grid-12 gap-y-8">
-          <Reveal as="figure" className="col-span-12 lg:col-span-4">
-            <Image
-              src="/images/saarland-university-campus.jpg"
-              alt="The campus of Saarland University in Saarbrücken"
-              width={1600}
-              height={1070}
-              sizes="(max-width: 1024px) 100vw, 33vw"
-              className="aspect-[4/3] w-full object-cover"
-            />
-          </Reveal>
-          <h2 className="t-head col-span-12 lg:col-start-6 lg:col-span-7">Interested in working on protein folding dynamics?</h2>
-          <div className="col-span-12 lg:col-start-6 lg:col-span-7">
+          <h2 className="t-head col-span-12 lg:col-span-6">Interested in working on protein folding dynamics?</h2>
+          <div className="col-span-12 lg:col-start-7 lg:col-span-6">
             <p className="t-body max-w-[44ch] text-[#c3c9d8]">
               PathFold offers opportunities for doctoral research, theses and collaborations at the interface of generative deep learning,
               protein biophysics and biomedical data science. Get in touch to learn more.

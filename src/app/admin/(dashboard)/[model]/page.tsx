@@ -122,7 +122,7 @@ export default async function AdminListPage({
 }
 
 function Cell({ value, type }: { value: unknown; type?: "date" | "boolean" | "text" }) {
-  if (value === null || value === undefined || value === "") return <span className="text-fg-subtle">—</span>;
+  if (value === null || value === undefined || value === "") return <span className="text-fg-subtle">-</span>;
   if (type === "boolean" || typeof value === "boolean") {
     return value ? <Check className="h-4 w-4 text-success" aria-label="Yes" /> : <Minus className="h-4 w-4 text-fg-subtle" aria-label="No" />;
   }

@@ -18,7 +18,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHero eyebrow="About the project" title="About PathFold" description="Language modelling for protein (mis-)folding pathway dynamics: a 36-month BMFTR-funded research project coordinated at Saarland University.">
+      <PageHero eyebrow="About the project" title="Language modelling for protein (mis-)folding pathway dynamics">
         <ul className="flex flex-wrap gap-2" aria-label="Keywords">
           {PROJECT.keywords.map((k) => (
             <li key={k}>
@@ -97,31 +97,6 @@ export default async function AboutPage() {
           </div>
         </div>
 
-        <div className="grid-12 mt-16 gap-y-8">
-          <Reveal as="figure" className="aside-zone">
-            <Image
-              src="/images/neurofibrillary-tangles.jpg"
-              alt="Micrograph of neurofibrillary tangles in the hippocampus of a person with Alzheimer-related pathology"
-              width={1600}
-              height={1067}
-              sizes="(max-width: 1024px) 100vw, 33vw"
-              className="aspect-[4/3] w-full object-cover"
-            />
-            <figcaption className="t-small mt-3 text-ink-soft">Neurofibrillary tangles in the hippocampus, haematoxylin-eosin stain. Photograph: Patho, CC BY-SA 3.0.</figcaption>
-          </Reveal>
-          <Reveal as="figure" className="axis" delay={0.08}>
-            <Image
-              src="/images/alzheimer-micrograph.jpg"
-              alt="High-magnification micrograph of dying neurons in Alzheimer-related pathology"
-              width={1600}
-              height={1067}
-              sizes="(max-width: 1024px) 100vw, 58vw"
-              className="aspect-[16/9] w-full object-cover"
-            />
-            <figcaption className="t-small mt-3 text-ink-soft">Dying neurons at high magnification. Photograph: Nephron, CC BY-SA 3.0.</figcaption>
-          </Reveal>
-        </div>
-
         <Reveal as="figure" className="mt-20">
           <Image
             src="/pathfold-overview.webp"
@@ -141,22 +116,24 @@ export default async function AboutPage() {
       {/* Research questions & hypotheses: a colour page */}
       <Section tone="sky" id="questions">
         <SectionHeading title="Two research questions, two hypotheses" />
-        <div className="mt-16 space-y-16">
+        <div className="mt-14 grid-12 gap-y-12">
           {RESEARCH_QUESTIONS.map((rq, i) => (
-            <Reveal key={rq.code} delay={i * 0.05} className="grid-12 gap-y-4">
-              <h3 className="aside-zone t-head text-ink-soft">{rq.code}</h3>
-              <div className="axis">
-                <p className="t-lead max-w-[46ch] font-medium">{rq.question}</p>
-                <p className="t-body mt-6 max-w-[66ch]">{rq.answer}</p>
-              </div>
+            <Reveal key={rq.code} delay={i * 0.05} className="axis">
+              <h3 className="t-lead max-w-[46ch] font-medium">
+                <span className="text-ink-soft">{rq.code}. </span>
+                {rq.question}
+              </h3>
+              <p className="t-body mt-5 max-w-[66ch]">{rq.answer}</p>
             </Reveal>
           ))}
-          {HYPOTHESES.map((h, i) => (
-            <Reveal key={h.code} delay={i * 0.05} className="grid-12 gap-y-4">
-              <h3 className="aside-zone t-head text-ink-soft">{h.code}</h3>
-              <p className="axis t-lead max-w-[46ch]">{h.text}</p>
-            </Reveal>
-          ))}
+          <ul className="axis grid gap-8 sm:grid-cols-2">
+            {HYPOTHESES.map((h, i) => (
+              <Reveal key={h.code} as="li" delay={i * 0.05} className="t-body max-w-[44ch]">
+                <span className="font-medium">Hypothesis {h.code}. </span>
+                {h.text}
+              </Reveal>
+            ))}
+          </ul>
         </div>
       </Section>
 

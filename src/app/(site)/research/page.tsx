@@ -26,12 +26,6 @@ const TIERS = [
   },
 ];
 
-const COMPONENT_CROPS = [
-  { src: "/pathfold-overview.jpg", position: "82% 44%", alt: "Detail of the PathFold overview: the native fold" },
-  { src: "/pathfold-overview.jpg", position: "86% 58%", alt: "Detail of the PathFold overview: off-pathway misfolding into fibrils" },
-  { src: "/pathfold-overview.jpg", position: "62% 84%", alt: "Detail of the PathFold overview: the kinetically ordered pathway" },
-];
-
 export default function ResearchPage() {
   return (
     <>
@@ -87,13 +81,12 @@ export default function ResearchPage() {
         <PinnedRows
           heading="The three components in depth"
           intro="The trajectory model, the misfolding model and the open platform that ships both."
-          blocks={COMPONENTS.map((c, i) => ({
+          blocks={COMPONENTS.map((c) => ({
             key: c.key,
             title: c.name,
             kicker: c.kicker,
             summary: c.summary,
             details: c.details,
-            image: COMPONENT_CROPS[i],
           }))}
         />
       </Section>
@@ -133,8 +126,8 @@ export default function ResearchPage() {
       {/* Applications: a colour page in the misfold colour */}
       <Section tone="coral" id="applications">
         <SectionHeading
-          title="Neurodegenerative diseases"
-          description="Application to neurodegenerative diseases: as a concrete health-relevance deliverable, PathFold produces variant-resolved dynamic misfolding maps for amyloid-β (Aβ40, Aβ42), tau and α-synuclein in collaboration with DZNE, the three clinically most important proteinopathies."
+          title="Application to neurodegenerative diseases"
+          description="As a concrete health-relevance deliverable, PathFold produces variant-resolved dynamic misfolding maps for amyloid-β (Aβ40, Aβ42), tau and α-synuclein in collaboration with DZNE, the three clinically most important proteinopathies."
         />
         <ul className="mt-16 grid gap-10 sm:grid-cols-3 sm:gap-6">
           {APPLICATIONS.map((a, i) => (
