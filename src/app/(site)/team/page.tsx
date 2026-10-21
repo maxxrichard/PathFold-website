@@ -31,7 +31,7 @@ export default async function TeamPage() {
             {groups.map((g) => (
               <div key={g.name}>
                 <SectionHeading title={g.name === "Core team" ? "Project team" : g.name} />
-                <ul className="mt-12 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+                <ul className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
                   {g.members.map((m, i) => (
                     <Reveal key={m.id} as="li" delay={(i % 4) * 0.06} className="h-full">
                       <TeamCard member={m} />
@@ -43,11 +43,11 @@ export default async function TeamPage() {
           </div>
         )}
       </Section>
-      <Section tone="night">
-        <div className="grid-12 gap-y-8">
-          <h2 className="t-head col-span-12 lg:col-span-6">Interested in working on protein folding dynamics?</h2>
-          <div className="col-span-12 lg:col-start-7 lg:col-span-6">
-            <p className="t-body max-w-[44ch] text-[#c3c9d8]">
+      <Section tone="elevated">
+        <div className="grid gap-8 lg:grid-cols-12">
+          <h2 className="t-head lg:col-span-6">Interested in working on protein folding dynamics?</h2>
+          <div className="lg:col-span-5 lg:col-start-8">
+            <p className="t-body max-w-[44ch] text-ink-soft">
               PathFold offers opportunities for doctoral research, theses and collaborations at the interface of generative deep learning,
               protein biophysics and biomedical data science. Get in touch to learn more.
             </p>

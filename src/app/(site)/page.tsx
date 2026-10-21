@@ -12,21 +12,15 @@ import { getPublishedNews, getFeaturedPublications } from "@/lib/data";
 import { PROBLEM_CARDS, COMPONENTS } from "@/lib/content";
 
 export default async function HomePage() {
-  const [settings, news, publications] = await Promise.all([getSettings(), getPublishedNews(5), getFeaturedPublications(5)]);
+  const [settings, news, publications] = await Promise.all([getSettings(), getPublishedNews(4), getFeaturedPublications(4)]);
 
   return (
     <>
-      <Masthead title={settings.heroTitle} subtitle={settings.heroSubtitle} latestNews={news[0]} latestPublication={publications[0]} />
+      <Masthead title={settings.heroTitle} subtitle={settings.heroSubtitle} />
 
       {/* --------------------------------------------- Beyond static structures */}
       <StatementTiles
-        slogan={
-          <>
-            Folding is a process,
-            <br />
-            not a single structure.
-          </>
-        }
+        slogan="Folding is a process, not a single structure"
         text="Protein misfolding, not structural damage per se, is the kinetic failure behind Alzheimer's, Parkinson's and related proteinopathies. Early off-pathway conformations of amyloid-β, tau and α-synuclein precede clinical symptoms by years, yet no existing computational tool models this process at scale."
         items={PROBLEM_CARDS}
       />
@@ -37,13 +31,13 @@ export default async function HomePage() {
           title="From sequence to pathway"
           description="Pick a benchmark protein or paste your own sequence to see a schematic of how PathFold reasons: residue-level propensity tracks, a kinetically ordered trajectory and the point where productive folding and off-pathway misfolding diverge."
         />
-        <Reveal className="mt-12">
+        <Reveal className="mt-10">
           <PathwayExplorer />
         </Reveal>
       </Section>
 
       {/* ------------------------------------------------ Components */}
-      <Section tone="sky" id="components">
+      <Section tone="elevated" id="components">
         <PinnedRows
           heading="Three complementary components"
           intro="PathFold combines the representational power of protein language models with constraints from energy-landscape theory, and ships everything as open, reusable artefacts."
@@ -61,26 +55,20 @@ export default async function HomePage() {
       {/* ----------------------------------------------------- News */}
       <Section id="news">
         <SectionHeading
-          title={
-            <>
-              <span className="text-ink-soft">Latest</span>
-              <br />
-              News & updates
-            </>
-          }
+          title="News & updates"
           action={
             <Link href="/news" className="link inline-flex items-center gap-1 font-medium text-ink">
               All news <ArrowUpRight className="h-4 w-4" />
             </Link>
           }
         />
-        <div className="mt-12">
+        <div className="mt-8">
           {news.length === 0 ? (
             <EmptyState title="No news yet" description="Project updates will be published here." />
           ) : (
-            <ul>
+            <ul className="divide-y divide-border border-y border-border">
               {news.slice(0, 4).map((post, i) => (
-                <Reveal key={post.id} as="li" delay={i * 0.06} className="odd:band">
+                <Reveal key={post.id} as="li" delay={i * 0.06}>
                   <NewsCard post={post} />
                 </Reveal>
               ))}
@@ -92,26 +80,20 @@ export default async function HomePage() {
       {/* ------------------------------------------------ Publications */}
       <Section tone="elevated" id="publications">
         <SectionHeading
-          title={
-            <>
-              <span className="text-ink-soft">Selected</span>
-              <br />
-              Publications
-            </>
-          }
+          title="Selected publications"
           action={
             <Link href="/publications" className="link inline-flex items-center gap-1 font-medium text-ink">
               All publications <ArrowUpRight className="h-4 w-4" />
             </Link>
           }
         />
-        <div className="mt-12">
+        <div className="mt-8">
           {publications.length === 0 ? (
             <EmptyState title="No publications yet" description="Papers, preprints and datasets will appear here." />
           ) : (
-            <ul>
+            <ul className="divide-y divide-border border-y border-border">
               {publications.slice(0, 4).map((pub, i) => (
-                <Reveal key={pub.id} as="li" delay={i * 0.06} className="odd:band">
+                <Reveal key={pub.id} as="li" delay={i * 0.06}>
                   <PublicationCard pub={pub} />
                 </Reveal>
               ))}
@@ -126,10 +108,10 @@ export default async function HomePage() {
           title="Partners & funding"
           description="PathFold is coordinated at Saarland University and supported by two associated partners that anchor the project in Germany's AI and neurodegenerative-disease research landscape."
         />
-        <div className="mt-12">
+        <div className="mt-10">
           <PartnerLogos />
         </div>
-        <p className="t-body mt-8 max-w-[64ch] text-ink-soft lg:ml-[41.7%]">{settings.fundingText}</p>
+        <p className="t-body mt-8 max-w-[64ch] text-ink-soft">{settings.fundingText}</p>
       </Section>
     </>
   );

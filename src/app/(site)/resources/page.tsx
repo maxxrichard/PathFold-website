@@ -30,9 +30,9 @@ export default async function ResourcesPage() {
             {groups.map((g) => (
               <div key={g.kind}>
                 <SectionHeading title={g.kind} />
-                <ul className="mt-10">
+                <ul className="mt-8 divide-y divide-border border-y border-border">
                   {g.items.map((r, i) => (
-                    <Reveal key={r.id} as="li" delay={(i % 4) * 0.05} className="odd:band">
+                    <Reveal key={r.id} as="li" delay={(i % 4) * 0.05}>
                       <ResourceCard resource={r} />
                     </Reveal>
                   ))}
@@ -42,7 +42,7 @@ export default async function ResourcesPage() {
           </div>
         )}
       </Section>
-      <Section tone="night">
+      <Section tone="elevated">
         <SectionHeading
           title="Open licences, model cards and provenance"
           description="All components are published under open-source licences together with model cards and usage documentation that meet the transparency requirements of the EU AI Act and the FAIR software principles, with explicit versioning and provenance documentation in line with the research data management policy of Saarland University. PathFold does not pursue patent protection: all model architectures, datasets and outputs are released under open-source and open-data licences."

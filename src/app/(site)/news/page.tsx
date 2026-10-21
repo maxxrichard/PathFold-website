@@ -22,19 +22,15 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
       <PageHero eyebrow="News" title="Updates from PathFold" description="Announcements, events, talks, releases and press coverage." />
       <Section tight>
         {all.length > 0 && (
-          <div className="grid-12">
-            <div className="col-span-12 lg:col-start-6 lg:col-span-7">
-              <NewsFilter categories={categories} active={category ?? "All"} />
-            </div>
-          </div>
+          <NewsFilter categories={categories} active={category ?? "All"} />
         )}
-        <div className="mt-10">
+        <div className="mt-8">
           {posts.length === 0 ? (
             <EmptyState title="No news yet" description="Updates will be published here as the project progresses." />
           ) : (
-            <ul>
+            <ul className="divide-y divide-border border-y border-border">
               {posts.map((post, i) => (
-                <Reveal key={post.id} as="li" delay={(i % 4) * 0.05} className="odd:band">
+                <Reveal key={post.id} as="li" delay={(i % 4) * 0.05}>
                   <NewsCard post={post} />
                 </Reveal>
               ))}

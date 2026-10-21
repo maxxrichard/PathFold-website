@@ -11,14 +11,14 @@ import { formatDate, cn } from "@/lib/utils";
 export function NewsCard({ post, compact = false }: { post: NewsPost; compact?: boolean }) {
   const href = `/news/${post.slug}`;
   return (
-    <article className="group grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-2 px-4 py-5 sm:grid-cols-12 sm:items-center sm:gap-x-6 sm:px-6">
+    <article className="group grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-2 py-6 sm:grid-cols-12 sm:items-center sm:gap-x-6">
       <time dateTime={post.publishedAt.toISOString()} className="tabular t-body text-ink-soft sm:col-span-2">
         {formatDate(post.publishedAt)}
       </time>
       <p className="t-body text-ink-soft sm:col-span-2 sm:order-last sm:text-right">{post.category}</p>
       <div className={cn("col-span-2 flex items-center gap-4 sm:col-span-8", compact && "sm:col-span-8")}>
         {post.coverImage && !compact && (
-          <Link href={href} className="relative hidden h-16 w-24 shrink-0 overflow-hidden bg-paper-2 sm:block" aria-hidden="true" tabIndex={-1}>
+          <Link href={href} className="relative hidden h-16 w-24 shrink-0 overflow-hidden rounded-md bg-paper-2 sm:block" aria-hidden="true" tabIndex={-1}>
             <Image src={post.coverImage} alt="" fill sizes="96px" className="object-cover" />
           </Link>
         )}
@@ -50,7 +50,7 @@ export function PublicationCard({ pub, showYear = true }: { pub: Publication; sh
   ].filter(Boolean) as Array<{ href: string; label: string }>;
 
   return (
-    <article className="grid grid-cols-12 gap-x-4 gap-y-2 px-4 py-5 sm:gap-x-6 sm:px-6">
+    <article className="grid grid-cols-12 gap-x-4 gap-y-2 py-6 sm:gap-x-6">
       <p className="tabular col-span-3 t-body text-ink-soft sm:col-span-1">{showYear ? pub.year : ""}</p>
       <div className="col-span-9 sm:col-span-7">
         <h3 className="text-[1.15rem] font-semibold leading-snug tracking-[-0.015em]">{pub.title}</h3>
@@ -82,7 +82,7 @@ export function PublicationCard({ pub, showYear = true }: { pub: Publication; sh
 
 function initials(name: string) {
   return name
-    .replace(/^(Prof\.|Dr\.|Dr\.-Ing\.|PD|M\.Sc\.|B\.Sc\.)\s*/g, "")
+    .replace(/^((Prof\.|Dr\.-Ing\.|Dr\.|PD|M\.Sc\.|B\.Sc\.)\s*)+/, "")
     .split(/\s+/)
     .filter(Boolean)
     .slice(0, 2)
@@ -103,16 +103,16 @@ export function TeamCard({ member }: { member: TeamMember }) {
   ].filter(Boolean) as Array<{ href: string; label: string }>;
 
   return (
-    <article className="flex h-full flex-col">
-      <div className="relative aspect-[3/4] overflow-hidden bg-sky">
+    <article className="panel flex h-full flex-col overflow-hidden">
+      <div className={cn("relative overflow-hidden bg-sky", member.photo ? "aspect-[3/4]" : "aspect-[4/3]")}>
         {member.photo ? (
           <Image src={member.photo} alt={member.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover" />
         ) : (
           <div className="absolute inset-0 flex flex-col justify-between p-4 text-ink">
-            <span className="text-[clamp(2.5rem,4vw,3.5rem)] font-bold leading-none tracking-[-0.04em] text-ink/60" aria-hidden="true">
+            <span className="text-[clamp(2rem,3vw,2.75rem)] font-semibold leading-none tracking-[-0.03em] text-native/70" aria-hidden="true">
               {initials(member.name)}
             </span>
-            <h3 className="text-[clamp(1.35rem,1rem+1vw,1.75rem)] font-semibold leading-[1.1] tracking-[-0.02em]">{member.name}</h3>
+            <h3 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.015em]">{member.name}</h3>
           </div>
         )}
       </div>
@@ -143,14 +143,14 @@ export function TeamCard({ member }: { member: TeamMember }) {
 export function PartnerCard({ partner }: { partner: Partner }) {
   const body = (
     <>
-      <div className="flex h-28 items-center justify-center bg-white p-5">
+      <div className="flex h-28 items-center justify-center rounded-t-lg bg-white p-5">
         {partner.logo ? (
           <Image src={partner.logo} alt={partner.name} width={224} height={96} className="max-h-16 w-auto object-contain" />
         ) : (
           <span className="text-[1.5rem] font-bold text-ink">{partner.shortName ?? initials(partner.name)}</span>
         )}
       </div>
-      <div className="bg-paper-2 px-4 py-3">
+      <div className="rounded-b-lg bg-paper-2 px-4 py-3">
         <Badge tone={statusTone(partner.type)}>{partner.type}</Badge>
         <h3 className="t-body mt-2 font-semibold leading-snug">{partner.name}</h3>
         {partner.description && <p className="t-small mt-2 text-ink-soft">{partner.description}</p>}
@@ -176,7 +176,7 @@ export function ResourceCard({ resource }: { resource: Resource }) {
     resource.docsUrl && { href: resource.docsUrl, label: "Docs" },
   ].filter(Boolean) as Array<{ href: string; label: string }>;
   return (
-    <article className="grid grid-cols-12 gap-x-4 gap-y-2 px-4 py-5 sm:gap-x-6 sm:px-6">
+    <article className="grid grid-cols-12 gap-x-4 gap-y-2 py-6 sm:gap-x-6">
       <div className="col-span-12 sm:col-span-4">
         <h3 className="text-[1.2rem] font-semibold leading-snug tracking-[-0.015em]">{resource.name}</h3>
         <p className="t-body mt-1 text-ink-soft">
@@ -201,7 +201,7 @@ export function ResourceCard({ resource }: { resource: Resource }) {
 
 export function StatTile({ label, value, hint, className }: { label: string; value: React.ReactNode; hint?: string; className?: string }) {
   return (
-    <div className={cn("bg-paper-2 p-5", className)}>
+    <div className={cn("panel p-5", className)}>
       <p className="t-small text-ink-soft">{label}</p>
       <p className="mt-1 text-[1.75rem] font-bold leading-none tracking-[-0.02em]">{value}</p>
       {hint && <p className="t-small mt-2 text-ink-soft">{hint}</p>}

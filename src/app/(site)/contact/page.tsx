@@ -15,9 +15,9 @@ export default async function ContactPage() {
     <>
       <PageHero eyebrow="Contact" title="Let's talk" description="Questions about the project, collaboration ideas, data or media requests: we are happy to hear from you." />
       <Section tight>
-        <div className="grid-12 gap-y-12">
-          <Reveal as="section" delay={0.1} className="aside-zone order-2 lg:order-1" aria-label="Contact details">
-            <div className="lg:sticky lg:top-24">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <Reveal as="section" delay={0.1} className="order-2 lg:order-1 lg:col-span-4" aria-label="Contact details">
+            <div className="panel p-6 lg:sticky lg:top-28">
               <h2 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.02em]">{settings.contactName}</h2>
               <p className="t-body mt-1 text-ink-soft">{settings.contactRole}</p>
               <dl className="t-body mt-5 space-y-3">
@@ -40,10 +40,10 @@ export default async function ContactPage() {
               </dl>
             </div>
           </Reveal>
-          <Reveal className="axis order-1 lg:order-2">
+          <Reveal className="order-1 lg:order-2 lg:col-span-7 lg:col-start-6">
             <h2 className="t-head">Send a message</h2>
             <p className="t-body mt-3 text-ink-soft">We usually reply within a few working days.</p>
-            <div className="mt-10 max-w-[64ch]">
+            <div className="mt-8 max-w-[64ch]">
               <ContactForm />
             </div>
           </Reveal>

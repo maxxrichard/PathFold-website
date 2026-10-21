@@ -14,7 +14,7 @@ export function ContactForm() {
 
   if (state.ok) {
     return (
-      <div className="field-sky px-6 py-12" role="status">
+      <div className="rounded-lg bg-sky px-6 py-10" role="status">
         <h3 className="t-head">Thank you.</h3>
         <p className="t-lead mt-4 max-w-[36ch] text-ink-soft">Your message has been received. We will get back to you soon.</p>
       </div>
@@ -45,7 +45,7 @@ export function ContactForm() {
       </div>
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="t-small max-w-[40ch] text-ink-soft">Your message is stored securely and only used to answer your request.</p>
-        <Button type="submit" disabled={pending} className="h-12 shrink-0 rounded-none px-6 text-base font-medium hover:bg-native">
+        <Button type="submit" disabled={pending} className="h-11 shrink-0 px-6 text-base font-medium hover:bg-native">
           {pending && <Loader2 className="h-4 w-4 animate-spin" />}
           {pending ? "Sending…" : "Send message"}
         </Button>
@@ -74,7 +74,7 @@ function Field({
   autoComplete?: string;
 }) {
   const id = `contact-${name}`;
-  const field = cn("mt-2 rounded-none border-border-strong bg-white text-base shadow-none", error && "border-misfold");
+  const field = cn("mt-2 border-border-strong bg-white text-base shadow-none", error && "border-misfold");
   return (
     <div>
       <Label htmlFor={id} className="t-body font-medium">
@@ -104,7 +104,7 @@ function Field({
           defaultValue={defaultValue}
           autoComplete={autoComplete}
           required={required}
-          className={cn(field, "h-12")}
+          className={cn(field, "h-11")}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-error` : undefined}
         />

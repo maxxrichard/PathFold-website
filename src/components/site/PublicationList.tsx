@@ -45,8 +45,8 @@ export function PublicationList({ publications }: { publications: Publication[] 
   return (
     <div>
       {/* Filters: a form keeps its lines */}
-      <div className="grid-12 gap-y-5" data-ui>
-        <div className="aside-zone">
+      <div className="grid gap-5 lg:grid-cols-12" data-ui>
+        <div className="lg:col-span-4">
           <Label htmlFor="pub-search" className="t-small text-ink-soft">
             Search
           </Label>
@@ -57,17 +57,17 @@ export function PublicationList({ publications }: { publications: Publication[] 
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Title, authors, venue…"
-              className="h-12 rounded-none border-border-strong bg-white pl-10 text-base"
+              className="h-11 border-border-strong bg-white pl-10 text-base"
             />
           </div>
         </div>
-        <div className="axis flex flex-wrap items-end gap-x-6 gap-y-5">
+        <div className="flex flex-wrap items-end gap-x-6 gap-y-5 lg:col-span-8">
           <div>
             <p className="t-small text-ink-soft">Category</p>
             <Tabs value={category} onValueChange={(v) => setCategory(String(v))} className="mt-2">
-              <TabsList className="h-12 rounded-none bg-paper-2 p-1">
+              <TabsList className="h-11 bg-paper-2 p-1">
                 {categories.map((c) => (
-                  <TabsTrigger key={c} value={c} className="h-10 rounded-none px-3.5 text-[0.95rem] data-[state=active]:bg-ink data-[state=active]:text-paper data-active:bg-ink data-active:text-paper">
+                  <TabsTrigger key={c} value={c} className="h-9 px-3.5 text-[0.95rem] data-[state=active]:bg-ink data-[state=active]:text-paper data-active:bg-ink data-active:text-paper">
                     {c}
                   </TabsTrigger>
                 ))}
@@ -87,15 +87,15 @@ export function PublicationList({ publications }: { publications: Publication[] 
           <EmptyState title="Nothing matches" description="Try a different search term or clear the filters." />
         </div>
       ) : (
-        <div className="mt-16 space-y-20">
+        <div className="mt-14 space-y-16">
           {byYear.map(([y, pubs]) => (
-            <section key={y} aria-labelledby={`year-${y}`} className="grid-12 gap-y-6">
-              <h2 id={`year-${y}`} className="aside-zone tabular t-head lg:sticky lg:top-24 lg:self-start">
+            <section key={y} aria-labelledby={`year-${y}`} className="grid gap-x-6 gap-y-6 lg:grid-cols-12">
+              <h2 id={`year-${y}`} className="col-span-12 tabular t-head lg:col-span-3 lg:sticky lg:top-28 lg:self-start">
                 {y}
               </h2>
-              <ul className="col-span-12 lg:col-start-5 lg:col-span-8">
+              <ul className="col-span-12 divide-y divide-border border-y border-border lg:col-start-4 lg:col-span-9">
                 {pubs.map((p, i) => (
-                  <Reveal key={p.id} as="li" delay={(i % 4) * 0.05} className="odd:band">
+                  <Reveal key={p.id} as="li" delay={(i % 4) * 0.05}>
                     <PublicationCard pub={p} showYear={false} />
                   </Reveal>
                 ))}
@@ -113,12 +113,12 @@ function FilterSelect({ label, value, onChange, options }: { label: string; valu
     <div>
       <p className="t-small text-ink-soft">{label}</p>
       <Select value={value} onValueChange={(v) => onChange(String(v ?? "All"))}>
-        <SelectTrigger className="mt-2 h-12 min-w-36 rounded-none border-border-strong bg-white text-base" aria-label={label}>
+        <SelectTrigger className="mt-2 h-11 min-w-36 border-border-strong bg-white text-base" aria-label={label}>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className="rounded-none">
+        <SelectContent>
           {options.map((o) => (
-            <SelectItem key={o} value={o} className="rounded-none">
+            <SelectItem key={o} value={o}>
               {o}
             </SelectItem>
           ))}

@@ -148,7 +148,7 @@ export function PathwayExplorer() {
   const stroke = mode === "native" ? NATIVE : MISFOLD;
 
   return (
-    <div className="bg-white text-ink">
+    <div className="panel overflow-hidden text-ink">
       <div className="grid lg:grid-cols-[minmax(0,1fr)_21rem]">
         {/* Left: sequence + trajectory */}
         <div className="p-5 sm:p-8">
@@ -165,7 +165,7 @@ export function PathwayExplorer() {
                     setMode(s.kind === "amyloid" ? "misfold" : "native");
                   }}
                   className={cn(
-                    "min-h-10 px-3 py-2 text-[0.9375rem] font-medium transition-colors",
+                    "min-h-10 rounded-md px-3 py-2 text-[0.9375rem] font-medium transition-colors",
                     on ? (s.kind === "amyloid" ? "bg-coral text-ink" : "bg-sky text-ink") : "bg-paper-2 text-ink-soft hover:bg-paper-3 hover:text-ink",
                   )}
                   aria-pressed={on}
@@ -193,14 +193,14 @@ export function PathwayExplorer() {
           </p>
 
           {/* residue strip */}
-          <div className="mt-5 overflow-x-auto bg-paper p-4 [touch-action:pan-x]">
+          <div className="mt-5 overflow-x-auto rounded-md bg-paper-2 p-4 [touch-action:pan-x]">
             <div className="flex gap-[3px] text-[0.9375rem] font-medium" aria-label="Sequence with per-residue hydropathy colouring">
               {seq.split("").map((aa, i) => {
                 const hot = prop[i] > 0.72;
                 return (
                   <div key={i} className="flex flex-col items-center gap-1.5">
                     <span className={cn("w-4 text-center", residueColor(aa))}>{aa}</span>
-                    <span className="relative h-10 w-4 bg-paper-2" title={`Residue ${i + 1} (${aa}): propensity ${(prop[i] * 100).toFixed(0)}%`}>
+                    <span className="relative h-10 w-4 rounded-sm bg-paper-3" title={`Residue ${i + 1} (${aa}): propensity ${(prop[i] * 100).toFixed(0)}%`}>
                       <span className={cn("absolute inset-x-0 bottom-0", hot ? "bg-misfold" : "bg-native")} style={{ height: `${Math.round(prop[i] * 100)}%` }} />
                     </span>
                   </div>
@@ -223,7 +223,7 @@ export function PathwayExplorer() {
           {/* trajectory */}
           <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
             <h3 className="text-[1.25rem] font-semibold tracking-[-0.015em]">Kinetically ordered trajectory</h3>
-            <div className="inline-flex bg-paper-2 p-1" role="tablist" aria-label="Pathway">
+            <div className="inline-flex rounded-md bg-paper-2 p-1" role="tablist" aria-label="Pathway">
               {(["native", "misfold"] as const).map((m) => (
                 <button
                   key={m}
@@ -232,7 +232,7 @@ export function PathwayExplorer() {
                   aria-selected={mode === m}
                   onClick={() => setMode(m)}
                   className={cn(
-                    "min-h-9 px-3.5 py-1.5 text-[0.9rem] font-medium transition-colors",
+                    "min-h-9 rounded px-3.5 py-1.5 text-[0.9rem] font-medium transition-colors",
                     mode === m ? (m === "native" ? "bg-sky text-ink" : "bg-coral text-ink") : "text-ink-soft hover:text-ink",
                   )}
                 >
@@ -304,7 +304,7 @@ export function PathwayExplorer() {
         </div>
 
         {/* Right: state description */}
-        <aside className={cn("p-5 sm:p-8 transition-colors duration-500", mode === "native" ? "field-sky" : "field-coral")}>
+        <aside className={cn("border-t border-border p-5 transition-colors duration-500 sm:p-8 lg:border-l lg:border-t-0", mode === "native" ? "field-sky" : "field-coral")}>
           <p className="t-body font-medium">{mode === "native" ? "Productive pathway" : "Off-pathway divergence"}</p>
           <AnimatePresence mode="wait">
             <motion.div
@@ -325,8 +325,8 @@ export function PathwayExplorer() {
           <dl className="mt-10 space-y-5 t-body">
             <div>
               <dt className="t-small text-ink-soft">Mean hydrophobic / β-propensity</dt>
-              <dd className="mt-2 h-2.5 w-full bg-ink/10">
-                <div className={cn("h-full", meanProp > 0.55 ? "bg-misfold" : "bg-native")} style={{ width: `${Math.round(meanProp * 100)}%` }} />
+              <dd className="mt-2 h-2 w-full overflow-hidden rounded-full bg-ink/10">
+                <div className={cn("h-full rounded-full", meanProp > 0.55 ? "bg-misfold" : "bg-native")} style={{ width: `${Math.round(meanProp * 100)}%` }} />
               </dd>
               <dd className="t-small mt-1.5 text-ink-soft">{(meanProp * 100).toFixed(0)}% of scale</dd>
             </div>

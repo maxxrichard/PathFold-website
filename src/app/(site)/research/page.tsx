@@ -41,26 +41,26 @@ export default function ResearchPage() {
           title="A tiered supervision signal"
           description="Direct folding trajectories exist only for a handful of small proteins. PathFold therefore integrates three complementary data tiers, which also makes the central data-availability problem of trajectory-based modelling explicit and tractable."
         />
-        <div className="mt-16">
+        <div className="mt-12">
           <Staircase steps={TIERS} />
         </div>
       </Section>
 
       {/* Energy-based latent space: figure in the left zone, text on the axis */}
-      <Section tone="elevated" id="latent">
-        <div className="grid-12 gap-y-10">
-          <div className="aside-zone order-2 lg:order-1">
-            <Reveal className="lg:sticky lg:top-24">
+      <Section id="latent" className="border-y border-border">
+        <div className="grid gap-10 lg:grid-cols-12">
+          <div className="order-2 lg:order-1 lg:col-span-5">
+            <Reveal className="lg:sticky lg:top-28">
               <LatentFigure />
             </Reveal>
           </div>
-          <div className="axis order-1 lg:order-2">
+          <div className="order-1 lg:order-2 lg:col-span-6 lg:col-start-7">
             <h2 className="t-head">Energy-based latent representation learning</h2>
-            <p className="t-lead mt-6 max-w-[42ch] text-ink-soft">
+            <p className="t-lead mt-5 max-w-[42ch] text-ink-soft">
               Pre-trained protein language models such as ESM-2 and ProtT5-XL capture rich co-evolutionary dependencies, but their latent spaces
               are not organised by free energy and do not encode the directed, downhill nature of folding trajectories.
             </p>
-            <p className="t-body mt-8 max-w-[64ch]">
+            <p className="t-body mt-6 max-w-[64ch]">
               PathFold adapts these embeddings with an energy-informed contrastive learning scheme grounded in energy-landscape theory. Every
               conformation is described by residue-resolved geometric descriptors (contact maps, torsion angles, solvent exposure,
               secondary-structure states). A free-energy surrogate, the fraction of native contacts Q combined with a statistical contact
@@ -77,7 +77,7 @@ export default function ResearchPage() {
       </Section>
 
       {/* Components in depth */}
-      <Section tone="sky" id="components">
+      <Section tone="elevated" id="components">
         <PinnedRows
           heading="The three components in depth"
           intro="The trajectory model, the misfolding model and the open platform that ships both."
@@ -97,18 +97,18 @@ export default function ResearchPage() {
           title="Open data sources"
           description="PathFold relies exclusively on publicly licensed, FAIR-compliant molecular and sequence resources. They are harmonised through standardised identifier mappings between UniProt accessions, PDB entry IDs and the annotation databases, so that sequence, structure, dynamics, disorder, aggregation and variant information line up for every protein."
         />
-        <Reveal className="mt-14">
+        <Reveal className="panel mt-12 overflow-hidden">
           <Table className="t-body">
             <TableHeader>
               <TableRow className="border-0 hover:bg-transparent">
-                <TableHead className="h-auto px-4 pb-3 t-small font-medium text-ink-soft sm:px-6">Resource</TableHead>
-                <TableHead className="h-auto px-4 pb-3 t-small font-medium text-ink-soft sm:px-6">What it contributes</TableHead>
-                <TableHead className="h-auto px-4 pb-3 text-right t-small font-medium text-ink-soft sm:px-6">Link</TableHead>
+                <TableHead className="h-auto px-4 py-3 t-small font-medium text-ink-soft sm:px-6">Resource</TableHead>
+                <TableHead className="h-auto px-4 py-3 t-small font-medium text-ink-soft sm:px-6">What it contributes</TableHead>
+                <TableHead className="h-auto px-4 py-3 text-right t-small font-medium text-ink-soft sm:px-6">Link</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {DATA_SOURCES.map((s) => (
-                <TableRow key={s.name} className="border-0 odd:bg-paper-2 hover:bg-sky/60">
+                <TableRow key={s.name} className="border-t border-border hover:bg-paper-2">
                   <TableCell className="whitespace-normal px-4 py-4 align-top font-semibold sm:px-6">{s.name}</TableCell>
                   <TableCell className="whitespace-normal px-4 py-4 align-top sm:px-6">{s.role}</TableCell>
                   <TableCell className="px-4 py-4 text-right align-top sm:px-6">
@@ -124,16 +124,16 @@ export default function ResearchPage() {
       </Section>
 
       {/* Applications: a colour page in the misfold colour */}
-      <Section tone="coral" id="applications">
+      <Section id="applications">
         <SectionHeading
           title="Application to neurodegenerative diseases"
           description="As a concrete health-relevance deliverable, PathFold produces variant-resolved dynamic misfolding maps for amyloid-β (Aβ40, Aβ42), tau and α-synuclein in collaboration with DZNE, the three clinically most important proteinopathies."
         />
-        <ul className="mt-16 grid gap-10 sm:grid-cols-3 sm:gap-6">
+        <ul className="mt-12 grid gap-8 sm:grid-cols-3">
           {APPLICATIONS.map((a, i) => (
-            <Reveal key={a.title} as="li" delay={i * 0.07} className="max-w-[38ch]">
-              <h3 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.02em]">{a.title}</h3>
-              <p className="t-body mt-4">{a.body}</p>
+            <Reveal key={a.title} as="li" delay={i * 0.07} className="rule pt-6">
+              <h3 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.015em]">{a.title}</h3>
+              <p className="t-body mt-3 text-ink-soft">{a.body}</p>
             </Reveal>
           ))}
         </ul>
@@ -144,7 +144,7 @@ export default function ResearchPage() {
 
 function LatentFigure() {
   return (
-    <figure className="bg-white p-4 sm:p-6">
+    <figure className="panel p-4 sm:p-6">
       <svg viewBox="0 0 520 320" className="w-full" role="img" aria-label="Schematic energy-aligned latent space with folding and misfolding trajectories">
         {[0, 1, 2, 3, 4].map((i) => (
           <ellipse key={`n${i}`} cx="400" cy="110" rx={30 + i * 26} ry={20 + i * 18} fill="none" stroke="#1d5fe0" strokeOpacity={0.5 - i * 0.09} />

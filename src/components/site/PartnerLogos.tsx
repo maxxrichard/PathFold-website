@@ -39,14 +39,14 @@ export const PARTNER_LOGOS = [
 /** A gutterless mosaic of white logo tiles, each with its role in a paper bar. */
 export function PartnerLogos() {
   return (
-    <ul className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+    <ul className="grid grid-cols-2 gap-5 lg:grid-cols-4">
       {PARTNER_LOGOS.map((p, i) => (
         <Reveal key={p.name} as="li" delay={i * 0.06} className="h-full">
-          <a href={p.href} target="_blank" rel="noreferrer" className="group flex h-full flex-col" aria-label={`${p.name} (${p.role})`}>
-            <div className="flex h-32 items-center justify-center bg-white p-6 transition-colors group-hover:bg-sky sm:h-40">
+          <a href={p.href} target="_blank" rel="noreferrer" className="group panel flex h-full flex-col overflow-hidden transition-colors hover:border-border-strong" aria-label={`${p.name} (${p.role})`}>
+            <div className="flex h-28 items-center justify-center bg-white p-6 sm:h-36">
               <Image src={p.src} alt={p.name} width={p.width} height={p.height} className="max-h-full w-auto max-w-full object-contain" />
             </div>
-            <div className="bg-paper-2 px-4 py-3">
+            <div className="border-t border-border px-4 py-3">
               <p className="t-small font-medium text-ink-soft">{p.role}</p>
             </div>
           </a>

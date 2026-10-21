@@ -44,8 +44,8 @@ export function MediaGallery({ items }: { items: MediaItem[] }) {
 
   return (
     <div>
-      <div className="grid-12">
-        <nav className="col-span-12 flex flex-wrap gap-x-6 gap-y-2 t-body lg:col-start-6 lg:col-span-7" aria-label="Filter media by type">
+      <div>
+        <nav className="flex flex-wrap gap-x-6 gap-y-2 t-body" aria-label="Filter media by type">
           {types.map((t) => (
             <button
               key={t}
@@ -60,7 +60,7 @@ export function MediaGallery({ items }: { items: MediaItem[] }) {
         </nav>
       </div>
 
-      <ul className="mt-10 grid grid-cols-2 gap-2 lg:grid-cols-3">
+      <ul className="mt-8 grid grid-cols-2 gap-5 lg:grid-cols-3">
         {visible.map((item, i) => {
           const Icon = ICONS[item.type] ?? FileText;
           const yt = item.type === "Video" ? youtubeId(item.url) : null;
@@ -78,7 +78,7 @@ export function MediaGallery({ items }: { items: MediaItem[] }) {
                 )}
                 {item.type === "Video" && (
                   <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="flex h-14 w-14 items-center justify-center bg-paper text-ink">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-paper text-ink">
                       <Play className="ml-0.5 h-6 w-6" />
                     </span>
                   </span>
@@ -103,11 +103,11 @@ export function MediaGallery({ items }: { items: MediaItem[] }) {
           return (
             <Reveal as="li" key={item.id} delay={(i % 3) * 0.06} className="flex">
               {openable ? (
-                <button type="button" onClick={() => setOpen(item)} className="group flex w-full flex-col text-left">
+                <button type="button" onClick={() => setOpen(item)} className="group panel flex w-full flex-col overflow-hidden text-left">
                   {content}
                 </button>
               ) : (
-                <a href={item.url} target="_blank" rel="noreferrer" className="group flex w-full flex-col">
+                <a href={item.url} target="_blank" rel="noreferrer" className="group panel flex w-full flex-col overflow-hidden">
                   {content}
                 </a>
               )}
@@ -144,7 +144,7 @@ export function MediaGallery({ items }: { items: MediaItem[] }) {
               >
                 <X className="h-5 w-5" />
               </button>
-              <div className="bg-night shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)]">
+              <div className="overflow-hidden rounded-xl bg-night shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)]">
                 {open.type === "Video" ? (
                   youtubeId(open.url) ? (
                     <iframe

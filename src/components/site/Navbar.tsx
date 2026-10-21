@@ -31,7 +31,7 @@ export function Navbar({ announcement }: { announcement?: string }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       {announcement ? <div className="bg-sky px-4 py-2 text-center t-small font-medium text-ink">{announcement}</div> : null}
-      <div className={cn("transition-colors duration-300", inverted ? "bg-transparent text-paper" : "bg-paper text-ink")}>
+      <div className={cn("transition-colors duration-300", inverted ? "bg-transparent text-paper" : "border-b border-border bg-paper/95 text-ink backdrop-blur-sm")}>
         <nav className="container-x flex h-16 items-center justify-between gap-6 sm:h-18" aria-label="Main">
           <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="PathFold home">
             <Image
@@ -69,7 +69,7 @@ export function Navbar({ announcement }: { announcement?: string }) {
             <Link
               href="/contact"
               className={cn(
-                "inline-flex min-h-10 items-center gap-1.5 px-3 py-2 text-[0.95rem] font-medium transition-colors sm:px-4 sm:py-2.5",
+                "inline-flex min-h-10 items-center gap-1.5 rounded-md px-3 py-2 text-[0.95rem] font-medium transition-colors sm:px-4 sm:py-2.5",
                 inverted ? "bg-paper text-ink hover:bg-sky" : "bg-ink text-paper hover:bg-native",
               )}
             >

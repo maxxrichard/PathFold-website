@@ -30,9 +30,9 @@ export default async function AboutPage() {
 
       {/* Text page: key facts in the left zone, the argument on the axis */}
       <Section tight>
-        <div className="grid-12 gap-y-12">
-          <aside className="aside-zone order-2 lg:order-1">
-            <dl className="t-body space-y-5 lg:sticky lg:top-24">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <aside className="order-2 lg:order-1 lg:col-span-4">
+            <dl className="panel t-body space-y-5 p-6 lg:sticky lg:top-28">
               <h2 className="text-[1.25rem] font-semibold tracking-[-0.015em]">Key facts</h2>
               <Fact label="Project" value={PROJECT.fullTitle} />
               <Fact label="Duration" value={PROJECT.duration} />
@@ -63,7 +63,7 @@ export default async function AboutPage() {
             </dl>
           </aside>
 
-          <div className="axis order-1 lg:order-2">
+          <div className="order-1 lg:order-2 lg:col-span-8 lg:col-start-5">
             <div className="prose prose-pathfold max-w-[66ch]">
               <p className="t-lead">
                 Protein folding is one of the most consequential molecular processes in biology. It determines whether a polypeptide chain
@@ -97,16 +97,16 @@ export default async function AboutPage() {
           </div>
         </div>
 
-        <Reveal as="figure" className="mt-20">
+        <Reveal as="figure" className="mt-16">
           <Image
             src="/pathfold-overview.webp"
             alt="PathFold overview infographic"
             width={1536}
             height={1024}
-            sizes="100vw"
-            className="w-full"
+            sizes="(max-width: 1280px) 100vw, 1216px"
+            className="w-full rounded-xl"
           />
-          <figcaption className="t-body mt-4 max-w-[60ch] text-ink-soft lg:ml-[41.7%]">
+          <figcaption className="t-small mt-3 max-w-[70ch] text-ink-soft">
             From sequence to dynamic folding pathways: productive folding towards the native state (blue) versus off-pathway misfolding into
             toxic oligomers and fibrils (red).
           </figcaption>
@@ -114,11 +114,11 @@ export default async function AboutPage() {
       </Section>
 
       {/* Research questions & hypotheses: a colour page */}
-      <Section tone="sky" id="questions">
+      <Section tone="elevated" id="questions">
         <SectionHeading title="Two research questions, two hypotheses" />
-        <div className="mt-14 grid-12 gap-y-12">
+        <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-12">
           {RESEARCH_QUESTIONS.map((rq, i) => (
-            <Reveal key={rq.code} delay={i * 0.05} className="axis">
+            <Reveal key={rq.code} delay={i * 0.05} className="panel p-6 sm:p-8">
               <h3 className="t-lead max-w-[46ch] font-medium">
                 <span className="text-ink-soft">{rq.code}. </span>
                 {rq.question}
@@ -126,9 +126,9 @@ export default async function AboutPage() {
               <p className="t-body mt-5 max-w-[66ch]">{rq.answer}</p>
             </Reveal>
           ))}
-          <ul className="axis grid gap-8 sm:grid-cols-2">
+          <ul className="grid gap-8 sm:grid-cols-2 lg:col-span-2">
             {HYPOTHESES.map((h, i) => (
-              <Reveal key={h.code} as="li" delay={i * 0.05} className="t-body max-w-[44ch]">
+              <Reveal key={h.code} as="li" delay={i * 0.05} className="t-body rule pt-5">
                 <span className="font-medium">Hypothesis {h.code}. </span>
                 {h.text}
               </Reveal>
@@ -140,14 +140,14 @@ export default async function AboutPage() {
       {/* Roadmap: a banded table, the year printed once per group */}
       <Section id="roadmap">
         <SectionHeading title="Roadmap" description="Exploitation and outlook, release by release." />
-        <ol className="mt-14">
+        <ol className="mt-10 divide-y divide-border border-y border-border">
           {TIMELINE.map((t, i) => (
-            <Reveal as="li" key={t.year} delay={i * 0.05} className="grid grid-cols-12 gap-x-6 gap-y-3 px-4 py-6 odd:band sm:px-6">
-              <p className="tabular col-span-12 text-[clamp(1.75rem,1rem+2vw,2.5rem)] font-bold leading-none tracking-[-0.03em] sm:col-span-2">{t.year}</p>
-              <ul className="col-span-12 space-y-2.5 t-body sm:col-span-10 lg:col-start-6 lg:col-span-7">
+            <Reveal as="li" key={t.year} delay={i * 0.05} className="grid grid-cols-12 gap-x-6 gap-y-3 py-7">
+              <p className="tabular col-span-12 text-[1.5rem] font-semibold leading-none tracking-[-0.02em] sm:col-span-2">{t.year}</p>
+              <ul className="col-span-12 space-y-2.5 t-body sm:col-span-10 lg:col-span-8">
                 {t.items.map((it) => (
                   <li key={it} className="flex gap-3">
-                    <span className="mt-[0.72em] h-1.5 w-1.5 shrink-0 bg-native" aria-hidden="true" />
+                    <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
                     <span>{it}</span>
                   </li>
                 ))}
@@ -158,12 +158,12 @@ export default async function AboutPage() {
       </Section>
 
       {/* Open science: the night band */}
-      <Section tone="night" id="open-science">
+      <Section id="open-science" className="border-t border-border">
         <SectionHeading title="FAIR by design, open by default" description="Open science and ethics." />
-        <ul className="mt-14 grid gap-x-6 gap-y-8 lg:grid-cols-12">
+        <ul className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2">
           {FAIR_PRINCIPLES.map((p, i) => (
-            <Reveal key={i} as="li" delay={i * 0.05} className={`t-body flex max-w-[48ch] gap-3 lg:col-span-6 ${i % 2 === 0 ? "lg:col-start-1" : "lg:col-start-7"}`}>
-              <span className="mt-[0.72em] h-1.5 w-1.5 shrink-0 bg-coral" aria-hidden="true" />
+            <Reveal key={i} as="li" delay={i * 0.05} className="t-body flex max-w-[52ch] gap-3 text-ink-soft">
+              <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
               <span>{p}</span>
             </Reveal>
           ))}

@@ -11,10 +11,10 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="field-paper-2 grid-12 gap-y-4 px-6 py-14 sm:px-10">
-      <h3 className="t-head col-span-12 lg:col-start-6 lg:col-span-7">{title}</h3>
-      {description && <p className="t-lead col-span-12 max-w-[40ch] text-ink-soft lg:col-start-6 lg:col-span-7">{description}</p>}
-      {action && <div className="col-span-12 mt-2 lg:col-start-6 lg:col-span-7">{action}</div>}
+    <div className="panel px-6 py-12 text-center sm:px-10">
+      <h3 className="text-[1.25rem] font-semibold tracking-[-0.015em]">{title}</h3>
+      {description && <p className="t-body mx-auto mt-2 max-w-[44ch] text-ink-soft">{description}</p>}
+      {action && <div className="mt-6">{action}</div>}
     </div>
   );
 }
