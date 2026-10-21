@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { PageHero, Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { Staircase, PinnedRows } from "@/components/site/landing";
+import { Staircase } from "@/components/site/landing";
+import { ComponentTabs } from "@/components/site/ComponentTabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { COMPONENTS, DATA_SOURCES, APPLICATIONS } from "@/lib/content";
 
@@ -89,17 +90,10 @@ export default function ResearchPage() {
 
       {/* Components in depth */}
       <Section tone="elevated" id="components">
-        <PinnedRows
-          heading="The three components in depth"
-          intro="The trajectory model, the misfolding model and the open platform that ships both."
-          blocks={COMPONENTS.map((c) => ({
-            key: c.key,
-            title: c.name,
-            kicker: c.kicker,
-            summary: c.summary,
-            details: c.details,
-          }))}
-        />
+        <SectionHeading title="The three components" description="The trajectory model, the misfolding model and the open platform that ships both." />
+        <div className="mt-10">
+          <ComponentTabs components={COMPONENTS} />
+        </div>
       </Section>
 
       {/* Open data sources: a table without lines */}
@@ -108,7 +102,7 @@ export default function ResearchPage() {
           title="Open data sources"
           description="Publicly licensed, FAIR-compliant resources, harmonised through UniProt and PDB identifiers so that sequence, structure, dynamics, disorder, aggregation and variant data line up for every protein."
         />
-        <Reveal className="panel mt-12 overflow-hidden">
+        <Reveal className="panel mt-10 overflow-hidden">
           <Table className="t-body">
             <TableHeader>
               <TableRow className="border-0 hover:bg-transparent">
