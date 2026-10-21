@@ -12,7 +12,7 @@ export default async function MediaPage() {
   const items = await getMedia();
   return (
     <>
-      <PageHero eyebrow="Media" title={<>Press release, videos & <span className="text-gradient">images</span></>} description="Visual material." />
+      <PageHero eyebrow="Media" title={<>Press release, videos & <span className="text-gradient">images</span></>} description="Talks, posters and media coverage from the project." />
       <Section>
         <MediaGallery items={items} />
       </Section>
