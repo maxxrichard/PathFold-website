@@ -62,6 +62,12 @@ export const COMPONENTS = [
     key: "pathfold-p",
     name: "PathFold-P",
     kicker: "Trajectory generation model",
+    highlights: [
+      { title: "Transformer over PLM embeddings", text: "Encoder-decoder on ESM-2 and ProtT5-XL with contact maps, dihedral angles and secondary structure as inputs." },
+      { title: "Directed kinetic order", text: "Temporal attention with causal masking; latent diffusion models stochastic relaxation on rugged landscapes." },
+      { title: "Energy-informed training", text: "Next-step reconstruction, a free-energy-consistent loss for monotonic descent, temporal smoothness." },
+      { title: "Curriculum from peptides to proteins", text: "From Chignolin, Trp-cage and WW domain towards full-length proteins." },
+    ],
     summary:
       "A transformer-based generative model that predicts coarse-grained folding trajectories from amino acid sequences while preserving kinetic order, intermediate-state plausibility and thermodynamic consistency along the whole pathway.",
     details: [
@@ -76,6 +82,12 @@ export const COMPONENTS = [
     key: "pathfold-m",
     name: "PathFold-M",
     kicker: "Misfolding & aggregation model",
+    highlights: [
+      { title: "Four input streams", text: "Sequence embeddings, PathFold-P trajectory embeddings, physicochemical residue features and latent energy gradients." },
+      { title: "Contrastive divergence learning", text: "Stable trajectories against annotated misfolded and aggregation-prone sequences from DisProt, AmyLoad, AmyPro and ClinVar." },
+      { title: "Augmentation for sparse families", text: "Diffusion-based synthetic misfolded trajectory segments." },
+      { title: "Calibrated, residue-resolved risk", text: "A Bayesian variational layer gives calibrated probabilities; attention attribution localises hotspots and mutation sites." },
+    ],
     summary:
       "A probabilistic model that treats misfolding as a divergence from normal folding trajectories and predicts residue-resolved misfolding and aggregation risk with calibrated uncertainty.",
     details: [
@@ -90,6 +102,12 @@ export const COMPONENTS = [
     key: "toolbox",
     name: "PathFold-Toolbox & DynBench",
     kicker: "Open platform & benchmark",
+    highlights: [
+      { title: "Python SDK", text: "One API for trajectory prediction and misfolding risk assessment." },
+      { title: "CLI and REST API", text: "Batch inference on HPC systems and integration into pipelines." },
+      { title: "Interactive visualisation", text: "Trajectory display and residue-resolved misfolding risk maps." },
+      { title: "DynBench metrics", text: "RMSD continuity, energy descent, agreement with NMR and HDX-MS intermediates, residue-resolved precision and recall." },
+    ],
     summary:
       "A modular open-source software suite that integrates both models, plus DynBench, the first standardised benchmarking framework with a public leaderboard for sequence-to-trajectory models.",
     details: [
