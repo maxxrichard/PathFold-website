@@ -42,7 +42,7 @@ export function Masthead({
   return (
     <section className="field-night relative isolate grid min-h-dvh grid-rows-[auto_1fr] lg:grid-cols-12 lg:grid-rows-1">
       {/* The animation tile: the project's own clip, whole, on its own dark ground */}
-      <div className="flex items-center pt-16 sm:pt-18 lg:order-2 lg:col-span-7 lg:pt-0">
+      <div className="flex items-center pt-16 sm:pt-18 lg:order-2 lg:col-span-6 lg:pt-0">
         <LoopVideo
           src="/pathfold-folding-paths.mp4"
           poster="/pathfold-overview.jpg"
@@ -54,7 +54,7 @@ export function Masthead({
       </div>
 
       {/* The text tile */}
-      <div className="relative flex flex-col justify-end px-gutter pb-10 pt-8 lg:order-1 lg:col-span-5 lg:justify-center lg:pt-28">
+      <div className="relative flex flex-col justify-end px-gutter pb-10 pt-8 lg:order-1 lg:col-span-6 lg:justify-center lg:pt-28">
         <h1 className="rise t-display max-w-[24ch] text-paper">{title}</h1>
         <p className="rise rise-1 t-lead mt-6 max-w-[36ch] text-[#c3c9d8]">{subtitle}</p>
         <div className="rise rise-2 mt-9 flex flex-wrap gap-3">
