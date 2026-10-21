@@ -33,14 +33,14 @@ export default function ResearchPage() {
       <PageHero
         eyebrow="Research"
         title="How PathFold learns folding dynamics"
-        description="Protein language models plus energy-landscape constraints: a scalable surrogate for molecular dynamics that infers kinetics and detects misfolding divergence across diverse protein families."
+        description="Training signal, latent space, the three components, data sources and applications."
       />
 
       {/* Tiered supervision: the three tiers step across the page */}
       <Section id="supervision" tight>
         <SectionHeading
           title="A tiered supervision signal"
-          description="Direct folding trajectories exist only for a handful of small proteins, so PathFold integrates three complementary data tiers."
+          description="Three complementary data tiers make up the training signal."
         />
         <div className="mt-12">
           <Staircase steps={TIERS} />
@@ -100,7 +100,7 @@ export default function ResearchPage() {
       <Section id="datasets">
         <SectionHeading
           title="Open data sources"
-          description="Publicly licensed, FAIR-compliant resources, harmonised through UniProt and PDB identifiers so that sequence, structure, dynamics, disorder, aggregation and variant data line up for every protein."
+          description="Publicly licensed, FAIR-compliant resources, harmonised by UniProt and PDB identifiers."
         />
         <Reveal className="panel mt-10 overflow-hidden">
           <Table className="t-body">

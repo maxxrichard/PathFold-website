@@ -21,7 +21,7 @@ export default async function TeamPage() {
       <PageHero
         eyebrow="Team"
         title="The people behind PathFold"
-        description="PathFold is led by Saarland University, supported by two associated partners with complementary expertise in AI systems engineering and neurodegenerative disease biology."
+        description="The project team at Saarland University and the associated partners DFKI and DZNE."
       />
       <Section tight>
         {members.length === 0 ? (
