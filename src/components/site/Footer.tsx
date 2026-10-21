@@ -70,10 +70,10 @@ export function Footer({ settings }: { settings: Settings }) {
           PathFold
         </p>
 
-        <div className="mt-12 grid-12 gap-y-10 t-small">
+        <div className="mt-12 grid-12 gap-y-10 t-body">
           <div className="col-span-12 sm:col-span-6 lg:col-span-4">
             <Image src="/logo-dark.png" alt="PathFold – Learning protein folding pathways" width={280} height={62} className="h-11 w-auto" />
-            <p className="mt-5 max-w-[46ch] text-[#c3c9d8]">
+            <p className="mt-5 max-w-[40ch] text-[#c3c9d8]">
               From sequence to dynamic folding pathways: a generative AI framework that learns how proteins fold and misfold over time,
               for earlier molecular diagnosis of neurodegenerative diseases.
             </p>

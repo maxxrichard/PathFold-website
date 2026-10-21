@@ -57,12 +57,12 @@ export function SectionHeading({
   return (
     <div className={cn("grid-12 gap-y-6", className)}>
       {(aside || action) && (
-        <div className="aside-zone flex flex-col justify-end gap-4 t-body text-ink-soft lg:pb-2">
+        <div className="aside-zone order-2 flex flex-col justify-end gap-4 t-body text-ink-soft lg:order-1 lg:pb-2">
           {aside}
           {action && <div>{action}</div>}
         </div>
       )}
-      <div className={cn("axis", !aside && !action && "lg:col-start-6")}>
+      <div className={cn("axis order-1 lg:order-2", !aside && !action && "lg:col-start-6")}>
         <Tag className="t-head text-balance">{title}</Tag>
         {description && <p className="t-lead mt-6 max-w-[42ch] text-ink-soft">{description}</p>}
       </div>

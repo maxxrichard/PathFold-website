@@ -27,9 +27,9 @@ const TIERS = [
 ];
 
 const COMPONENT_CROPS = [
-  { src: "/pathfold-overview.jpg", position: "82% 32%", alt: "Detail of the PathFold overview: the native fold" },
-  { src: "/pathfold-overview.jpg", position: "84% 52%", alt: "Detail of the PathFold overview: off-pathway misfolding into fibrils" },
-  { src: "/pathfold-overview.jpg", position: "70% 80%", alt: "Detail of the PathFold overview: the kinetically ordered pathway" },
+  { src: "/pathfold-overview.jpg", position: "82% 44%", alt: "Detail of the PathFold overview: the native fold" },
+  { src: "/pathfold-overview.jpg", position: "86% 58%", alt: "Detail of the PathFold overview: off-pathway misfolding into fibrils" },
+  { src: "/pathfold-overview.jpg", position: "62% 84%", alt: "Detail of the PathFold overview: the kinetically ordered pathway" },
 ];
 
 export default function ResearchPage() {
