@@ -5,7 +5,11 @@ import { Search } from "lucide-react";
 import type { Publication } from "@prisma/client";
 import { PublicationCard } from "./cards";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function PublicationList({ publications }: { publications: Publication[] }) {
   const [query, setQuery] = useState("");
@@ -40,52 +44,62 @@ export function PublicationList({ publications }: { publications: Publication[] 
 
   return (
     <div>
-      <div className="card flex flex-col gap-4 p-4 sm:p-5 lg:flex-row lg:items-center">
-        <label className="relative flex-1">
-          <span className="sr-only">Search publications</span>
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-fg-subtle" />
-          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search title, authors, venue…" className="input pl-10" />
-        </label>
-        <div className="flex flex-wrap gap-2">
-          <Select label="Category" value={category} onChange={setCategory} options={categories} />
-          <Select label="Type" value={type} onChange={setType} options={types} />
-          <Select label="Year" value={year} onChange={setYear} options={years} />
+      {/* Filters: a form keeps its lines */}
+      <div className="grid-12 gap-y-5" data-ui>
+        <div className="aside-zone">
+          <Label htmlFor="pub-search" className="t-small text-ink-soft">
+            Search
+          </Label>
+          <div className="relative mt-2">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
+            <Input
+              id="pub-search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Title, authors, venue…"
+              className="h-12 rounded-none border-border-strong bg-white pl-10 text-base"
+            />
+          </div>
         </div>
-      </div>
-
-      <div className="mt-6 flex flex-wrap gap-2">
-        {categories.map((c) => (
-          <button
-            key={c}
-            type="button"
-            onClick={() => setCategory(c)}
-            className={cn("chip cursor-pointer transition", category === c ? "border-brand-cyan/50 bg-brand-cyan/15 text-brand-cyan" : "hover:text-fg")}
-            aria-pressed={category === c}
-          >
-            {c}
-          </button>
-        ))}
-        <span className="ml-auto self-center text-xs text-fg-subtle" aria-live="polite">
-          {filtered.length} of {publications.length}
-        </span>
+        <div className="axis flex flex-wrap items-end gap-x-6 gap-y-5">
+          <div>
+            <p className="t-small text-ink-soft">Category</p>
+            <Tabs value={category} onValueChange={(v) => setCategory(String(v))} className="mt-2">
+              <TabsList className="h-12 rounded-none bg-paper-2 p-1">
+                {categories.map((c) => (
+                  <TabsTrigger key={c} value={c} className="h-10 rounded-none px-3.5 text-[0.95rem] data-[state=active]:bg-ink data-[state=active]:text-paper data-active:bg-ink data-active:text-paper">
+                    {c}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
+          <FilterSelect label="Type" value={type} onChange={setType} options={types} />
+          <FilterSelect label="Year" value={year} onChange={setYear} options={years} />
+          <p className="t-small pb-3 text-ink-soft" aria-live="polite">
+            {filtered.length} of {publications.length}
+          </p>
+        </div>
       </div>
 
       {byYear.length === 0 ? (
-        <div className="mt-8">
+        <div className="mt-12">
           <EmptyState title="Nothing matches" description="Try a different search term or clear the filters." />
         </div>
       ) : (
-        <div className="mt-8 space-y-12">
+        <div className="mt-16 space-y-20">
           {byYear.map(([y, pubs]) => (
-            <section key={y} aria-labelledby={`year-${y}`}>
-              <h2 id={`year-${y}`} className="font-display text-3xl font-bold text-gradient">
+            <section key={y} aria-labelledby={`year-${y}`} className="grid-12 gap-y-6">
+              <h2 id={`year-${y}`} className="aside-zone tabular t-head lg:sticky lg:top-24 lg:self-start">
                 {y}
               </h2>
-              <div className="mt-5 grid gap-5 lg:grid-cols-2">
-                {pubs.map((p) => (
-                  <PublicationCard key={p.id} pub={p} />
+              <ul className="col-span-12 lg:col-start-5 lg:col-span-8">
+                {pubs.map((p, i) => (
+                  <Reveal key={p.id} as="li" delay={(i % 4) * 0.05} className="odd:band">
+                    <PublicationCard pub={p} showYear={false} />
+                  </Reveal>
                 ))}
-              </div>
+              </ul>
             </section>
           ))}
         </div>
@@ -94,17 +108,22 @@ export function PublicationList({ publications }: { publications: Publication[] 
   );
 }
 
-function Select({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: string[] }) {
+function FilterSelect({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: string[] }) {
   return (
-    <label className="flex items-center gap-2 text-xs text-fg-subtle">
-      {label}
-      <select value={value} onChange={(e) => onChange(e.target.value)} className="input w-auto min-w-28 py-2 text-sm">
-        {options.map((o) => (
-          <option key={o} value={o}>
-            {o}
-          </option>
-        ))}
-      </select>
-    </label>
+    <div>
+      <p className="t-small text-ink-soft">{label}</p>
+      <Select value={value} onValueChange={(v) => onChange(String(v ?? "All"))}>
+        <SelectTrigger className="mt-2 h-12 min-w-36 rounded-none border-border-strong bg-white text-base" aria-label={label}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent className="rounded-none">
+          {options.map((o) => (
+            <SelectItem key={o} value={o} className="rounded-none">
+              {o}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }

@@ -1,76 +1,131 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail } from "lucide-react";
-import { Github, Linkedin } from "@/components/ui/BrandIcons";
 import type { Settings } from "@/lib/settings";
 import { NAV_LINKS } from "@/lib/nav";
+import { Reveal } from "@/components/ui/Reveal";
 
+/**
+ * The designed close of every page: a closing row (sentence, the campus, the
+ * links), then the name returning at full width on the night band.
+ */
 export function Footer({ settings }: { settings: Settings }) {
   const year = new Date().getFullYear();
   const socials = [
-    settings.githubUrl && { href: settings.githubUrl, label: "GitHub", Icon: Github },
-    settings.linkedinUrl && { href: settings.linkedinUrl, label: "LinkedIn", Icon: Linkedin },
-    settings.contactEmail && { href: `mailto:${settings.contactEmail}`, label: "E-mail", Icon: Mail },
-  ].filter(Boolean) as Array<{ href: string; label: string; Icon: typeof Github }>;
+    settings.githubUrl && { href: settings.githubUrl, label: "GitHub" },
+    settings.linkedinUrl && { href: settings.linkedinUrl, label: "LinkedIn" },
+    settings.twitterUrl && { href: settings.twitterUrl, label: "X" },
+    settings.blueskyUrl && { href: settings.blueskyUrl, label: "Bluesky" },
+  ].filter(Boolean) as Array<{ href: string; label: string }>;
 
   return (
-    <footer className="relative mt-4 border-t border-border bg-bg-elevated">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/50 to-transparent" />
-      <div className="container-x grid gap-12 py-16 md:grid-cols-12">
-        <div className="md:col-span-5">
-          <Image src="/logo-dark.png" alt="PathFold – Learning protein folding pathways" width={280} height={62} className="h-14 w-auto" />
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-fg-muted">
-            From sequence to dynamic folding pathways: a generative AI framework that learns how proteins fold and
-            misfold over time, for earlier molecular diagnosis of neurodegenerative diseases.
-          </p>
-          {socials.length > 0 && (
-            <div className="mt-6 flex gap-2">
-              {socials.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel="noreferrer"
-                  aria-label={label}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border text-fg-muted transition hover:border-border-strong hover:text-fg"
-                >
-                  <Icon className="h-4.5 w-4.5" />
+    <footer className="field-night">
+      <div className="container-x pt-20 pb-10 sm:pt-28">
+        {/* Closing row */}
+        <div className="grid-12 gap-y-10">
+          <Reveal as="p" className="col-span-12 max-w-[22ch] text-[clamp(1.5rem,1rem+2vw,2.25rem)] font-semibold leading-[1.1] tracking-[-0.02em] lg:col-span-5">
+            Questions about the project, collaboration ideas, data or media requests: write to us.
+          </Reveal>
+          <Reveal as="figure" delay={0.08} className="col-span-6 lg:col-start-8 lg:col-span-2">
+            <Image
+              src="/images/saarland-university-campus.jpg"
+              alt="The campus of Saarland University in Saarbrücken"
+              width={1600}
+              height={1070}
+              sizes="(max-width: 1024px) 50vw, 170px"
+              className="aspect-square w-full max-w-[170px] object-cover"
+            />
+          </Reveal>
+          <Reveal delay={0.16} className="col-span-12 sm:col-span-6 lg:col-start-10 lg:col-span-3">
+            <p className="t-body font-medium">How to reach the project</p>
+            <ul className="mt-5 space-y-2.5 t-body">
+              <li>
+                <a href={`mailto:${settings.contactEmail}`} className="link break-all">
+                  {settings.contactEmail}
                 </a>
+              </li>
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a href={s.href} target="_blank" rel="noreferrer" className="link">
+                    {s.label}
+                  </a>
+                </li>
               ))}
-            </div>
-          )}
-        </div>
-
-        <div className="md:col-span-3">
-          <h3 className="eyebrow">Explore</h3>
-          <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm md:grid-cols-1">
-            {NAV_LINKS.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="text-fg-muted transition hover:text-fg">
-                  {l.label}
+              <li>
+                <Link href="/contact" className="link">
+                  Contact form
                 </Link>
               </li>
-            ))}
-          </ul>
+            </ul>
+            <p className="mt-5 t-small text-[#9aa3b8]">
+              {settings.contactInstitution}, Saarbrücken · we usually reply within a few working days
+            </p>
+          </Reveal>
         </div>
 
-        <div className="md:col-span-4">
-          <h3 className="eyebrow">Funding</h3>
-          <p className="mt-4 text-sm leading-relaxed text-fg-muted">{settings.fundingText}</p>
-          <p className="mt-4 text-sm text-fg-subtle">{settings.footerNote}</p>
+        {/* The name returns at full width */}
+        <p
+          className="mt-24 select-none font-display text-[clamp(4.5rem,15.5vw,15rem)] font-bold leading-[0.82] tracking-[-0.05em] text-paper sm:mt-32"
+          aria-hidden="true"
+        >
+          PathFold
+        </p>
+
+        <div className="mt-12 grid-12 gap-y-10 t-small">
+          <div className="col-span-12 sm:col-span-6 lg:col-span-4">
+            <Image src="/logo-dark.png" alt="PathFold – Learning protein folding pathways" width={280} height={62} className="h-11 w-auto" />
+            <p className="mt-5 max-w-[46ch] text-[#c3c9d8]">
+              From sequence to dynamic folding pathways: a generative AI framework that learns how proteins fold and misfold over time,
+              for earlier molecular diagnosis of neurodegenerative diseases.
+            </p>
+          </div>
+          <nav className="col-span-6 sm:col-span-3 lg:col-start-6 lg:col-span-2" aria-label="Footer">
+            <ul className="space-y-2">
+              {NAV_LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="link">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="col-span-12 sm:col-span-6 lg:col-start-9 lg:col-span-4">
+            <p className="text-[#c3c9d8]">{settings.fundingText}</p>
+            <p className="mt-4 text-[#9aa3b8]">{settings.footerNote}</p>
+          </div>
         </div>
-      </div>
-      <div className="border-t border-border">
-        <div className="container-x flex flex-col gap-3 py-6 text-xs text-fg-subtle sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} PathFold · {settings.contactInstitution}. All rights reserved.</p>
-          <div className="flex gap-5">
-            <Link href="/contact" className="hover:text-fg">
+
+        <div className="mt-14 flex flex-col gap-3 text-[0.8125rem] text-[#9aa3b8] sm:flex-row sm:items-start sm:justify-between">
+          <p>
+            © {year} PathFold · {settings.contactInstitution}. All rights reserved. ·{" "}
+            <Link href="/contact" className="link">
               Imprint & contact
-            </Link>
-            <Link href="/admin" className="hover:text-fg">
+            </Link>{" "}
+            ·{" "}
+            <Link href="/admin" className="link">
               Admin
             </Link>
-          </div>
+          </p>
+          <p className="max-w-[64ch] sm:text-right">
+            Pictures:{" "}
+            <a className="link" href="https://commons.wikimedia.org/wiki/File:20200414Universit%C3%A4t_des_Saarlandes_02.jpg" target="_blank" rel="noreferrer">
+              “Universität des Saarlandes”
+            </a>{" "}
+            by Flocci Nivis, CC BY-SA 4.0;{" "}
+            <a
+              className="link"
+              href="https://commons.wikimedia.org/wiki/File:Neurofibrillary_tangles_in_the_Hippocampus_of_an_old_person_with_Alzheimer-related_pathology,_HE_5.JPG"
+              target="_blank"
+              rel="noreferrer"
+            >
+              “Neurofibrillary tangles in the hippocampus”
+            </a>{" "}
+            by Patho, CC BY-SA 3.0;{" "}
+            <a className="link" href="https://commons.wikimedia.org/wiki/File:Alzheimer_type_II_astrocyte_high_mag.jpg" target="_blank" rel="noreferrer">
+              “Alzheimer type II astrocyte”
+            </a>{" "}
+            by Nephron, CC BY-SA 3.0, via Wikimedia Commons.
+          </p>
         </div>
       </div>
     </footer>

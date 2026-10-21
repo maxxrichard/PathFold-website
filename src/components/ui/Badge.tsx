@@ -1,13 +1,17 @@
 import { cn } from "@/lib/utils";
 
+/**
+ * A small flat label, square-cornered, set in the text face. The tone tints the
+ * ground with one of the page's own colours; it never becomes a pill.
+ */
 const tones: Record<string, string> = {
-  neutral: "border-border bg-white/4 text-fg-muted",
-  cyan: "border-brand-cyan/30 bg-brand-cyan/10 text-brand-cyan",
-  blue: "border-brand-blue/30 bg-brand-blue/10 text-sky-300",
-  violet: "border-brand-violet/30 bg-brand-violet/10 text-violet-300",
-  misfold: "border-misfold/30 bg-misfold/10 text-misfold",
-  success: "border-success/30 bg-success/10 text-success",
-  warning: "border-warning/30 bg-warning/10 text-warning",
+  neutral: "bg-paper-2 text-ink-soft",
+  cyan: "bg-sky text-ink",
+  blue: "bg-sky text-ink",
+  violet: "bg-ink text-paper",
+  misfold: "bg-coral text-ink",
+  success: "bg-[#d6f1e2] text-[#0f5b36]",
+  warning: "bg-[#fbe9c8] text-[#6b3f00]",
 };
 
 export function Badge({ children, tone = "neutral", className }: { children: React.ReactNode; tone?: keyof typeof tones; className?: string }) {

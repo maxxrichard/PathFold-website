@@ -1,91 +1,81 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, ExternalLink, FileText, Code2, Globe, Mail, GraduationCap, Calendar } from "lucide-react";
-import { Linkedin } from "@/components/ui/BrandIcons";
+import { ArrowUpRight } from "lucide-react";
 import type { NewsPost, Publication, TeamMember, Partner, Resource } from "@prisma/client";
 import { Badge, statusTone } from "@/components/ui/Badge";
 import { formatDate, cn } from "@/lib/utils";
 
-const CATEGORY_TONE: Record<string, "cyan" | "violet" | "misfold" | "success" | "blue" | "neutral"> = {
-  News: "cyan",
-  Event: "violet",
-  Press: "misfold",
-  Talk: "blue",
-  Release: "success",
-};
-
+/* ------------------------------------------------------------------ */
+/* News: a banded agenda row                                            */
+/* ------------------------------------------------------------------ */
 export function NewsCard({ post, compact = false }: { post: NewsPost; compact?: boolean }) {
   const href = `/news/${post.slug}`;
   return (
-    <article className="card card-hover group flex h-full flex-col overflow-hidden">
-      {post.coverImage && !compact && (
-        <Link href={href} className="relative aspect-[16/9] overflow-hidden border-b border-border bg-bg">
-          <Image
-            src={post.coverImage}
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-cover transition duration-500 group-hover:scale-[1.03]"
-          />
-        </Link>
-      )}
-      <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-center gap-3 text-xs text-fg-subtle">
-          <Badge tone={CATEGORY_TONE[post.category] ?? "neutral"}>{post.category}</Badge>
-          <time dateTime={post.publishedAt.toISOString()}>{formatDate(post.publishedAt)}</time>
-        </div>
-        <h3 className="font-display mt-4 text-xl font-semibold leading-snug text-fg">
-          <Link href={href} className="transition hover:text-brand-cyan">
-            {post.title}
+    <article className="group grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-2 px-4 py-5 sm:grid-cols-12 sm:items-center sm:gap-x-6 sm:px-6">
+      <time dateTime={post.publishedAt.toISOString()} className="tabular t-body text-ink-soft sm:col-span-2">
+        {formatDate(post.publishedAt)}
+      </time>
+      <p className="t-body text-ink-soft sm:col-span-2 sm:order-last sm:text-right">{post.category}</p>
+      <div className={cn("col-span-2 flex items-center gap-4 sm:col-span-8", compact && "sm:col-span-8")}>
+        {post.coverImage && !compact && (
+          <Link href={href} className="relative hidden h-16 w-24 shrink-0 overflow-hidden bg-paper-2 sm:block" aria-hidden="true" tabIndex={-1}>
+            <Image src={post.coverImage} alt="" fill sizes="96px" className="object-cover" />
           </Link>
-        </h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-fg-muted">{post.excerpt}</p>
-        <div className="mt-auto pt-5">
-          <Link href={href} className="inline-flex items-center gap-1 text-sm font-semibold text-brand-cyan">
-            Read more <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+        )}
+        <div className="min-w-0">
+          <h3 className="text-[1.2rem] font-semibold leading-snug tracking-[-0.015em]">
+            <Link href={href} className="link decoration-transparent hover:decoration-current">
+              {post.title}
+              <ArrowUpRight className="ml-1 inline h-[0.9em] w-[0.9em] align-[-0.1em] opacity-0 transition-opacity group-hover:opacity-100" />
+            </Link>
+          </h3>
+          {!compact && <p className="t-body mt-1 line-clamp-2 text-ink-soft">{post.excerpt}</p>}
         </div>
       </div>
     </article>
   );
 }
 
-export function PublicationCard({ pub }: { pub: Publication }) {
+/* ------------------------------------------------------------------ */
+/* Publication: one row of the table                                    */
+/* ------------------------------------------------------------------ */
+export function PublicationCard({ pub, showYear = true }: { pub: Publication; showYear?: boolean }) {
   const doiUrl = pub.doi ? (pub.doi.startsWith("http") ? pub.doi : `https://doi.org/${pub.doi}`) : null;
   const links = [
-    doiUrl && { href: doiUrl, label: "DOI", Icon: ExternalLink },
-    pub.url && !doiUrl && { href: pub.url, label: "Link", Icon: ExternalLink },
-    pub.url && doiUrl && { href: pub.url, label: "Publisher", Icon: Globe },
-    pub.pdfUrl && { href: pub.pdfUrl, label: "PDF", Icon: FileText },
-    pub.codeUrl && { href: pub.codeUrl, label: "Code", Icon: Code2 },
-  ].filter(Boolean) as Array<{ href: string; label: string; Icon: typeof ExternalLink }>;
+    doiUrl && { href: doiUrl, label: "DOI" },
+    pub.url && !doiUrl && { href: pub.url, label: "Link" },
+    pub.url && doiUrl && { href: pub.url, label: "Publisher" },
+    pub.pdfUrl && { href: pub.pdfUrl, label: "PDF" },
+    pub.codeUrl && { href: pub.codeUrl, label: "Code" },
+  ].filter(Boolean) as Array<{ href: string; label: string }>;
 
   return (
-    <article className="card card-hover p-6">
-      <div className="flex flex-wrap items-center gap-2 text-xs">
-        <Badge tone={pub.category === "PathFold" ? "cyan" : "neutral"}>{pub.category}</Badge>
-        <Badge>{pub.type}</Badge>
-        <span className="text-fg-subtle">{pub.year}</span>
-        {pub.featured && <Badge tone="violet">Featured</Badge>}
+    <article className="grid grid-cols-12 gap-x-4 gap-y-2 px-4 py-5 sm:gap-x-6 sm:px-6">
+      <p className="tabular col-span-3 t-body text-ink-soft sm:col-span-1">{showYear ? pub.year : ""}</p>
+      <div className="col-span-9 sm:col-span-7">
+        <h3 className="text-[1.15rem] font-semibold leading-snug tracking-[-0.015em]">{pub.title}</h3>
+        <p className="t-body mt-1 text-ink-soft">{pub.authors}</p>
+        {pub.abstract && (
+          <details className="mt-2 t-body">
+            <summary className="link inline cursor-pointer list-none text-ink-soft [&::-webkit-details-marker]:hidden">Abstract</summary>
+            <p className="mt-2 max-w-[62ch]">{pub.abstract}</p>
+          </details>
+        )}
       </div>
-      <h3 className="font-display mt-4 text-lg font-semibold leading-snug text-fg">{pub.title}</h3>
-      <p className="mt-2 text-sm text-fg-muted">{pub.authors}</p>
-      <p className="mt-1 text-sm italic text-fg-subtle">{pub.venue}</p>
-      {pub.abstract && (
-        <details className="group/abs mt-3">
-          <summary className="cursor-pointer text-sm font-medium text-fg-muted hover:text-fg">Abstract</summary>
-          <p className="mt-2 text-sm leading-relaxed text-fg-muted">{pub.abstract}</p>
-        </details>
-      )}
-      {links.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {links.map(({ href, label, Icon }) => (
-            <a key={label} href={href} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
-              <Icon className="h-3.5 w-3.5" /> {label}
-            </a>
-          ))}
-        </div>
-      )}
+      <p className="col-span-9 col-start-4 t-body text-ink-soft sm:col-span-3 sm:col-start-auto">
+        {pub.venue}
+        <span className="block t-small">
+          {pub.type}
+          {pub.category !== "PathFold" ? ` · ${pub.category}` : ""}
+        </span>
+      </p>
+      <div className="col-span-9 col-start-4 flex flex-wrap gap-x-4 gap-y-1 t-body sm:col-span-1 sm:col-start-auto sm:flex-col sm:items-end">
+        {links.map(({ href, label }) => (
+          <a key={label} href={href} target="_blank" rel="noreferrer" className="link font-medium">
+            {label}
+          </a>
+        ))}
+      </div>
     </article>
   );
 }
@@ -100,110 +90,109 @@ function initials(name: string) {
     .join("");
 }
 
+/* ------------------------------------------------------------------ */
+/* Team: a tile with the portrait and a paper bar                        */
+/* ------------------------------------------------------------------ */
 export function TeamCard({ member }: { member: TeamMember }) {
   const links = [
-    member.email && { href: `mailto:${member.email}`, label: "E-mail", Icon: Mail },
-    member.website && { href: member.website, label: "Website", Icon: Globe },
-    member.orcid && { href: member.orcid, label: "ORCID", Icon: GraduationCap },
-    member.scholar && { href: member.scholar, label: "Google Scholar", Icon: GraduationCap },
-    member.linkedin && { href: member.linkedin, label: "LinkedIn", Icon: Linkedin },
-  ].filter(Boolean) as Array<{ href: string; label: string; Icon: typeof Mail }>;
+    member.email && { href: `mailto:${member.email}`, label: "E-mail" },
+    member.website && { href: member.website, label: "Website" },
+    member.orcid && { href: member.orcid, label: "ORCID" },
+    member.scholar && { href: member.scholar, label: "Scholar" },
+    member.linkedin && { href: member.linkedin, label: "LinkedIn" },
+  ].filter(Boolean) as Array<{ href: string; label: string }>;
 
   return (
-    <article className="card card-hover flex h-full flex-col p-6">
-      <div className="flex items-start gap-4">
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-brand-blue/30 to-brand-violet/30">
-          {member.photo ? (
-            <Image src={member.photo} alt={member.name} fill sizes="80px" className="object-cover" />
-          ) : (
-            <span className="font-display flex h-full w-full items-center justify-center text-2xl font-bold text-fg">
+    <article className="flex h-full flex-col">
+      <div className="relative aspect-[3/4] overflow-hidden bg-sky">
+        {member.photo ? (
+          <Image src={member.photo} alt={member.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover" />
+        ) : (
+          <div className="absolute inset-0 flex flex-col justify-between p-4 text-ink">
+            <span className="text-[clamp(2.5rem,4vw,3.5rem)] font-bold leading-none tracking-[-0.04em] text-ink/60" aria-hidden="true">
               {initials(member.name)}
             </span>
-          )}
-        </div>
-        <div className="min-w-0">
-          <h3 className="font-display text-lg font-semibold leading-tight text-fg">{member.name}</h3>
-          <p className="mt-1 text-sm font-medium text-brand-cyan">{member.role}</p>
-          <p className="mt-1 text-sm text-fg-muted">{member.affiliation}</p>
-        </div>
+            <h3 className="text-[clamp(1.35rem,1rem+1vw,1.75rem)] font-semibold leading-[1.1] tracking-[-0.02em]">{member.name}</h3>
+          </div>
+        )}
       </div>
-      {member.bio && <p className="mt-4 text-sm leading-relaxed text-fg-muted">{member.bio}</p>}
-      {links.length > 0 && (
-        <div className="mt-auto flex flex-wrap gap-2 pt-5">
-          {links.map(({ href, label, Icon }) => (
-            <a
-              key={label}
-              href={href}
-              target={href.startsWith("http") ? "_blank" : undefined}
-              rel="noreferrer"
-              aria-label={`${member.name} – ${label}`}
-              title={label}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-fg-muted transition hover:border-border-strong hover:text-fg"
-            >
-              <Icon className="h-4 w-4" />
-            </a>
-          ))}
-        </div>
-      )}
+      <div className="flex flex-1 flex-col bg-white px-4 py-4">
+        {member.photo && <h3 className="text-[1.15rem] font-semibold leading-snug tracking-[-0.015em]">{member.name}</h3>}
+        <p className="t-body font-medium text-native">{member.role}</p>
+        <p className="t-body mt-0.5 text-ink-soft">{member.affiliation}</p>
+        {member.bio && <p className="t-body mt-3 text-ink">{member.bio}</p>}
+        {links.length > 0 && (
+          <ul className="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-4 t-body">
+            {links.map(({ href, label }) => (
+              <li key={label}>
+                <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="link font-medium" aria-label={`${member.name} – ${label}`}>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </article>
   );
 }
 
+/* ------------------------------------------------------------------ */
+/* Partner: a white logo tile                                           */
+/* ------------------------------------------------------------------ */
 export function PartnerCard({ partner }: { partner: Partner }) {
   const body = (
     <>
-      <div className="flex items-center gap-4">
-        <div className="flex h-16 w-28 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-white p-2">
-          {partner.logo ? (
-            <Image src={partner.logo} alt={partner.name} width={112} height={56} className="max-h-12 w-auto object-contain" />
-          ) : (
-            <span className="font-display text-lg font-bold text-slate-800">{partner.shortName ?? initials(partner.name)}</span>
-          )}
-        </div>
-        <div className="min-w-0">
-          <Badge tone={statusTone(partner.type)}>{partner.type}</Badge>
-          <h3 className="font-display mt-2 text-base font-semibold leading-snug text-fg">{partner.name}</h3>
-        </div>
+      <div className="flex h-28 items-center justify-center bg-white p-5">
+        {partner.logo ? (
+          <Image src={partner.logo} alt={partner.name} width={224} height={96} className="max-h-16 w-auto object-contain" />
+        ) : (
+          <span className="text-[1.5rem] font-bold text-ink">{partner.shortName ?? initials(partner.name)}</span>
+        )}
       </div>
-      {partner.description && <p className="mt-4 text-sm leading-relaxed text-fg-muted">{partner.description}</p>}
+      <div className="bg-paper-2 px-4 py-3">
+        <Badge tone={statusTone(partner.type)}>{partner.type}</Badge>
+        <h3 className="t-body mt-2 font-semibold leading-snug">{partner.name}</h3>
+        {partner.description && <p className="t-small mt-2 text-ink-soft">{partner.description}</p>}
+      </div>
     </>
   );
   return partner.website ? (
-    <a href={partner.website} target="_blank" rel="noreferrer" className="card card-hover block h-full p-6">
+    <a href={partner.website} target="_blank" rel="noreferrer" className="block h-full">
       {body}
     </a>
   ) : (
-    <div className="card h-full p-6">{body}</div>
+    <div className="h-full">{body}</div>
   );
 }
 
+/* ------------------------------------------------------------------ */
+/* Resource: a banded row                                               */
+/* ------------------------------------------------------------------ */
 export function ResourceCard({ resource }: { resource: Resource }) {
   const links = [
-    resource.url && { href: resource.url, label: "Website", Icon: Globe },
-    resource.repoUrl && { href: resource.repoUrl, label: "Repository", Icon: Code2 },
-    resource.docsUrl && { href: resource.docsUrl, label: "Docs", Icon: FileText },
-  ].filter(Boolean) as Array<{ href: string; label: string; Icon: typeof Globe }>;
+    resource.url && { href: resource.url, label: "Website" },
+    resource.repoUrl && { href: resource.repoUrl, label: "Repository" },
+    resource.docsUrl && { href: resource.docsUrl, label: "Docs" },
+  ].filter(Boolean) as Array<{ href: string; label: string }>;
   return (
-    <article className="card card-hover flex h-full flex-col p-6">
-      <div className="flex flex-wrap items-center gap-2">
-        <Badge>{resource.kind}</Badge>
-        <Badge tone={statusTone(resource.status)}>{resource.status}</Badge>
+    <article className="grid grid-cols-12 gap-x-4 gap-y-2 px-4 py-5 sm:gap-x-6 sm:px-6">
+      <div className="col-span-12 sm:col-span-4">
+        <h3 className="text-[1.2rem] font-semibold leading-snug tracking-[-0.015em]">{resource.name}</h3>
+        <p className="t-body mt-1 text-ink-soft">
+          {resource.kind} · {resource.status}
+        </p>
       </div>
-      <h3 className="font-display mt-4 text-xl font-semibold text-fg">{resource.name}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-fg-muted">{resource.description}</p>
-      <div className="mt-auto pt-5">
+      <p className="t-body col-span-12 max-w-[56ch] sm:col-span-6">{resource.description}</p>
+      <div className="col-span-12 flex flex-wrap gap-x-4 gap-y-1 t-body sm:col-span-2 sm:flex-col sm:items-end">
         {links.length > 0 ? (
-          <div className="flex flex-wrap gap-2">
-            {links.map(({ href, label, Icon }) => (
-              <a key={label} href={href} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
-                <Icon className="h-3.5 w-3.5" /> {label}
-              </a>
-            ))}
-          </div>
+          links.map(({ href, label }) => (
+            <a key={label} href={href} target="_blank" rel="noreferrer" className="link font-medium">
+              {label}
+            </a>
+          ))
         ) : (
-          <p className="inline-flex items-center gap-1.5 text-xs text-fg-subtle">
-            <Calendar className="h-3.5 w-3.5" /> Links will be added on release
-          </p>
+          <span className="t-small text-ink-soft sm:text-right">Links will be added on release</span>
         )}
       </div>
     </article>
@@ -212,10 +201,10 @@ export function ResourceCard({ resource }: { resource: Resource }) {
 
 export function StatTile({ label, value, hint, className }: { label: string; value: React.ReactNode; hint?: string; className?: string }) {
   return (
-    <div className={cn("card p-5", className)}>
-      <p className="text-xs font-semibold uppercase tracking-wider text-fg-subtle">{label}</p>
-      <p className="font-display mt-2 text-2xl font-bold text-fg">{value}</p>
-      {hint && <p className="mt-1 text-xs text-fg-subtle">{hint}</p>}
+    <div className={cn("bg-paper-2 p-5", className)}>
+      <p className="t-small text-ink-soft">{label}</p>
+      <p className="mt-1 text-[1.75rem] font-bold leading-none tracking-[-0.02em]">{value}</p>
+      {hint && <p className="t-small mt-2 text-ink-soft">{hint}</p>}
     </div>
   );
 }

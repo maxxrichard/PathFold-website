@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
@@ -65,11 +64,11 @@ const BETA: Record<string, number> = {
 
 function residueColor(aa: string) {
   const h = KD[aa] ?? 0;
-  if (h >= 2.5) return "text-sky-300";
-  if (h >= 1) return "text-sky-200/80";
-  if (h <= -3) return "text-rose-300";
-  if (h <= -1) return "text-rose-200/70";
-  return "text-fg-muted";
+  if (h >= 2.5) return "text-native";
+  if (h >= 1) return "text-native/75";
+  if (h <= -3) return "text-misfold";
+  if (h <= -1) return "text-misfold/75";
+  return "text-ink-soft";
 }
 
 /** Sliding-window aggregation-propensity heuristic (illustration only). */
@@ -112,6 +111,9 @@ const STATES = {
   ],
 };
 
+const NATIVE = "#1d5fe0";
+const MISFOLD = "#d9462b";
+
 export function PathwayExplorer() {
   const [sampleId, setSampleId] = useState(SAMPLES[0].id);
   const [custom, setCustom] = useState("");
@@ -126,7 +128,6 @@ export function PathwayExplorer() {
   const hotspots = useMemo(() => {
     const idx: number[] = [];
     prop.forEach((p, i) => p > 0.72 && idx.push(i + 1));
-    // compress into ranges
     const ranges: string[] = [];
     let start: number | null = null;
     let prev = -2;
@@ -144,89 +145,85 @@ export function PathwayExplorer() {
 
   const states = STATES[mode];
   const current = states[Math.min(active, states.length - 1)];
+  const stroke = mode === "native" ? NATIVE : MISFOLD;
 
   return (
-    <div className="card overflow-hidden">
-      <div className="grid lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div className="bg-white text-ink">
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_21rem]">
         {/* Left: sequence + trajectory */}
-        <div className="p-6 sm:p-8">
-          <div className="flex flex-wrap items-center gap-2">
-            {SAMPLES.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => {
-                  setSampleId(s.id);
-                  setCustom("");
-                  setMode(s.kind === "amyloid" ? "misfold" : "native");
-                }}
-                className={cn(
-                  "chip cursor-pointer transition",
-                  sampleId === s.id && !custom
-                    ? s.kind === "amyloid"
-                      ? "border-misfold/50 bg-misfold/15 text-misfold"
-                      : "border-brand-cyan/50 bg-brand-cyan/15 text-brand-cyan"
-                    : "hover:border-border-strong hover:text-fg",
-                )}
-                aria-pressed={sampleId === s.id && !custom}
-              >
-                {s.name}
-              </button>
-            ))}
+        <div className="p-5 sm:p-8">
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Benchmark proteins">
+            {SAMPLES.map((s) => {
+              const on = sampleId === s.id && !custom;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => {
+                    setSampleId(s.id);
+                    setCustom("");
+                    setMode(s.kind === "amyloid" ? "misfold" : "native");
+                  }}
+                  className={cn(
+                    "min-h-10 px-3 py-2 text-[0.9375rem] font-medium transition-colors",
+                    on ? (s.kind === "amyloid" ? "bg-coral text-ink" : "bg-sky text-ink") : "bg-paper-2 text-ink-soft hover:bg-paper-3 hover:text-ink",
+                  )}
+                  aria-pressed={on}
+                >
+                  {s.name}
+                </button>
+              );
+            })}
           </div>
 
-          <label className="mt-5 block">
-            <span className="text-xs font-semibold uppercase tracking-wider text-fg-subtle">Amino acid sequence</span>
+          <label className="mt-6 block">
+            <span className="t-small font-medium text-ink-soft">Amino acid sequence (one-letter code)</span>
             <input
               value={custom}
               onChange={(e) => setCustom(e.target.value)}
               placeholder={sample.sequence}
               spellCheck={false}
-              className="input mt-2 font-mono text-sm tracking-[0.08em]"
-              aria-label="Enter an amino acid sequence (one-letter code)"
+              autoCapitalize="characters"
+              autoCorrect="off"
+              className="input mt-2 tracking-[0.12em]"
             />
           </label>
-          <p className="mt-2 text-xs text-fg-subtle">
+          <p className="t-small mt-2 text-ink-soft">
             {custom ? "Custom sequence" : sample.note} · {seq.length} residues
           </p>
 
           {/* residue strip */}
-          <div className="mt-5 overflow-x-auto rounded-xl border border-border bg-bg/60 p-4">
-            <div className="flex gap-[3px] font-mono text-sm" aria-label="Sequence with per-residue hydropathy colouring">
-              {seq.split("").map((aa, i) => (
-                <div key={i} className="flex flex-col items-center gap-1.5">
-                  <span className={cn("w-4 text-center", residueColor(aa))}>{aa}</span>
-                  <span
-                    className="h-10 w-4 rounded-sm bg-gradient-to-t from-brand-blue/30 to-brand-cyan/50"
-                    style={{
-                      backgroundImage:
-                        prop[i] > 0.72
-                          ? "linear-gradient(to top, rgba(244,63,94,0.35), rgba(251,113,133,0.9))"
-                          : "linear-gradient(to top, rgba(59,130,246,0.3), rgba(56,189,248,0.7))",
-                      clipPath: `inset(${Math.round((1 - prop[i]) * 100)}% 0 0 0)`,
-                    }}
-                    title={`Residue ${i + 1} (${aa}): propensity ${(prop[i] * 100).toFixed(0)}%`}
-                  />
-                </div>
-              ))}
+          <div className="mt-5 overflow-x-auto bg-paper p-4 [touch-action:pan-x]">
+            <div className="flex gap-[3px] text-[0.9375rem] font-medium" aria-label="Sequence with per-residue hydropathy colouring">
+              {seq.split("").map((aa, i) => {
+                const hot = prop[i] > 0.72;
+                return (
+                  <div key={i} className="flex flex-col items-center gap-1.5">
+                    <span className={cn("w-4 text-center", residueColor(aa))}>{aa}</span>
+                    <span className="relative h-10 w-4 bg-paper-2" title={`Residue ${i + 1} (${aa}): propensity ${(prop[i] * 100).toFixed(0)}%`}>
+                      <span className={cn("absolute inset-x-0 bottom-0", hot ? "bg-misfold" : "bg-native")} style={{ height: `${Math.round(prop[i] * 100)}%` }} />
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-fg-subtle">
+          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 t-small text-ink-soft">
             <span>
-              <span className="mr-1 inline-block h-2 w-2 rounded-sm bg-brand-cyan" /> hydrophobic / β-prone window
+              <span className="mr-1.5 inline-block h-2.5 w-2.5 bg-native align-[-1px]" /> hydrophobic / β-prone window
             </span>
             <span>
-              <span className="mr-1 inline-block h-2 w-2 rounded-sm bg-misfold" /> aggregation-prone hotspot
+              <span className="mr-1.5 inline-block h-2.5 w-2.5 bg-misfold align-[-1px]" /> aggregation-prone hotspot
             </span>
             <span>
-              Hotspots: <span className="font-mono text-fg-muted">{hotspots.length ? hotspots.join(", ") : "none"}</span>
+              Hotspots: <span className="font-medium text-ink">{hotspots.length ? hotspots.join(", ") : "none"}</span>
             </span>
           </div>
 
           {/* trajectory */}
-          <div className="mt-8 flex items-center justify-between gap-4">
-            <h3 className="font-display text-lg font-semibold text-fg">Kinetically ordered trajectory</h3>
-            <div className="inline-flex rounded-full border border-border bg-bg/60 p-1" role="tablist" aria-label="Pathway">
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
+            <h3 className="text-[1.25rem] font-semibold tracking-[-0.015em]">Kinetically ordered trajectory</h3>
+            <div className="inline-flex bg-paper-2 p-1" role="tablist" aria-label="Pathway">
               {(["native", "misfold"] as const).map((m) => (
                 <button
                   key={m}
@@ -235,12 +232,8 @@ export function PathwayExplorer() {
                   aria-selected={mode === m}
                   onClick={() => setMode(m)}
                   className={cn(
-                    "cursor-pointer rounded-full px-3.5 py-1.5 text-xs font-semibold transition",
-                    mode === m
-                      ? m === "native"
-                        ? "bg-brand-blue/30 text-sky-200"
-                        : "bg-misfold/25 text-misfold"
-                      : "text-fg-muted hover:text-fg",
+                    "min-h-9 px-3.5 py-1.5 text-[0.9rem] font-medium transition-colors",
+                    mode === m ? (m === "native" ? "bg-sky text-ink" : "bg-coral text-ink") : "text-ink-soft hover:text-ink",
                   )}
                 >
                   {m === "native" ? "Productive folding" : "Off-pathway misfolding"}
@@ -251,16 +244,6 @@ export function PathwayExplorer() {
 
           <div className="relative mt-6">
             <svg viewBox="0 0 700 120" className="h-28 w-full" aria-hidden="true">
-              <defs>
-                <linearGradient id="pe-native" x1="0" x2="1">
-                  <stop offset="0" stopColor="#38bdf8" />
-                  <stop offset="1" stopColor="#6366f1" />
-                </linearGradient>
-                <linearGradient id="pe-misfold" x1="0" x2="1">
-                  <stop offset="0" stopColor="#fb923c" />
-                  <stop offset="1" stopColor="#f43f5e" />
-                </linearGradient>
-              </defs>
               <motion.path
                 key={mode}
                 d={
@@ -269,24 +252,23 @@ export function PathwayExplorer() {
                     : "M10 60 C 80 20, 120 100, 200 60 S 300 100, 380 85 S 500 40, 580 90 S 650 110, 690 100"
                 }
                 fill="none"
-                stroke={mode === "native" ? "url(#pe-native)" : "url(#pe-misfold)"}
+                stroke={stroke}
                 strokeWidth="3"
                 strokeLinecap="round"
                 initial={reduce ? false : { pathLength: 0, opacity: 0.4 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 1.4, ease: "easeOut" }}
               />
-              {states.map((_, i) => {
+              {states.map((s, i) => {
                 const x = 10 + (i * 680) / (states.length - 1);
                 const yNative = [60, 50, 68, 55, 50, 62, 48];
                 const yMis = [60, 50, 72, 85, 60, 90, 100];
                 const y = (mode === "native" ? yNative : yMis)[i];
                 return (
                   <g key={i} className="cursor-pointer" onClick={() => setActive(i)}>
-                    <circle cx={x} cy={y} r={active === i ? 9 : 6} fill="#070b14" stroke={mode === "native" ? "#38bdf8" : "#fb7185"} strokeWidth="2.5" />
-                    {active === i && (
-                      <circle cx={x} cy={y} r={14} fill="none" stroke={mode === "native" ? "#38bdf8" : "#fb7185"} strokeOpacity="0.35" strokeWidth="2" />
-                    )}
+                    <title>{s.label}</title>
+                    <circle cx={x} cy={y} r={active === i ? 9 : 6} fill="#ffffff" stroke={stroke} strokeWidth="2.5" />
+                    {active === i && <circle cx={x} cy={y} r={14} fill="none" stroke={stroke} strokeOpacity="0.35" strokeWidth="2" />}
                     <rect x={x - 24} y={y - 24} width="48" height="48" fill="transparent" />
                   </g>
                 );
@@ -299,8 +281,8 @@ export function PathwayExplorer() {
                   type="button"
                   onClick={() => setActive(i)}
                   className={cn(
-                    "cursor-pointer rounded-md px-1 py-1.5 text-center text-[10px] leading-tight transition sm:text-xs",
-                    active === i ? "text-fg" : "text-fg-subtle hover:text-fg-muted",
+                    "min-h-10 px-0.5 py-1 text-center text-[0.8125rem] leading-tight transition-colors",
+                    active === i ? "font-semibold text-ink" : "text-ink-faint hover:text-ink-soft",
                   )}
                   aria-pressed={active === i}
                 >
@@ -314,15 +296,16 @@ export function PathwayExplorer() {
               max={states.length - 1}
               value={active}
               onChange={(e) => setActive(Number(e.target.value))}
-              className="mt-3 w-full accent-brand-cyan"
+              className="mt-3 h-11 w-full [touch-action:pan-y]"
+              style={{ accentColor: stroke }}
               aria-label="Position along the trajectory"
             />
           </div>
         </div>
 
         {/* Right: state description */}
-        <aside className="border-t border-border bg-bg/50 p-6 sm:p-8 lg:border-l lg:border-t-0">
-          <p className="eyebrow">{mode === "native" ? "Productive pathway" : "Off-pathway divergence"}</p>
+        <aside className={cn("p-5 sm:p-8 transition-colors duration-500", mode === "native" ? "field-sky" : "field-coral")}>
+          <p className="t-body font-medium">{mode === "native" ? "Productive pathway" : "Off-pathway divergence"}</p>
           <AnimatePresence mode="wait">
             <motion.div
               key={`${mode}-${active}`}
@@ -331,37 +314,33 @@ export function PathwayExplorer() {
               exit={reduce ? undefined : { opacity: 0, y: -6 }}
               transition={{ duration: 0.22 }}
             >
-              <p className="mt-2 text-xs text-fg-subtle">
+              <h4 className="mt-6 text-[1.75rem] font-semibold leading-tight tracking-[-0.02em]">{current.label}</h4>
+              <p className="t-body mt-3">{current.desc}</p>
+              <p className="t-small mt-3 text-ink-soft">
                 State {active + 1} of {states.length}
               </p>
-              <h4 className="font-display mt-1 text-2xl font-semibold text-fg">{current.label}</h4>
-              <p className="mt-3 text-sm leading-relaxed text-fg-muted">{current.desc}</p>
             </motion.div>
           </AnimatePresence>
 
-          <dl className="mt-8 space-y-4 text-sm">
+          <dl className="mt-10 space-y-5 t-body">
             <div>
-              <dt className="text-fg-subtle">Mean hydrophobic / β-propensity</dt>
-              <dd className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-white/8">
-                <div
-                  className={cn("h-full rounded-full", meanProp > 0.55 ? "bg-gradient-to-r from-orange-400 to-misfold" : "bg-gradient-to-r from-brand-cyan to-brand-indigo")}
-                  style={{ width: `${Math.round(meanProp * 100)}%` }}
-                />
+              <dt className="t-small text-ink-soft">Mean hydrophobic / β-propensity</dt>
+              <dd className="mt-2 h-2.5 w-full bg-ink/10">
+                <div className={cn("h-full", meanProp > 0.55 ? "bg-misfold" : "bg-native")} style={{ width: `${Math.round(meanProp * 100)}%` }} />
               </dd>
-              <dd className="mt-1 text-xs text-fg-subtle">{(meanProp * 100).toFixed(0)}% of scale</dd>
+              <dd className="t-small mt-1.5 text-ink-soft">{(meanProp * 100).toFixed(0)}% of scale</dd>
             </div>
             <div>
-              <dt className="text-fg-subtle">Divergence risk (heuristic)</dt>
-              <dd className="mt-1 font-semibold text-fg">
+              <dt className="t-small text-ink-soft">Divergence risk (heuristic)</dt>
+              <dd className="mt-1 font-semibold">
                 {meanProp > 0.6 || hotspots.length >= 2 ? "Elevated" : meanProp > 0.45 || hotspots.length === 1 ? "Moderate" : "Low"}
               </dd>
             </div>
           </dl>
 
-          <p className="mt-8 flex items-start gap-2 text-xs leading-relaxed text-fg-subtle">
-            <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-            Illustration only. The propensity track uses classical hydropathy and β-propensity scales, not PathFold
-            predictions. PathFold-P and PathFold-M will replace this schematic once released.
+          <p className="t-small mt-10 text-ink-soft">
+            Illustration only. The propensity track uses classical hydropathy and β-propensity scales, not PathFold predictions. PathFold-P and
+            PathFold-M will replace this schematic once released.
           </p>
         </aside>
       </div>
