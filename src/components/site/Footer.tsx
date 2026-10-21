@@ -3,6 +3,8 @@ import Image from "next/image";
 import type { Settings } from "@/lib/settings";
 import { NAV_LINKS } from "@/lib/nav";
 
+const linkClass = "text-[#aab3c5] transition-colors duration-150 hover:text-white";
+
 export function Footer({ settings }: { settings: Settings }) {
   const year = new Date().getFullYear();
   const socials = [
@@ -14,20 +16,20 @@ export function Footer({ settings }: { settings: Settings }) {
   ].filter(Boolean) as Array<{ href: string; label: string }>;
 
   return (
-    <footer className="field-night">
-      <div className="container-x pt-16 pb-10 sm:pt-20">
-        <div className="grid-12 gap-y-10 t-body">
-          <div className="col-span-12 sm:col-span-6 lg:col-span-5">
-            <Image src="/logo-dark.png" alt="PathFold - Learning protein folding pathways" width={280} height={62} className="h-12 w-auto" />
-            <p className="mt-5 max-w-[40ch] text-[#c3c9d8]">
-              From sequence to dynamic folding pathways: a generative AI framework that learns how proteins fold and misfold over time, for
-              earlier molecular diagnosis of neurodegenerative diseases.
+    <footer className="field-night text-[0.9375rem] leading-relaxed">
+      <div className="container-x pt-14 pb-8 sm:pt-16">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <Image src="/logo-dark.png" alt="PathFold - Learning protein folding pathways" width={280} height={62} className="h-10 w-auto" />
+            <p className="mt-5 max-w-[38ch] text-[#aab3c5]">
+              A generative AI framework that learns how proteins fold and misfold over time, for earlier molecular diagnosis of
+              neurodegenerative diseases.
             </p>
             {socials.length > 0 && (
-              <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
+              <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
                 {socials.map((s) => (
                   <li key={s.label}>
-                    <a href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="link">
+                    <a href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className={linkClass}>
                       {s.label}
                     </a>
                   </li>
@@ -35,34 +37,36 @@ export function Footer({ settings }: { settings: Settings }) {
               </ul>
             )}
           </div>
-          <nav className="col-span-6 sm:col-span-3 lg:col-start-7 lg:col-span-2" aria-label="Footer">
-            <p className="font-medium">Explore</p>
-            <ul className="mt-4 space-y-2">
+
+          <nav className="lg:col-span-3 lg:col-start-7" aria-label="Footer">
+            <p className="font-medium text-white">Explore</p>
+            <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5">
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="link text-[#c3c9d8]">
+                  <Link href={l.href} className={linkClass}>
                     {l.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <div className="col-span-12 sm:col-span-6 lg:col-start-9 lg:col-span-4">
-            <p className="font-medium">Funding</p>
-            <p className="mt-4 text-[#c3c9d8]">{settings.fundingText}</p>
-            <p className="mt-4 text-[#9aa3b8]">{settings.footerNote}</p>
+
+          <div className="lg:col-span-3 lg:col-start-10">
+            <p className="font-medium text-white">Funding</p>
+            <p className="mt-4 text-[#aab3c5]">{settings.fundingText}</p>
+            <p className="mt-3 text-[#7d879c]">{settings.footerNote}</p>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 t-small text-[#9aa3b8] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-[0.8125rem] text-[#7d879c] sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} PathFold · {settings.contactInstitution}. All rights reserved.
           </p>
-          <p className="flex gap-5">
-            <Link href="/contact" className="link">
+          <p className="flex gap-6">
+            <Link href="/contact" className="transition-colors duration-150 hover:text-white">
               Imprint & contact
             </Link>
-            <Link href="/admin" className="link">
+            <Link href="/admin" className="transition-colors duration-150 hover:text-white">
               Admin
             </Link>
           </p>
