@@ -106,12 +106,20 @@ export const RESEARCH_QUESTIONS = [
   {
     code: "RQ1",
     question: "Why do current structure prediction models fail to capture folding pathways from amino acid sequences?",
+    points: [
+      "Structure predictors return static end states and discard the order and energetics of folding.",
+      "PathFold learns from a tiered signal: MD trajectories, experimental observables and physics-informed regularisation.",
+    ],
     answer:
       "Structure predictors return static end states and discard the temporal order and energetic continuity of folding. PathFold addresses this with a tiered supervision signal: Tier 1 uses long all-atom MD trajectories of fast-folding proteins and Folding@home subsets discretised with Markov state models; Tier 2 integrates experimental observables (NMR ensembles, HDX-MS protection factors, Φ-values) as partial ordering constraints; Tier 3 provides physics-informed regularisation through Gō-type energy functions, contact-order folding-rate estimates and statistical contact potentials.",
   },
   {
     code: "RQ2",
     question: "How can generative models predict misfolding divergence to identify sequence regions responsible for aggregation and instability?",
+    points: [
+      "Hand-crafted aggregation predictors reach roughly fifty percent accuracy across protein families.",
+      "PathFold treats misfolding as a divergent trajectory and localises the residues and mutation hotspots that drive it.",
+    ],
     answer:
       "Existing aggregation predictors rely on hand-crafted physicochemical features and reach roughly fifty percent accuracy on diverse protein families. PathFold treats misfolding as a divergent trajectory in the same latent space used for folding prediction. Learning from both stable and unstable sequence–trajectory pairs, it estimates the probability of deviating from low-energy pathways and identifies residue clusters or mutation hotspots linked to aggregation-prone behaviour.",
   },
@@ -120,10 +128,12 @@ export const RESEARCH_QUESTIONS = [
 export const HYPOTHESES = [
   {
     code: "H1",
+    short: "Trajectory signatures are early indicators of instability.",
     text: "Trajectory signatures provide molecular indicators of early instability that support variant prioritisation, aggregation risk assessment and the identification of mechanistic targets for therapeutic intervention.",
   },
   {
     code: "H2",
+    short: "A kinetic surrogate, orders of magnitude faster than MD.",
     text: "Such a framework is a data-driven kinetic surrogate that delivers clinically relevant folding and misfolding information orders of magnitude faster than MD simulations, without requiring existing structures or MD trajectories as input.",
   },
 ];
@@ -160,6 +170,13 @@ export const APPLICATIONS = [
   },
 ];
 
+export const FAIR_POINTS = [
+  { title: "FAIR and documented", text: "Models, datasets and outputs carry metadata, versioning and provenance following ELIXIR-DE and NFDI4Health standards." },
+  { title: "Open source, open data", text: "PathFold-P, PathFold-M and the Toolbox are open-source software; P-Track, M-Track and DynBench are open resources." },
+  { title: "Public resources only", text: "Only publicly licensed molecular and sequence data are used. No human, animal or patient-identifying data are processed." },
+  { title: "Analysis, not design", text: "PathFold describes naturally occurring sequences. It does not generate new proteins or synthesisable constructs." },
+];
+
 export const FAIR_PRINCIPLES = [
   "All models, datasets and analysis outputs are curated according to the FAIR principles and published with metadata, versioning and provenance documentation following ELIXIR-DE and NFDI4Health standards.",
   "PathFold-P, PathFold-M and the PathFold-Toolbox are released as open-source software; P-Track and M-Track as versioned open datasets; DynBench as an open benchmarking platform with a public leaderboard.",
@@ -170,6 +187,7 @@ export const FAIR_PRINCIPLES = [
 export const TIMELINE = [
   {
     year: "2027",
+    title: "Data foundation",
     items: [
       "Dataset release: P-Track and M-Track v1.0, FAIR-compliant via ELIXIR-DE and NFDI4Health",
       "Goal: one harmonised sequence–trajectory–annotation resource as the foundation for both models",
@@ -177,6 +195,7 @@ export const TIMELINE = [
   },
   {
     year: "2028",
+    title: "Folding model and benchmark",
     items: [
       "Model release: PathFold-P v1.0, the folding trajectory model",
       "Benchmark release: DynBench v1.0 with a public leaderboard",
@@ -185,6 +204,7 @@ export const TIMELINE = [
   },
   {
     year: "2029",
+    title: "Misfolding model and toolbox",
     items: [
       "Model release: PathFold-M v1.0, the misfolding and aggregation model",
       "Release: PathFold-Toolbox with Python SDK, CLI and REST API",
@@ -194,6 +214,7 @@ export const TIMELINE = [
   },
   {
     year: "2030+",
+    title: "Beyond the project",
     items: [
       "Goal: extend PathFold to multi-protein aggregation and post-translational modifications",
       "Goal: clinical validation of trajectory-based misfolding risk scores",
