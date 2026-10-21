@@ -27,13 +27,13 @@ export default async function TeamPage() {
         {members.length === 0 ? (
           <EmptyState title="Team members will be listed here" description="Add people in the admin area." />
         ) : (
-          <div className="space-y-24">
+          <div className="space-y-16">
             {groups.map((g) => (
               <div key={g.name}>
                 <SectionHeading title={g.name === "Core team" ? "Project team" : g.name} />
-                <ul className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+                <ul className="mt-8 grid gap-5 lg:grid-cols-2">
                   {g.members.map((m, i) => (
-                    <Reveal key={m.id} as="li" delay={(i % 4) * 0.06} className="h-full">
+                    <Reveal key={m.id} as="li" delay={(i % 2) * 0.06} className={g.members.length === 1 ? "lg:col-span-2" : "h-full"}>
                       <TeamCard member={m} />
                     </Reveal>
                   ))}

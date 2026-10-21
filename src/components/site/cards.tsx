@@ -81,17 +81,15 @@ export function PublicationCard({ pub, showYear = true }: { pub: Publication; sh
 }
 
 function initials(name: string) {
-  return name
-    .replace(/^((Prof\.|Dr\.-Ing\.|Dr\.|PD|M\.Sc\.|B\.Sc\.)\s*)+/, "")
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase())
-    .join("");
+  const words = name.split(/\s+/).filter((w) => w && !/\.$/.test(w) && !/^(Prof|Dr|PD|med|Ing)$/i.test(w) && !/^[A-Z]\.?$/.test(w));
+  if (words.length === 0) return "";
+  const first = words[0][0] ?? "";
+  const last = words.length > 1 ? words[words.length - 1][0] ?? "" : "";
+  return (first + last).toUpperCase();
 }
 
 /* ------------------------------------------------------------------ */
-/* Team: a tile with the portrait and a paper bar                        */
+/* Team: a profile row, portrait on the left, details on the right        */
 /* ------------------------------------------------------------------ */
 export function TeamCard({ member }: { member: TeamMember }) {
   const links = [
@@ -103,26 +101,23 @@ export function TeamCard({ member }: { member: TeamMember }) {
   ].filter(Boolean) as Array<{ href: string; label: string }>;
 
   return (
-    <article className="panel flex h-full flex-col overflow-hidden">
-      <div className={cn("relative overflow-hidden bg-sky", member.photo ? "aspect-[3/4]" : "aspect-[4/3]")}>
+    <article className="panel grid gap-6 p-5 sm:grid-cols-[9rem_1fr] sm:p-6 lg:grid-cols-[10rem_1fr]">
+      <div className="relative aspect-square w-28 overflow-hidden rounded-lg bg-sky sm:w-full">
         {member.photo ? (
-          <Image src={member.photo} alt={member.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover" />
+          <Image src={member.photo} alt={member.name} fill sizes="160px" className="object-cover" />
         ) : (
-          <div className="absolute inset-0 flex flex-col justify-between p-4 text-ink">
-            <span className="text-[clamp(2rem,3vw,2.75rem)] font-semibold leading-none tracking-[-0.03em] text-native/70" aria-hidden="true">
-              {initials(member.name)}
-            </span>
-            <h3 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.015em]">{member.name}</h3>
-          </div>
+          <span className="absolute inset-0 flex items-center justify-center text-[2rem] font-semibold tracking-[-0.03em] text-native/70" aria-hidden="true">
+            {initials(member.name)}
+          </span>
         )}
       </div>
-      <div className="flex flex-1 flex-col bg-white px-4 py-4">
-        {member.photo && <h3 className="text-[1.15rem] font-semibold leading-snug tracking-[-0.015em]">{member.name}</h3>}
-        <p className="t-body font-medium text-native">{member.role}</p>
-        <p className="t-body mt-0.5 text-ink-soft">{member.affiliation}</p>
-        {member.bio && <p className="t-body mt-3 text-ink">{member.bio}</p>}
+      <div className="min-w-0">
+        <h3 className="text-[1.2rem] font-semibold leading-snug tracking-[-0.015em]">{member.name}</h3>
+        <p className="t-body mt-1 font-medium text-native">{member.role}</p>
+        <p className="t-small mt-0.5 text-ink-soft">{member.affiliation}</p>
+        {member.bio && <p className="t-body mt-4 max-w-[70ch] text-ink-soft">{member.bio}</p>}
         {links.length > 0 && (
-          <ul className="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-4 t-body">
+          <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1 t-body">
             {links.map(({ href, label }) => (
               <li key={label}>
                 <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="link font-medium" aria-label={`${member.name} – ${label}`}>
