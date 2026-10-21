@@ -5,19 +5,17 @@ import { CheckCircle2 } from "lucide-react";
 import { PageHero, Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
-import { PartnerCard } from "@/components/site/cards";
-import { getPartners } from "@/lib/data";
 import { getSettings } from "@/lib/settings";
-import { PROJECT, RESEARCH_QUESTIONS, HYPOTHESES, SUCCESS_CRITERIA, FAIR_PRINCIPLES, TIMELINE } from "@/lib/content";
+import { PROJECT, RESEARCH_QUESTIONS, HYPOTHESES, FAIR_PRINCIPLES, TIMELINE } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "PathFold – Language Modelling for Protein (Mis-)Folding Pathway Dynamics: goals, research questions, roadmap and partners.",
+    "PathFold – Language Modelling for Protein (Mis-)Folding Pathway Dynamics: goals, research questions and roadmap.",
 };
 
 export default async function AboutPage() {
-  const [partners, settings] = await Promise.all([getPartners(), getSettings()]);
+  const settings = await getSettings();
 
   return (
     <>
@@ -144,17 +142,6 @@ export default async function AboutPage() {
             </Reveal>
           ))}
         </div>
-        <div className="mt-12">
-          <h3 className="font-display text-2xl font-semibold text-fg">Project success will be measured against</h3>
-          <ul className="mt-6 space-y-4">
-            {SUCCESS_CRITERIA.map((c, i) => (
-              <Reveal key={i} as="li" delay={i * 0.05} className="flex gap-3 text-sm leading-relaxed text-fg-muted">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-success" />
-                <span>{c}</span>
-              </Reveal>
-            ))}
-          </ul>
-        </div>
       </Section>
 
       {/* Roadmap */}
@@ -192,18 +179,6 @@ export default async function AboutPage() {
         </ul>
       </Section>
 
-      {/* Partners */}
-      <Section id="partners">
-        <SectionHeading eyebrow="Consortium" title="Partners" />
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {partners.map((p, i) => (
-            <Reveal key={p.id} delay={i * 0.06} className="h-full">
-              <PartnerCard partner={p} />
-            </Reveal>
-          ))}
-        </div>
-        <p className="mt-8 max-w-3xl text-sm leading-relaxed text-fg-subtle">{settings.fundingText}</p>
-      </Section>
     </>
   );
 }

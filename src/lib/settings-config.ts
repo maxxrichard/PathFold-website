@@ -14,7 +14,7 @@ export const SETTING_DEFAULTS = {
   twitterUrl: "",
   blueskyUrl: "",
   fundingText:
-    "PathFold is funded by the German Federal Ministry of Research, Technology and Space (BMFTR) under the “Zukunft eHealth” funding guideline (grant no. 031L0342).",
+    "PathFold is funded by the German Federal Ministry of Research, Technology and Space (BMFTR) under the “Zukunft eHealth” funding guideline.",
   footerNote: "UdS · DFKI · DZNE",
 } as const;
 
