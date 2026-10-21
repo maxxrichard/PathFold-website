@@ -5,22 +5,18 @@ import { LoopVideo } from "@/components/site/LoopVideo";
 import { PathwayExplorer } from "@/components/site/PathwayExplorer";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { NewsCard, PublicationCard, PartnerCard } from "@/components/site/cards";
+import { NewsCard, PublicationCard } from "@/components/site/cards";
+import { PartnerLogos } from "@/components/site/PartnerLogos";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { getSettings } from "@/lib/settings";
-import { getPublishedNews, getFeaturedPublications, getPartners } from "@/lib/data";
+import { getPublishedNews, getFeaturedPublications } from "@/lib/data";
 import { PROBLEM_CARDS, COMPONENTS } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const COMPONENT_ICONS = [Dna, Activity, Boxes];
 
 export default async function HomePage() {
-  const [settings, news, publications, partners] = await Promise.all([
-    getSettings(),
-    getPublishedNews(3),
-    getFeaturedPublications(3),
-    getPartners(),
-  ]);
+  const [settings, news, publications] = await Promise.all([getSettings(), getPublishedNews(3), getFeaturedPublications(3)]);
 
   return (
     <>
@@ -207,12 +203,8 @@ export default async function HomePage() {
           title="Partners & funding"
           description="PathFold is coordinated at Saarland University and supported by two associated partners that anchor the project in Germany's AI and neurodegenerative-disease research landscape."
         />
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {partners.map((p, i) => (
-            <Reveal key={p.id} delay={i * 0.06} className="h-full">
-              <PartnerCard partner={p} />
-            </Reveal>
-          ))}
+        <div className="mt-10">
+          <PartnerLogos />
         </div>
         <p className="mt-8 max-w-3xl text-sm leading-relaxed text-fg-subtle">{settings.fundingText}</p>
       </Section>

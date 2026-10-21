@@ -23,6 +23,7 @@ async function seedPartners() {
       {
         name: "Saarland University",
         shortName: "UdS",
+        logo: "/partners/uds.png",
         type: "Coordinator",
         website: "https://www.uni-saarland.de/en/",
         description:
@@ -32,6 +33,7 @@ async function seedPartners() {
       {
         name: "Deutsches Forschungszentrum für Künstliche Intelligenz GmbH (DFKI)",
         shortName: "DFKI",
+        logo: "/partners/dfki.png",
         type: "Associated partner",
         website: "https://www.dfki.de/en/web",
         description:
@@ -41,6 +43,7 @@ async function seedPartners() {
       {
         name: "Deutsches Zentrum für Neurodegenerative Erkrankungen e. V. (DZNE)",
         shortName: "DZNE",
+        logo: "/partners/dzne.png",
         type: "Associated partner",
         website: "https://www.dzne.de/en/",
         description:
@@ -50,6 +53,7 @@ async function seedPartners() {
       {
         name: "Federal Ministry of Research, Technology and Space (BMFTR)",
         shortName: "BMFTR",
+        logo: "/partners/bmftr.png",
         type: "Funding",
         website: "https://www.bmftr.bund.de/",
         description: "Funding authority. PathFold is supported under the “Zukunft eHealth” funding guideline (Postdoc Starting Grant), grant number 031L0342.",
