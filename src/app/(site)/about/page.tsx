@@ -64,35 +64,52 @@ export default async function AboutPage() {
           </aside>
 
           <div className="order-1 lg:order-2 lg:col-span-8 lg:col-start-5">
-            <div className="prose prose-pathfold max-w-[66ch]">
+            <div className="max-w-[66ch]">
               <p className="t-lead">
-                Protein folding is one of the most consequential molecular processes in biology. It determines whether a polypeptide chain
-                reaches its native, functional conformation or diverges into a structurally aberrant state that causes disease. Instead of
-                adopting a fixed shape immediately, a chain navigates a rugged, multi-dimensional energy landscape shaped by metastable
-                intermediates, kinetic traps and competing transition routes before it settles into a stable native state or a misfolded
-                configuration. The order, timing and cooperativity of structure formation along this trajectory decide folding efficiency,
-                the stability of intermediates and the susceptibility to aggregation.
+                Protein folding decides whether a polypeptide chain reaches its native, functional conformation or diverges into a state that
+                causes disease. A chain navigates a rugged energy landscape of intermediates, kinetic traps and competing routes, and the
+                order, timing and cooperativity of that trajectory decide stability and the susceptibility to aggregation.
               </p>
-              <p>
-                In amyloid-forming proteins such as amyloid-β, tau and α-synuclein, early off-pathway conformations trigger the nucleation
-                and spread of toxic oligomeric aggregates years or decades before neuronal damage becomes detectable. An estimated 9.1 million
-                people in Europe live with dementia, projected to rise to 14.3 million by 2050. Despite transformative progress in static
-                structure prediction, this dynamic dimension of protein biology remains computationally inaccessible at scale.
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="panel p-5">
+                  <p className="text-[2rem] font-semibold leading-none tracking-[-0.02em] text-native">9.1 million</p>
+                  <p className="t-body mt-2 text-ink-soft">people in Europe live with dementia today</p>
+                </div>
+                <div className="panel p-5">
+                  <p className="text-[2rem] font-semibold leading-none tracking-[-0.02em] text-native">14.3 million</p>
+                  <p className="t-body mt-2 text-ink-soft">projected by 2050</p>
+                </div>
+              </div>
+              <p className="t-body mt-5 text-ink-soft">
+                In amyloid-forming proteins such as amyloid-β, tau and α-synuclein, early off-pathway conformations trigger toxic aggregates
+                years or decades before neuronal damage becomes detectable. This dynamic dimension of protein biology remains computationally
+                inaccessible at scale.
               </p>
-              <p>
-                <strong>PathFold closes this gap</strong> by developing a generative framework that learns and predicts how proteins fold and
-                misfold over time directly from their amino acid sequences. Rather than predicting a single final structure, PathFold models
-                the folding process as a coarse-grained, kinetically ordered sequence of structural transitions and captures the order, timing
-                and interdependence of the conformational events that govern stability. Because direct experimental folding trajectories exist
-                only for a limited set of small model proteins, PathFold combines them with indirect kinetic observables (HDX-MS protection
-                factors, NMR conformational ensembles) and energy-informed surrogates into a tiered supervision signal.
-              </p>
-              <p>
-                The framework consists of three complementary components: the trajectory generation model{" "}
-                <Link href="/research#pathfold-p">PathFold-P</Link>, the probabilistic misfolding detection model{" "}
-                <Link href="/research#pathfold-m">PathFold-M</Link>, and the <Link href="/research#toolbox">PathFold-Toolbox</Link> with the
-                DynBench benchmarking framework.
-              </p>
+
+              <h2 className="mt-10 text-[1.25rem] font-semibold tracking-[-0.015em]">PathFold closes this gap</h2>
+              <ul className="mt-4 space-y-3 t-body text-ink-soft">
+                <li className="flex gap-3">
+                  <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
+                  <span>A generative framework that learns how proteins fold and misfold over time, directly from their amino acid sequence.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
+                  <span>Folding modelled as a kinetically ordered sequence of structural transitions, not a single final structure.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
+                  <span>A tiered supervision signal: experimental trajectories, indirect kinetic observables (HDX-MS, NMR) and energy-informed surrogates.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
+                  <span>
+                    Three components: <Link href="/research#pathfold-p" className="link font-medium text-ink">PathFold-P</Link>,{" "}
+                    <Link href="/research#pathfold-m" className="link font-medium text-ink">PathFold-M</Link> and the{" "}
+                    <Link href="/research#toolbox" className="link font-medium text-ink">PathFold-Toolbox</Link> with DynBench.
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -123,7 +140,14 @@ export default async function AboutPage() {
                 <span className="text-ink-soft">{rq.code}. </span>
                 {rq.question}
               </h3>
-              <p className="t-body mt-5 max-w-[66ch]">{rq.answer}</p>
+              <ul className="mt-5 space-y-2.5 t-body text-ink-soft">
+                {rq.answer.split(/(?<=[.;])\s+(?=[A-Z])/).map((sentence) => (
+                  <li key={sentence} className="flex gap-3">
+                    <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
+                    <span>{sentence}</span>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           ))}
           <ul className="grid gap-8 sm:grid-cols-2 lg:col-span-2">

@@ -13,16 +13,16 @@ export const metadata: Metadata = {
 
 const TIERS = [
   {
-    line: "Tier 1: direct MD trajectories.",
-    note: "Long all-atom MD simulations of ~12 fast-folding proteins under 80 residues and Folding@home subsets, discretised with Markov state models into backbone dihedral distributions, contact probability maps and secondary-structure assignments.",
+    line: "Tier 1: direct MD trajectories",
+    note: "Long all-atom simulations of about 12 fast-folding proteins and Folding@home subsets, discretised with Markov state models.",
   },
   {
-    line: "Tier 2: indirect kinetic observables.",
-    note: "For larger proteins without complete trajectories: NMR conformational ensembles, HDX-MS protection factors and Φ-value data serve as partial ordering constraints.",
+    line: "Tier 2: indirect kinetic observables",
+    note: "NMR ensembles, HDX-MS protection factors and Φ-value data serve as partial ordering constraints for larger proteins.",
   },
   {
-    line: "Tier 3: physics-informed surrogates.",
-    note: "Gō-type energy functions, contact-order folding-rate estimates and statistical contact potentials enforce thermodynamic plausibility across the whole dataset, even without direct experimental supervision.",
+    line: "Tier 3: physics-informed surrogates",
+    note: "Gō-type energy functions, contact-order folding rates and statistical contact potentials enforce thermodynamic plausibility.",
   },
 ];
 
@@ -32,14 +32,14 @@ export default function ResearchPage() {
       <PageHero
         eyebrow="Research"
         title="How PathFold learns folding dynamics"
-        description="PathFold combines the representational power of large protein language models with constraints from energy-landscape theory to act as a scalable surrogate for molecular dynamics, enabling kinetic inference and misfolding divergence detection across large and diverse protein families."
+        description="Protein language models plus energy-landscape constraints: a scalable surrogate for molecular dynamics that infers kinetics and detects misfolding divergence across diverse protein families."
       />
 
       {/* Tiered supervision: the three tiers step across the page */}
       <Section id="supervision" tight>
         <SectionHeading
           title="A tiered supervision signal"
-          description="Direct folding trajectories exist only for a handful of small proteins. PathFold therefore integrates three complementary data tiers, which also makes the central data-availability problem of trajectory-based modelling explicit and tractable."
+          description="Direct folding trajectories exist only for a handful of small proteins, so PathFold integrates three complementary data tiers."
         />
         <div className="mt-12">
           <Staircase steps={TIERS} />
@@ -60,18 +60,29 @@ export default function ResearchPage() {
               Pre-trained protein language models such as ESM-2 and ProtT5-XL capture rich co-evolutionary dependencies, but their latent spaces
               are not organised by free energy and do not encode the directed, downhill nature of folding trajectories.
             </p>
-            <p className="t-body mt-6 max-w-[64ch]">
-              PathFold adapts these embeddings with an energy-informed contrastive learning scheme grounded in energy-landscape theory. Every
-              conformation is described by residue-resolved geometric descriptors (contact maps, torsion angles, solvent exposure,
-              secondary-structure states). A free-energy surrogate, the fraction of native contacts Q combined with a statistical contact
-              potential, assigns a scalar energy to each conformation. Conformations with similar Q form positive pairs, distant ones negative
-              pairs, and an InfoNCE loss in the residue-resolved embedding space pulls energetically adjacent conformations together.
-            </p>
-            <p className="t-body mt-5 max-w-[64ch]">
-              The result is a thermodynamically ordered latent manifold in which neighbouring points represent plausible sequential steps along
-              a folding pathway, the geometric foundation for PathFold-P. A lightweight two-layer MLP projects PLM embeddings (ESM-2 650M: 1280
-              dims; ProtT5-XL: 1024 dims) into this energy-aligned space.
-            </p>
+            <ul className="mt-8 space-y-5 t-body">
+              <li className="rule pt-5">
+                <p className="font-semibold">Energy-informed contrastive learning</p>
+                <p className="mt-1 text-ink-soft">
+                  Each conformation is described by residue-resolved geometric descriptors: contact maps, torsion angles, solvent exposure and
+                  secondary-structure states.
+                </p>
+              </li>
+              <li className="rule pt-5">
+                <p className="font-semibold">A free-energy surrogate orders the space</p>
+                <p className="mt-1 text-ink-soft">
+                  The fraction of native contacts Q with a statistical contact potential assigns each conformation an energy; an InfoNCE loss
+                  pulls energetically adjacent conformations together.
+                </p>
+              </li>
+              <li className="rule pt-5">
+                <p className="font-semibold">A thermodynamically ordered latent manifold</p>
+                <p className="mt-1 text-ink-soft">
+                  Neighbouring points are plausible sequential folding steps, the geometric foundation for PathFold-P. A two-layer MLP projects
+                  ESM-2 and ProtT5-XL embeddings into this space.
+                </p>
+              </li>
+            </ul>
           </div>
         </div>
       </Section>
@@ -95,7 +106,7 @@ export default function ResearchPage() {
       <Section id="datasets">
         <SectionHeading
           title="Open data sources"
-          description="PathFold relies exclusively on publicly licensed, FAIR-compliant molecular and sequence resources. They are harmonised through standardised identifier mappings between UniProt accessions, PDB entry IDs and the annotation databases, so that sequence, structure, dynamics, disorder, aggregation and variant information line up for every protein."
+          description="Publicly licensed, FAIR-compliant resources, harmonised through UniProt and PDB identifiers so that sequence, structure, dynamics, disorder, aggregation and variant data line up for every protein."
         />
         <Reveal className="panel mt-12 overflow-hidden">
           <Table className="t-body">
@@ -127,7 +138,7 @@ export default function ResearchPage() {
       <Section id="applications">
         <SectionHeading
           title="Application to neurodegenerative diseases"
-          description="As a concrete health-relevance deliverable, PathFold produces variant-resolved dynamic misfolding maps for amyloid-β (Aβ40, Aβ42), tau and α-synuclein in collaboration with DZNE, the three clinically most important proteinopathies."
+          description="Variant-resolved dynamic misfolding maps for amyloid-β, tau and α-synuclein, developed with DZNE."
         />
         <ul className="mt-12 grid gap-8 sm:grid-cols-3">
           {APPLICATIONS.map((a, i) => (

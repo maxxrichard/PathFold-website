@@ -46,7 +46,7 @@ export default async function HomePage() {
             title: c.name,
             kicker: c.kicker,
             summary: c.summary,
-            details: c.details,
+            details: [],
             href: `/research#${c.key}`,
           }))}
         />

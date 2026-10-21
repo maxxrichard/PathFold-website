@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 /* ------------------------------------------------------------------ */
 export function Masthead({ title, subtitle }: { title: string; subtitle: string }) {
   return (
-    <section className="field-night relative pt-28 pb-16 sm:pt-36 sm:pb-24">
+    <section className="field-night relative flex min-h-dvh items-center pt-24 pb-14 sm:pt-28 sm:pb-16">
       <div className="container-x grid gap-12 lg:grid-cols-12 lg:items-center">
         <div className="lg:col-span-5">
           <h1 className="rise t-display max-w-[20ch] text-paper">{title}</h1>
@@ -50,7 +50,7 @@ export function StatementTiles({
 }: {
   slogan: React.ReactNode;
   text: string;
-  items: Array<{ title: string; subtitle: string; body: string; tone: "neutral" | "brand" }>;
+  items: Array<{ title: string; subtitle: string; highlight: string; body: string; tone: "neutral" | "brand" }>;
 }) {
   return (
     <section id="overview" className="py-section" aria-labelledby="overview-title">
@@ -64,9 +64,11 @@ export function StatementTiles({
         <ul className="mt-14 grid gap-8 sm:grid-cols-3">
           {items.map((it, i) => (
             <Reveal as="li" key={it.title} delay={i * 0.08} className={cn("rule pt-6", it.tone === "brand" && "border-native")}>
-              <h3 className={cn("text-[1.25rem] font-semibold leading-snug tracking-[-0.015em]", it.tone === "brand" && "text-native")}>{it.title}</h3>
-              <p className="t-body mt-1 font-medium text-ink-soft">{it.subtitle}</p>
-              <p className="t-body mt-4 text-ink">{it.body}</p>
+              <p className="t-body font-medium text-ink-soft">{it.title}</p>
+              <p className={cn("mt-3 text-[clamp(1.75rem,1.2rem+1.4vw,2.25rem)] font-semibold leading-[1.1] tracking-[-0.02em]", it.tone === "brand" && "text-native")}>
+                {it.highlight}
+              </p>
+              <p className="t-body mt-4 text-ink-soft">{it.body}</p>
             </Reveal>
           ))}
         </ul>
@@ -126,14 +128,16 @@ export function PinnedRows({
             </h3>
             <p className="t-body mt-1 font-medium text-native">{b.kicker}</p>
             <p className="t-body mt-4 max-w-[60ch]">{b.summary}</p>
-            <ul className="mt-6 space-y-3 t-body text-ink-soft">
-              {b.details.map((d) => (
-                <li key={d} className="flex gap-3">
-                  <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
-                  <span>{d}</span>
-                </li>
-              ))}
-            </ul>
+            {b.details.length > 0 && (
+              <ul className="mt-6 space-y-3 t-body text-ink-soft">
+                {b.details.map((d) => (
+                  <li key={d} className="flex gap-3">
+                    <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-native" aria-hidden="true" />
+                    <span>{d}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
             {b.href && (
               <Link href={b.href} className="link mt-6 inline-flex items-center gap-1 t-body font-medium text-native">
                 Learn more <ArrowUpRight className="h-4 w-4" />
