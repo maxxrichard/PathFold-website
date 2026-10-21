@@ -1,6 +1,4 @@
-export function cn(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(" ");
-}
+export { cn } from "cn";
 
 export function slugify(input: string) {
   return input

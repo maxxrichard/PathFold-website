@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, Building2 } from "lucide-react";
 import { PageHero, Section } from "@/components/ui/Section";
 import { ContactForm } from "@/components/site/ContactForm";
 import { getSettings } from "@/lib/settings";
+import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -13,52 +13,40 @@ export default async function ContactPage() {
   const settings = await getSettings();
   return (
     <>
-      <PageHero eyebrow="Contact" title={<>Let&apos;s <span className="text-gradient">talk</span></>} description="Questions about the project, collaboration ideas, data or media requests: we are happy to hear from you." />
-      <Section>
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <div className="card p-7">
-              <p className="eyebrow">Project Leader</p>
-              <h2 className="font-display mt-2 text-2xl font-semibold text-fg">{settings.contactName}</h2>
-              <p className="text-sm text-fg-muted">{settings.contactRole}</p>
-              <dl className="mt-6 space-y-4 text-sm">
-                <div className="flex gap-3">
-                  <Building2 className="mt-0.5 h-4.5 w-4.5 shrink-0 text-brand-cyan" />
-                  <div>
-                    <dt className="sr-only">Institution</dt>
-                    <dd className="text-fg">{settings.contactInstitution}</dd>
-                  </div>
+      <PageHero eyebrow="Contact" title="Let's talk" description="Questions about the project, collaboration ideas, data or media requests: we are happy to hear from you." />
+      <Section tight>
+        <div className="grid gap-12 lg:grid-cols-12">
+          <Reveal as="section" delay={0.1} className="order-2 lg:order-1 lg:col-span-4" aria-label="Contact details">
+            <div className="panel p-6 lg:sticky lg:top-28">
+              <h2 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.02em]">{settings.contactName}</h2>
+              <p className="t-body mt-1 text-ink-soft">{settings.contactRole}</p>
+              <dl className="t-body mt-5 space-y-3">
+                <div>
+                  <dt className="sr-only">Institution</dt>
+                  <dd>{settings.contactInstitution}</dd>
                 </div>
-                <div className="flex gap-3">
-                  <MapPin className="mt-0.5 h-4.5 w-4.5 shrink-0 text-brand-cyan" />
-                  <div>
-                    <dt className="sr-only">Address</dt>
-                    <dd className="whitespace-pre-line text-fg">{settings.contactAddress}</dd>
-                  </div>
+                <div>
+                  <dt className="sr-only">Address</dt>
+                  <dd className="whitespace-pre-line">{settings.contactAddress}</dd>
                 </div>
-                <div className="flex gap-3">
-                  <Mail className="mt-0.5 h-4.5 w-4.5 shrink-0 text-brand-cyan" />
-                  <div>
-                    <dt className="sr-only">E-mail</dt>
-                    <dd>
-                      <a href={`mailto:${settings.contactEmail}`} className="text-brand-cyan hover:underline">
-                        {settings.contactEmail}
-                      </a>
-                    </dd>
-                  </div>
+                <div>
+                  <dt className="sr-only">E-mail</dt>
+                  <dd>
+                    <a href={`mailto:${settings.contactEmail}`} className="link font-medium">
+                      {settings.contactEmail}
+                    </a>
+                  </dd>
                 </div>
               </dl>
             </div>
-          </div>
-          <div className="lg:col-span-7">
-            <div className="card p-7">
-              <h2 className="font-display text-2xl font-semibold text-fg">Send a message</h2>
-              <p className="mt-1 text-sm text-fg-muted">We usually reply within a few working days.</p>
-              <div className="mt-6">
-                <ContactForm />
-              </div>
+          </Reveal>
+          <Reveal className="order-1 lg:order-2 lg:col-span-7 lg:col-start-6">
+            <h2 className="t-head">Send a message</h2>
+            <p className="t-body mt-3 text-ink-soft">We usually reply within a few working days.</p>
+            <div className="mt-8 max-w-[64ch]">
+              <ContactForm />
             </div>
-          </div>
+          </Reveal>
         </div>
       </Section>
     </>

@@ -1,8 +1,12 @@
 "use client";
 
 import { useActionState } from "react";
-import { CheckCircle2, Loader2, Send } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { sendContactMessage, type ActionState } from "@/lib/admin/actions";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function ContactForm() {
@@ -10,10 +14,9 @@ export function ContactForm() {
 
   if (state.ok) {
     return (
-      <div className="flex flex-col items-center rounded-2xl border border-success/30 bg-success/10 px-6 py-12 text-center" role="status">
-        <CheckCircle2 className="h-10 w-10 text-success" />
-        <h3 className="font-display mt-4 text-xl font-semibold text-fg">Thank you!</h3>
-        <p className="mt-2 text-sm text-fg-muted">Your message has been received. We will get back to you soon.</p>
+      <div className="rounded-lg bg-sky px-6 py-10" role="status">
+        <h3 className="t-head">Thank you.</h3>
+        <p className="t-lead mt-4 max-w-[36ch] text-ink-soft">Your message has been received. We will get back to you soon.</p>
       </div>
     );
   }
@@ -22,13 +25,13 @@ export function ContactForm() {
   const err = state.fieldErrors ?? {};
 
   return (
-    <form action={action} className="space-y-5" noValidate>
+    <form action={action} className="space-y-6" noValidate data-ui>
       {state.error && (
-        <p className="rounded-xl border border-danger/40 bg-danger/10 px-4 py-3 text-sm text-fg" role="alert">
+        <p className="bg-coral px-4 py-3 t-body text-ink" role="alert">
           {state.error}
         </p>
       )}
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2">
         <Field label="Name" name="name" error={err.name} defaultValue={v.name} autoComplete="name" required />
         <Field label="E-mail" name="email" type="email" error={err.email} defaultValue={v.email} autoComplete="email" required />
       </div>
@@ -40,12 +43,12 @@ export function ContactForm() {
           Website <input type="text" name="website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <p className="text-xs text-fg-subtle">Your message is stored securely and only used to answer your request.</p>
-        <button type="submit" className="btn btn-primary" disabled={pending}>
-          {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <p className="t-small max-w-[40ch] text-ink-soft">Your message is stored securely and only used to answer your request.</p>
+        <Button type="submit" disabled={pending} className="h-11 shrink-0 px-6 text-base font-medium hover:bg-native">
+          {pending && <Loader2 className="h-4 w-4 animate-spin" />}
           {pending ? "Sending…" : "Send message"}
-        </button>
+        </Button>
       </div>
     </form>
   );
@@ -71,18 +74,43 @@ function Field({
   autoComplete?: string;
 }) {
   const id = `contact-${name}`;
+  const field = cn("mt-2 border-border-strong bg-white text-base shadow-none", error && "border-misfold");
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-fg">
-        {label} {required && <span className="text-misfold">*</span>}
-      </label>
+      <Label htmlFor={id} className="t-body font-medium">
+        {label}
+        {required && (
+          <span className="text-misfold" aria-hidden="true">
+            *
+          </span>
+        )}
+      </Label>
       {textarea ? (
-        <textarea id={id} name={name} rows={6} defaultValue={defaultValue} className={cn("input mt-2", error && "border-danger")} aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} />
+        <Textarea
+          id={id}
+          name={name}
+          rows={7}
+          defaultValue={defaultValue}
+          required={required}
+          className={cn(field, "min-h-44")}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${id}-error` : undefined}
+        />
       ) : (
-        <input id={id} name={name} type={type} defaultValue={defaultValue} autoComplete={autoComplete} className={cn("input mt-2", error && "border-danger")} aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} />
+        <Input
+          id={id}
+          name={name}
+          type={type}
+          defaultValue={defaultValue}
+          autoComplete={autoComplete}
+          required={required}
+          className={cn(field, "h-11")}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${id}-error` : undefined}
+        />
       )}
       {error && (
-        <p id={`${id}-error`} className="mt-1.5 text-xs text-danger">
+        <p id={`${id}-error`} className="t-small mt-1.5 text-misfold">
           {error}
         </p>
       )}

@@ -34,22 +34,25 @@ export const PROBLEM_CARDS = [
   {
     title: "AlphaFold2 / AlphaFold3",
     subtitle: "Single end-point structure",
+    highlight: "One end-point structure",
     body:
-      "State-of-the-art structure predictors describe only the folding endpoint: one lowest-energy conformation, without kinetic or temporal information, and they capture fewer than one in seven experimentally validated fold-switching conformations.",
+      "Structure predictors return one lowest-energy conformation without kinetic or temporal information, and capture fewer than one in seven validated fold-switching conformations.",
     tone: "neutral" as const,
   },
   {
     title: "Molecular dynamics",
     subtitle: "Too short timescales",
+    highlight: "Milliseconds to seconds out of reach",
     body:
-      "MD simulations generate atomistic folding trajectories, but clinically relevant folding and misfolding events happen on millisecond-to-second timescales that remain out of reach even with enhanced sampling and Markov state models.",
+      "MD simulations produce atomistic trajectories, but clinically relevant folding and misfolding events happen on timescales that remain out of reach even with enhanced sampling.",
     tone: "neutral" as const,
   },
   {
     title: "PathFold",
     subtitle: "Kinetically ordered pathways from sequence",
+    highlight: "Order, timing and interdependence",
     body:
-      "PathFold models folding as a coarse-grained, kinetically ordered sequence of structural transitions, capturing the order, timing and interdependence of conformational events that decide between a stable native state and misfolding.",
+      "PathFold models folding as a kinetically ordered sequence of structural transitions, from sequence alone, capturing the events that decide between a stable native state and misfolding.",
     tone: "brand" as const,
   },
 ];

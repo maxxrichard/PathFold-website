@@ -14,10 +14,10 @@ export default async function PublicationsPage() {
     <>
       <PageHero
         eyebrow="Publications"
-        title={<>Publications, pre-prints & <span className="text-gradient">documentation</span></>}
+        title="Publications, pre-prints and documentation"
         description="Peer-reviewed publications and preprints from PathFold, together with the prior work that laid its methodological foundations in trajectory-aware sequence modelling, pathway-based machine learning and generative modelling for neurodegenerative disease research."
       />
-      <Section>
+      <Section tight>
         <PublicationList publications={publications} />
       </Section>
     </>
