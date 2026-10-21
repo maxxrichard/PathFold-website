@@ -1,14 +1,29 @@
-import type { Metadata } from "next";
-import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 
 export const dynamic = "force-dynamic";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
-const outfit = Outfit({ variable: "--font-outfit", subsets: ["latin"], display: "swap" });
-const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], display: "swap" });
+// General Sans (Indian Type Foundry, Fontshare licence), self-hosted. One family for the whole site.
+const generalSans = localFont({
+  variable: "--font-general",
+  display: "swap",
+  src: [
+    { path: "../fonts/GeneralSans-400.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/GeneralSans-500.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/GeneralSans-600.woff2", weight: "600", style: "normal" },
+    { path: "../fonts/GeneralSans-700.woff2", weight: "700", style: "normal" },
+  ],
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+export const viewport: Viewport = {
+  themeColor: "#f4f5f2",
+  viewportFit: "cover",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -49,7 +64,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${jetbrains.variable} h-full antialiased`}>
+    <html lang="en" className={`${generalSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
