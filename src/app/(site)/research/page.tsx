@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, Database, ExternalLink, Layers3 } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { PageHero, Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
-import { ResourceCard } from "@/components/site/cards";
-import { getResources } from "@/lib/data";
 import { COMPONENTS, DATA_SOURCES, APPLICATIONS } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Research",
-  description: "How PathFold works: energy-based latent representation learning, PathFold-P, PathFold-M, the PathFold-Toolbox, DynBench and the P-Track / M-Track datasets.",
+  description: "How PathFold works: energy-based latent representation learning, PathFold-P, PathFold-M, the PathFold-Toolbox, DynBench and the open data sources.",
 };
 
 const TIERS = [
@@ -32,9 +29,7 @@ const TIERS = [
   },
 ];
 
-export default async function ResearchPage() {
-  const resources = await getResources();
-
+export default function ResearchPage() {
   return (
     <>
       <PageHero
@@ -61,17 +56,6 @@ export default async function ResearchPage() {
             </Reveal>
           ))}
         </div>
-        <Reveal className="mt-6">
-          <div className="card flex flex-col gap-4 p-6 sm:flex-row sm:items-center">
-            <Layers3 className="h-8 w-8 shrink-0 text-brand-cyan" />
-            <p className="text-sm leading-relaxed text-fg-muted">
-              Each trajectory step is represented as a triple of <em>dihedral-angle distribution</em>, <em>contact probability map</em> and{" "}
-              <em>secondary-structure vector</em>. For proteins under 100 residues, typically 10 to 30 discrete states capture the main
-              events of structure formation. The modelling target is a coarse-grained, kinetically ordered trajectory, explicitly not
-              atomistic MD resolution.
-            </p>
-          </div>
-        </Reveal>
       </Section>
 
       {/* Energy-based latent space */}
@@ -130,39 +114,14 @@ export default async function ResearchPage() {
         </Section>
       ))}
 
-      {/* Datasets */}
+      {/* Open data sources */}
       <Section tone="elevated" id="datasets">
         <SectionHeading
-          eyebrow="FAIR datasets"
-          title="P-Track and M-Track"
-          description="A curated, FAIR-compliant sequence–trajectory dataset that harmonises nine open molecular resources into a single versioned, metadata-rich release, a scientific contribution in its own right."
+          eyebrow="Data"
+          title="Open data sources"
+          description="PathFold relies exclusively on publicly licensed, FAIR-compliant molecular and sequence resources. They are harmonised through standardised identifier mappings between UniProt accessions, PDB entry IDs and the annotation databases, so that sequence, structure, dynamics, disorder, aggregation and variant information line up for every protein."
         />
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
-          <Reveal>
-            <article className="card h-full border-brand-cyan/30 p-7">
-              <Badge tone="cyan">P-Track</Badge>
-              <h3 className="font-display mt-4 text-xl font-semibold text-fg">Sequence–trajectory pairs</h3>
-              <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                Folded and structurally well-characterised proteins, built from PDB ensembles, NMR conformers and Folding@home
-                trajectory subsets, providing the folding supervision signal.
-              </p>
-            </article>
-          </Reveal>
-          <Reveal delay={0.07}>
-            <article className="card h-full border-misfold/30 p-7">
-              <Badge tone="misfold">M-Track</Badge>
-              <h3 className="font-display mt-4 text-xl font-semibold text-fg">Sequence–annotation pairs</h3>
-              <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                Intrinsically disordered and amyloidogenic proteins with residue-resolved misfolding and aggregation labels from
-                DisProt, AmyLoad, AmyPro and ClinVar.
-              </p>
-            </article>
-          </Reveal>
-        </div>
-        <h3 className="font-display mt-12 flex items-center gap-2 text-xl font-semibold text-fg">
-          <Database className="h-5 w-5 text-brand-cyan" /> Open data sources
-        </h3>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {DATA_SOURCES.map((s, i) => (
             <Reveal key={s.name} as="li" delay={i * 0.03}>
               <a href={s.url} target="_blank" rel="noreferrer" className="card card-hover flex h-full flex-col p-4">
@@ -195,22 +154,6 @@ export default async function ResearchPage() {
         </div>
       </Section>
 
-      {/* Resources teaser */}
-      <Section tone="elevated" id="outputs">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading eyebrow="Outputs" title="Open artefacts" description="Everything PathFold produces is released under open licenses." />
-          <Link href="/resources" className="btn btn-secondary btn-sm">
-            All resources <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {resources.slice(0, 3).map((r, i) => (
-            <Reveal key={r.id} delay={i * 0.06} className="h-full">
-              <ResourceCard resource={r} />
-            </Reveal>
-          ))}
-        </div>
-      </Section>
     </>
   );
 }
