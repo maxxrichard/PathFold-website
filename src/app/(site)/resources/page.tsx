@@ -21,7 +21,7 @@ export default async function ResourcesPage() {
       <PageHero
         eyebrow="Resources"
         title={<>Open <span className="text-gradient">software, data & benchmarks</span></>}
-        description="PathFold-P, PathFold-M and the PathFold-Toolbox are released as open-source software; P-Track and M-Track as FAIR, versioned datasets via ELIXIR-DE and NFDI4Health; DynBench as an open benchmarking platform with a public leaderboard."
+        description="PathFold-P, PathFold-M and the PathFold-Toolbox are released as open-source software; P-Track and M-Track as FAIR datasets; DynBench as an open benchmarking platform with a public leaderboard."
       />
       <Section>
         {resources.length === 0 ? (

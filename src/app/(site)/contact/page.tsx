@@ -18,7 +18,7 @@ export default async function ContactPage() {
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <div className="card p-7">
-              <p className="eyebrow">Project coordinator</p>
+              <p className="eyebrow">Project Leader</p>
               <h2 className="font-display mt-2 text-2xl font-semibold text-fg">{settings.contactName}</h2>
               <p className="text-sm text-fg-muted">{settings.contactRole}</p>
               <dl className="mt-6 space-y-4 text-sm">
