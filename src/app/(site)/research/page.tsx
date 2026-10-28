@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { COMPONENTS, DATA_SOURCES, APPLICATIONS } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/research" },
   title: "Research",
   description: "How PathFold works: energy-based latent representation learning, PathFold-P, PathFold-M, the PathFold-Toolbox, DynBench and the open data sources.",
 };

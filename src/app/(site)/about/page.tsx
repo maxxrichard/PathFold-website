@@ -8,6 +8,7 @@ import { getSettings } from "@/lib/settings";
 import { PROJECT, RESEARCH_QUESTIONS, HYPOTHESES, FAIR_POINTS, TIMELINE } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About",
   description:
     "PathFold – Language Modelling for Protein (Mis-)Folding Pathway Dynamics: goals, research questions and roadmap.",

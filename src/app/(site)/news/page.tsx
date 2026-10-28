@@ -7,6 +7,7 @@ import { getPublishedNews } from "@/lib/data";
 import { NewsFilter } from "@/components/site/NewsFilter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/news" },
   title: "News",
   description: "News, events, talks and press coverage from the PathFold project.",
 };

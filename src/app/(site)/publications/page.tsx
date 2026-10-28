@@ -4,6 +4,7 @@ import { PublicationList } from "@/components/site/PublicationList";
 import { getPublications } from "@/lib/data";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/publications" },
   title: "Publications",
   description: "Publications, preprints, datasets and software from the PathFold project and related prior work.",
 };

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { SITE_URL } from "@/lib/site";
+import { StructuredData } from "@/components/site/StructuredData";
 
 export const dynamic = "force-dynamic";
 
@@ -16,17 +18,20 @@ const generalSans = localFont({
   ],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
 export const viewport: Viewport = {
-  themeColor: "#f4f5f2",
+  themeColor: "#ffffff",
   viewportFit: "cover",
   width: "device-width",
   initialScale: 1,
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
+  ...(googleVerification ? { verification: { google: googleVerification } } : {}),
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   title: {
     default: "PathFold – Learning protein folding pathways",
     template: "%s · PathFold",
@@ -65,7 +70,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${generalSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <StructuredData />
+      </body>
     </html>
   );
 }

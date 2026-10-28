@@ -5,6 +5,7 @@ import { getSettings } from "@/lib/settings";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact",
   description: "Get in touch with the PathFold project team at Saarland University.",
 };

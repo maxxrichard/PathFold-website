@@ -8,6 +8,7 @@ import { getTeam } from "@/lib/data";
 import { TEAM_GROUPS } from "@/lib/admin/registry";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/team" },
   title: "Team",
   description: "The people behind PathFold at Saarland University, DFKI and DZNE.",
 };

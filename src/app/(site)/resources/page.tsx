@@ -7,6 +7,7 @@ import { getResources } from "@/lib/data";
 import { RESOURCE_KINDS } from "@/lib/admin/registry";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources" },
   title: "Resources",
   description: "Open-source software, benchmarks, datasets, models and documentation released by the PathFold project.",
 };
